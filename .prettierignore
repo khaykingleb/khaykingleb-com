@@ -1,3 +1,5 @@
+node_modules
+build
 .github
 .pre-commit-config.yaml
 package.json
