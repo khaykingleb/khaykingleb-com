@@ -12,5 +12,5 @@ export default {
     "package.json",
     "pnpm-lock.yaml",
   ],
-  words: ["workdir", "tseslint", "jsxa", "espree"],
+  words: ["workdir", "tseslint", "jsxa", "espree", "Gleb", "Khaykin"],
 };
