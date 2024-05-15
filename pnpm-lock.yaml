@@ -66,8 +66,8 @@ importers:
         specifier: ^15.1.0
         version: 15.2.0
       prettier:
-        specifier: ^3.2.5, <4.0.0
-        version: 2.8.8
+        specifier: ^3.2.5
+        version: 3.2.5
       stylelint:
         specifier: ^16.5.0
         version: 16.5.0(typescript@5.3.3)
@@ -4744,6 +4744,14 @@ packages:
     engines: { node: ">=10.13.0" }
     hasBin: true
 
+  prettier@3.2.5:
+    resolution:
+      {
+        integrity: sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==,
+      }
+    engines: { node: ">=14" }
+    hasBin: true
+
   pretty-ms@7.0.1:
     resolution:
       {
@@ -9169,6 +9177,8 @@ snapshots:
   prelude-ls@1.2.1: {}
 
   prettier@2.8.8: {}
+
+  prettier@3.2.5: {}
 
   pretty-ms@7.0.1:
     dependencies:

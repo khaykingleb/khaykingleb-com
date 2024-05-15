@@ -55,6 +55,16 @@ run: build ## Run production server
 	pnpm run start
 .PHONY: run
 
+lint: ## Lint project
+	@echo "Linting project."
+	pnpm run lint
+.PHONY: lint
+
+format: ## Format project
+	@echo "Formatting project."
+	pnpm run format
+.PHONY: format
+
 ##@ Miscullaneous
 
 create-secrets-baseline:  ## Create secrets baseline file
