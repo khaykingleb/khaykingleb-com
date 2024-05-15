@@ -1,4 +1,4 @@
-import { MetaFunction } from "@remix-run/node";
+import { MetaFunction, LinksFunction } from "@remix-run/node";
 import {
   Links,
   Meta,
@@ -6,6 +6,8 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+
+import stylesheet from "./styles/tailwind.css?url";
 
 export const meta: MetaFunction = () => {
   return [
@@ -15,6 +17,10 @@ export const meta: MetaFunction = () => {
     { "og:title": "Gleb Khaykin" },
     { "og:description": "Personal website" },
   ];
+};
+
+export const links: LinksFunction = () => {
+  return [{ rel: "stylesheet", href: stylesheet }];
 };
 
 export default function App() {
