@@ -7,7 +7,7 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
-import stylesheet from "./styles/tailwind.css?url";
+import tailwindStylesheetUrl from "./styles/tailwind.css?url";
 
 export const meta: MetaFunction = () => {
   return [
@@ -20,7 +20,19 @@ export const meta: MetaFunction = () => {
 };
 
 export const links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: stylesheet }];
+  return [
+    {
+      rel: "stylesheet",
+      href: tailwindStylesheetUrl,
+    },
+
+    // Prefetch an image into the browser cache
+    {
+      rel: "prefetch",
+      as: "image",
+      href: "/avatar.jpg",
+    },
+  ];
 };
 
 export default function App() {
