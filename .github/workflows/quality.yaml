@@ -16,11 +16,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install asdf & tools
-        uses: asdf-vm/actions/install@v3.0.2
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 21.7.3
 
-      - name: Install Node packages
-        run: pnmp install
+      - name: Setup pnmp and install dependencies
+        run: |
+          curl -fsSL https://get.pnpm.io/install.sh | sh -
+          pnpm install
 
       - name: Check all files with pre-commit
         uses: pre-commit/action@v3.0.1
