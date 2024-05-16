@@ -19,6 +19,7 @@ export default {
     "espree",
     "Gleb",
     "Khaykin",
+    "khaykingleb",
     "daisyui",
     "wheatfield",
   ],
