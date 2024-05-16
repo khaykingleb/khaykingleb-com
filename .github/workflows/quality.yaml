@@ -16,5 +16,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install asdf & tools
+        uses: asdf-vm/actions/install@v3.0.2
+
+      - name: Install Node packages
+        run: pnmp install
+
       - name: Check all files with pre-commit
         uses: pre-commit/action@v3.0.1
