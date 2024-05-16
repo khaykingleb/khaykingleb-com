@@ -66,10 +66,6 @@ export default {
               section: "Styles",
             },
             {
-              message: "refactor:*",
-              section: "Code Refactoring",
-            },
-            {
               message: "test:*",
               section: "Tests",
             },
