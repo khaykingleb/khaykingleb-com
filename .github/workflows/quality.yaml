@@ -22,9 +22,10 @@ jobs:
           node-version: 21.7.3
 
       - name: Setup pnmp and install dependencies
-        run: |
-          curl -fsSL https://get.pnpm.io/install.sh | sh -
-          pnpm install
+        uses: pnpm/action-setup@v4.0.0
+        with:
+          version: 9.1.1
+          run_install: true
 
       - name: Check all files with pre-commit
         uses: pre-commit/action@v3.0.1
