@@ -20,5 +20,6 @@ export default {
     "Gleb",
     "Khaykin",
     "daisyui",
+    "wheatfield",
   ],
 };

@@ -14,7 +14,7 @@ repos:
       - id: check-shebang-scripts-are-executable
       - id: check-added-large-files
         args:
-          - "--maxkb=5000"
+          - "--maxkb=10000"
       - id: no-commit-to-branch
         args:
           - "--branch=master"

@@ -26,7 +26,69 @@ export default {
         ],
       },
     ],
-    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        preset: "angular",
+        presetConfig: {
+          header: "CHANGELOG",
+          types: [
+            {
+              message: "feat:*",
+              section: "Features",
+            },
+            {
+              message: "BREAKING CHANGE:*",
+              section: "Breaking Changes",
+            },
+            {
+              message: "feat!:*",
+              section: "Breaking Changes",
+            },
+            {
+              message: "fix:*",
+              section: "Bug Fixes",
+            },
+            {
+              message: "perf:*",
+              section: "Performance Improvements",
+            },
+            {
+              message: "revert:*",
+              section: "Reverts",
+            },
+            {
+              message: "docs:*",
+              section: "Documentation",
+            },
+            {
+              message: "style:*",
+              section: "Styles",
+            },
+            {
+              message: "refactor:*",
+              section: "Code Refactoring",
+            },
+            {
+              message: "test:*",
+              section: "Tests",
+            },
+            {
+              message: "build:*",
+              section: "Build System",
+            },
+            {
+              message: "ci:*",
+              section: "CI/CD",
+            },
+            {
+              message: "chore:*",
+              section: "Chores",
+            },
+          ],
+        },
+      },
+    ],
     [
       "@semantic-release/exec",
       {

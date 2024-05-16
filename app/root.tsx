@@ -1,4 +1,4 @@
-import { MetaFunction, LinksFunction } from "@remix-run/node";
+import { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
   Links,
   Meta,
@@ -31,6 +31,16 @@ export const links: LinksFunction = () => {
       rel: "prefetch",
       as: "image",
       href: "/avatar.jpg",
+    },
+    {
+      rel: "prefetch",
+      as: "image",
+      href: "/img/van_gogh_wheatfield_with_cypresses.jpg",
+    },
+    {
+      rel: "prefetch",
+      as: "image",
+      href: "/img/van_gogh_wheatfield_with_crows.jpg",
     },
   ];
 };
