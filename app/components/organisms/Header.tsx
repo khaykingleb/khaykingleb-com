@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Menu } from "../molecules/Menu";
 
 interface HeaderProps {
   backgroundImage: string;
@@ -22,23 +22,7 @@ export const Header = ({ backgroundImage }: HeaderProps) => {
         </a>
       </div>
       <div className="relative flex-none">
-        <ul className="menu menu-horizontal menu-md px-1 text-white">
-          <li>
-            <Link to="/blog" className="font-extrabold">
-              Blog
-            </Link>
-          </li>
-          <li>
-            <Link to="/projects" className="font-extrabold">
-              Projects
-            </Link>
-          </li>
-          <li>
-            <Link to="/" className="font-extrabold">
-              About
-            </Link>
-          </li>
-        </ul>
+        <Menu />
       </div>
     </div>
   );

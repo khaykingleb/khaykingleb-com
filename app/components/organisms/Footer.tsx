@@ -1,5 +1,5 @@
 import { Copyright } from "../atoms/Copyright";
-import { SocialMedia } from "../atoms/SocialMedia";
+import { SocialMedia } from "../molecules/SocialMedia";
 
 export const Footer = () => {
   return (
