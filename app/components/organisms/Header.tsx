@@ -11,8 +11,6 @@ export const Header = ({ backgroundImage }: HeaderProps) => {
         className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage: `url(${backgroundImage})`,
-          backgroundAttachment: "fixed",
-          filter: "blur(1px)",
         }}
       ></div>
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/20"></div>
