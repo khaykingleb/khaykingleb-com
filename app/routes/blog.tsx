@@ -6,8 +6,8 @@ import { Header } from "~/components/organisms/Header";
 export const meta: MetaFunction = () => {
   return [
     { title: "Gleb Khaykin | Blog" },
-    { "og:title": "Gleb Khaykin | Blog" },
-    { "og:description": "Personal website" },
+    { property: "og:title", content: "Gleb Khaykin | Blog" },
+    { property: "og:description", content: "Personal website" },
   ];
 };
 
