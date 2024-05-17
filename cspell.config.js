@@ -22,5 +22,6 @@ export default {
     "khaykingleb",
     "daisyui",
     "wheatfield",
+    "conventionalcommits",
   ],
 };

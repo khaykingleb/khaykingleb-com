@@ -29,57 +29,66 @@ export default {
     [
       "@semantic-release/release-notes-generator",
       {
-        preset: "angular",
+        preset: "conventionalcommits",
         presetConfig: {
           header: "CHANGELOG",
           types: [
             {
-              message: "feat:*",
+              type: "feat",
               section: "Features",
+              hidden: false,
             },
             {
-              message: "BREAKING CHANGE:*",
+              type: "BREAKING CHANGE",
               section: "Breaking Changes",
+              hidden: false,
             },
             {
-              message: "feat!:*",
+              type: "feat!",
               section: "Breaking Changes",
+              hidden: false,
             },
             {
-              message: "fix:*",
+              type: "fix",
               section: "Bug Fixes",
+              hidden: false,
             },
             {
-              message: "perf:*",
+              type: "perf",
               section: "Performance Improvements",
+              hidden: false,
             },
             {
-              message: "revert:*",
-              section: "Reverts",
+              type: "revert",
+              hidden: true,
             },
             {
-              message: "docs:*",
-              section: "Documentation",
+              type: "docs",
+              hidden: true,
             },
             {
-              message: "style:*",
-              section: "Styles",
+              type: "style:*",
+              hidden: true,
             },
             {
-              message: "test:*",
+              type: "test",
               section: "Tests",
+              hidden: false,
             },
             {
-              message: "build:*",
+              type: "build",
               section: "Build System",
+              hidden: false,
             },
             {
-              message: "ci:*",
+              type: "ci",
               section: "CI/CD",
+              hidden: false,
             },
             {
-              message: "chore:*",
+              type: "chore",
               section: "Chores",
+              hidden: false,
             },
           ],
         },
