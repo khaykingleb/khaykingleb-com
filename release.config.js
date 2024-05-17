@@ -33,63 +33,15 @@ export default {
         presetConfig: {
           header: "CHANGELOG",
           types: [
-            {
-              type: "feat",
-              section: "Features",
-              hidden: false,
-            },
-            {
-              type: "BREAKING CHANGE",
-              section: "Breaking Changes",
-              hidden: false,
-            },
-            {
-              type: "feat!",
-              section: "Breaking Changes",
-              hidden: false,
-            },
-            {
-              type: "fix",
-              section: "Bug Fixes",
-              hidden: false,
-            },
-            {
-              type: "perf",
-              section: "Performance Improvements",
-              hidden: false,
-            },
-            {
-              type: "revert",
-              hidden: true,
-            },
-            {
-              type: "docs",
-              hidden: true,
-            },
-            {
-              type: "style:*",
-              hidden: true,
-            },
-            {
-              type: "test",
-              section: "Tests",
-              hidden: false,
-            },
-            {
-              type: "build",
-              section: "Build System",
-              hidden: false,
-            },
-            {
-              type: "ci",
-              section: "CI/CD",
-              hidden: false,
-            },
-            {
-              type: "chore",
-              section: "Chores",
-              hidden: false,
-            },
+            { type: "feat", section: "Features" },
+            { type: "BREAKING CHANGE", section: "Breaking Changes" },
+            { type: "feat!", section: "Breaking Changes" },
+            { type: "fix", section: "Bug Fixes" },
+            { type: "perf", section: "Performance Improvements" },
+            { type: "test", section: "Tests" },
+            { type: "build", section: "Build System" },
+            { type: "ci", section: "CI/CD" },
+            { type: "chore", section: "Chores" },
           ],
         },
       },
