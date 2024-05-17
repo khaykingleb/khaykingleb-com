@@ -1,5 +1,9 @@
 node_modules
-
 /.cache
 /build
 .env
+
+terraform.tfstate
+terraform.tfstate.backup
+terraform.tfvars
+.terraform

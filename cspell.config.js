@@ -23,5 +23,6 @@ export default {
     "daisyui",
     "wheatfield",
     "conventionalcommits",
+    "vercel",
   ],
 };
