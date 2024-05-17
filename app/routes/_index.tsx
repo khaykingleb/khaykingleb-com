@@ -8,7 +8,13 @@ export default function Index() {
       <Header backgroundImage="/img/van_gogh_wheatfield_with_crows.jpg" />
       <main className="flex-grow">
         <Avatar />
-        <div className="py-4 text-center">Hey!</div>
+        <div className="font-eb-garamond-light text-pretty px-48 text-center">
+          Hey! I'm Gleb. I'm an ML/MLOps Engineer passionate about pushing the
+          boundaries of machine learning and operations. With extensive
+          experience in enhancing model performance, reducing operational costs,
+          and deploying scalable solutions, I thrive on integrating cutting-edge
+          technologies to create efficient, reliable, and powerful systems.
+        </div>
       </main>
       <Footer />
     </div>
