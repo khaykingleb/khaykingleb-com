@@ -14,7 +14,8 @@ export default function Index() {
           <p className="mb-2">
             Welcome! I'm Gleb, a full-stack developer with a focus on DevOps and
             ML/MLOps engineering. Or, in simpler terms, I code things and
-            occasionally break them...
+            occasionally break them... (Don't worry, I fix them in staging or QA
+            in the end!)
           </p>
           <p className="mb-2">
             Early on, I had thoughts of being a software engineer, investment
