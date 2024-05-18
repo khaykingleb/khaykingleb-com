@@ -14,8 +14,13 @@ export const meta: MetaFunction = () => {
     { charset: "utf-8" },
     { name: "viewport", content: "width=device-width, initial-scale=1" },
     { title: "Gleb Khaykin" },
-    { "og:title": "Gleb Khaykin" },
-    { "og:description": "Personal website" },
+    { property: "og:title", content: "Gleb Khaykin" },
+    { property: "og:description", content: "Personal website" },
+    {
+      name: "keywords",
+      content:
+        "Gleb Khaykin, Computer Science, Finance, Deep Learning, Machine Learning, MLOps",
+    },
   ];
 };
 
