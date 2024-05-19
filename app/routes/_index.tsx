@@ -36,8 +36,8 @@ export default function Index() {
             Here, you’ll find a collection of resources I’ve found valuable.
             Dive in, and I hope you discover some tools and materials useful for
             yourself. Also, you can check out my Telegram channel in the footer
-            below; it's where I share thoughts and materials in a more
-            unstructured and freestyle format.
+            below; it's where I share thoughts and materials in a more freestyle
+            format.
           </p>
         </div>
       </div>
