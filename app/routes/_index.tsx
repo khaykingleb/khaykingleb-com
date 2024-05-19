@@ -14,23 +14,16 @@ export default function Index() {
           <p className="mb-2">
             Welcome! I'm Gleb, a full-stack developer with a focus on DevOps and
             ML/MLOps engineering. Or, in simpler terms, I code things and
-            occasionally break them... (Don't worry, I fix them after hitting
-            staging or QA in the end!)
+            occasionally break them...
           </p>
           <p className="mb-2">
             Early on, I had thoughts of being a software engineer, investment
-            banker, or fitness trainer. Ultimately, I ended up at the Higher
-            School of Economics, where I studied both Computer Science and
-            Finance. This background helps me understand not only the technical
-            side of things but also the business aspects of projects.
-          </p>
-          <p className="mb-2">
-            Professionally, I build scalable services whether in the cloud or
-            on-premise, and have a solid track record of boosting model
-            performance and cutting costs. Outside of work, I enjoy hitting the
-            weights at the gym, striving to look like a fitness trainer without
-            actually being one. At least, yet! Who knows, maybe, Devin's gonna
-            make it, lol.
+            banker, or bodybuilder. Ultimately, I ended up at the Higher School
+            of Economics, where I studied both Computer Science and Finance.
+            This helps me understand not only the technical side of things but
+            also the business aspects of projects. Outside of work, I enjoy
+            hitting the weights at the gym. Who knows, maybe I'll end up as a
+            bodybuilder after all if Devin AI is gonna make it? 🤔
           </p>
           <p className="mb-2">
             Here, you’ll find a collection of resources I’ve found valuable.
