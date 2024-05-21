@@ -10,7 +10,7 @@ export default function Index() {
         <Avatar />
       </div>
       <div className="grow">
-        <div className="text font-eb-garamond-light mx-auto max-w-lg text-pretty text-center">
+        <div className="font-eb-garamond-light mx-auto max-w-lg text-pretty text-center text-sm sm:text-base">
           <p className="mb-2">
             Welcome! I'm Gleb, a full-stack developer with a focus on DevOps and
             ML/MLOps engineering. Or, in simpler terms, I code things and
