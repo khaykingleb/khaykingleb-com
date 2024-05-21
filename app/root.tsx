@@ -7,6 +7,7 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/remix";
 
 import tailwindStylesheetUrl from "./styles/tailwind.css?url";
 
@@ -60,6 +61,7 @@ export default function App() {
       </head>
       <body>
         <Analytics />
+        <SpeedInsights />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
