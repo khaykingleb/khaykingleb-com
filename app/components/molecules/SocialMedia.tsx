@@ -34,7 +34,7 @@ export const SocialMedia = () => {
         </svg>
       </a>
       <a
-        href="https://t.me/yourusername"
+        href="https://t.me/khaykingleb_channel"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Telegram"
