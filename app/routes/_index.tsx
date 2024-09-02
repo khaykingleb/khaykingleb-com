@@ -1,6 +1,16 @@
+import { MetaFunction } from "@remix-run/node";
+
 import { Avatar } from "~/components/atoms/Avatar";
 import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "About | Gleb Khaykin" },
+    { property: "og:title", content: "About | Gleb Khaykin" },
+    { property: "og:description", content: "Gleb Khaykin's personal website" },
+  ];
+};
 
 export default function Index() {
   return (
@@ -12,25 +22,24 @@ export default function Index() {
       <div className="grow">
         <div className="font-eb-garamond-light mx-auto max-w-lg text-pretty text-center text-sm sm:text-base">
           <p className="mb-2">
-            Welcome! I'm Gleb, a full-stack developer with a focus on DevOps and
-            ML/MLOps engineering. Or, in simpler terms, I code things and
-            occasionally break them...
+            Hi there! I'm Gleb, a full-stack developer specializing in DevOps
+            and MLOps engineering. My background includes distributed systems,
+            speech processing, speech synthesis, natural language processing,
+            and finance. When I'm not coding, you'll likely find me at the gym,
+            lifting weights.
           </p>
           <p className="mb-2">
-            Early on, I had thoughts of being a software engineer, investment
-            banker, or bodybuilder. Ultimately, I ended up at the Higher School
-            of Economics, where I studied both Computer Science and Finance.
-            This helps me understand not only the technical side of things but
-            also the business aspects of projects. Outside of work, I enjoy
-            hitting the weights at the gym. Who knows, maybe I'll end up as a
-            bodybuilder after all if Devin AI is gonna make it? 🤔
+            I've graduated summa cum laude from the Higher School of Economics,
+            where I studied both Computer Science and Finance. This dual
+            background helps me understand both the technical and business
+            aspects of projects.
           </p>
           <p className="mb-2">
-            Here, you’ll find a collection of resources I’ve found valuable.
-            Dive in, and I hope you discover some tools and materials useful for
-            yourself. Also, you can check out my Telegram channel in the footer
-            below; it's where I share thoughts and materials in a more freestyle
-            format.
+            On this site, you'll find a collection of resources that I've found
+            valuable. Feel free to explore, and I hope you discover some useful
+            tools and materials! You can also find links to my Telegram channel
+            (in Russian) and X profile (in English) in the footer below. It's
+            where I share my thoughts and materials in a more freestyle format.
           </p>
         </div>
       </div>
