@@ -41,7 +41,6 @@ export default {
             { type: "test", section: "Tests" },
             { type: "build", section: "Build System" },
             { type: "ci", section: "CI/CD" },
-            { type: "chore", section: "Chores" },
           ],
         },
       },
