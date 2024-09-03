@@ -1,3 +1,7 @@
+import "react-notion-x/src/styles.css";
+import "prismjs/themes/prism-tomorrow.css";
+import "katex/dist/katex.min.css";
+
 import { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
   Links,
@@ -9,9 +13,6 @@ import {
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/remix";
 
-import "react-notion-x/src/styles.css";
-import "prismjs/themes/prism-tomorrow.css";
-import "katex/dist/katex.min.css";
 import tailwindStylesheetUrl from "./styles/tailwind.css?url";
 
 export const meta: MetaFunction = () => {
