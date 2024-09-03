@@ -35,8 +35,8 @@ pre-commit: ## Install pre-commit hooks
 	@echo "Installing pre-commit hooks."
 	pre-commit install -t pre-commit -t commit-msg
 
-local-init: prerequisite deps pre-commit ## Initialize local environment for development
-.PHONY: local-init
+init: prerequisite deps pre-commit ## Initialize local environment for development
+.PHONY: init
 
 ##@ Scripts
 
@@ -75,6 +75,10 @@ audit-secrets-baseline:  ## Check updated .secrets.baseline file
 	detect-secrets audit .secrets.baseline
 	git commit .secrets.baseline --no-verify -m "build(security): update secrets.baseline"
 .PHONY: audit-secrets-baseline
+
+update-pre-commit-hooks:  ## Update pre-commit hooks
+	pre-commit autoupdate
+.PHONY: update-pre-commit-hooks
 
 clean: ## Clean project
 	@echo "Cleaning project."
