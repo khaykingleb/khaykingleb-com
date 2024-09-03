@@ -11,6 +11,11 @@ import { SpeedInsights } from "@vercel/speed-insights/remix";
 
 import tailwindStylesheetUrl from "./styles/tailwind.css?url";
 
+// Import required CSS for Notion
+import "react-notion-x/src/styles.css";
+import "prismjs/themes/prism-tomorrow.css";
+import "katex/dist/katex.min.css";
+
 export const meta: MetaFunction = () => {
   return [
     { charset: "utf-8" },

@@ -26,9 +26,15 @@ importers:
       isbot:
         specifier: ^4.4.0
         version: 4.4.0
+      katex:
+        specifier: ^0.16.11
+        version: 0.16.11
       notion-client:
         specifier: ^6.16.0
         version: 6.16.0
+      prismjs:
+        specifier: ^1.29.0
+        version: 1.29.0
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -2532,6 +2538,10 @@ packages:
 
   katex@0.15.6:
     resolution: {integrity: sha512-UpzJy4yrnqnhXvRPhjEuLA4lcPn6eRngixW7Q3TJErjg3Aw2PuLFBzTkdUb89UtumxjhHTqL3a5GDGETMSwgJA==}
+    hasBin: true
+
+  katex@0.16.11:
+    resolution: {integrity: sha512-RQrI8rlHY92OLf3rho/Ts8i/XvjgguEjOkO1BEXcU3N8BqPpSzBNwV/G0Ukr+P/l3ivvJUE/Fa/CwbS6HesGNQ==}
     hasBin: true
 
   keyv@4.5.4:
@@ -7041,6 +7051,10 @@ snapshots:
       object.values: 1.2.0
 
   katex@0.15.6:
+    dependencies:
+      commander: 8.3.0
+
+  katex@0.16.11:
     dependencies:
       commander: 8.3.0
 

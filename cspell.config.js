@@ -24,5 +24,6 @@ export default {
     "wheatfield",
     "conventionalcommits",
     "vercel",
+    "katex",
   ],
 };
