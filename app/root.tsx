@@ -32,6 +32,12 @@ export const meta: MetaFunction = () => {
 
 export const links: LinksFunction = () => {
   return [
+    // Preload styles for speed
+    {
+      rel: "preload",
+      href: tailwindStylesheetUrl,
+      as: "style",
+    },
     {
       rel: "stylesheet",
       href: tailwindStylesheetUrl,
