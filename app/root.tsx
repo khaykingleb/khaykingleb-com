@@ -1,3 +1,7 @@
+import "react-notion-x/src/styles.css";
+import "prismjs/themes/prism-tomorrow.css";
+import "katex/dist/katex.min.css";
+
 import { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
   Links,
@@ -28,6 +32,12 @@ export const meta: MetaFunction = () => {
 
 export const links: LinksFunction = () => {
   return [
+    // Preload styles for speed
+    {
+      rel: "preload",
+      href: tailwindStylesheetUrl,
+      as: "style",
+    },
     {
       rel: "stylesheet",
       href: tailwindStylesheetUrl,
