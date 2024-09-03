@@ -43,6 +43,7 @@ repos:
         language: system
         types: [file]
         files: \.(js|ts|jsx|tsx)$
+        args: ["--quiet"]
 
   - repo: local
     hooks:
