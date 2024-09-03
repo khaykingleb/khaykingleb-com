@@ -36,7 +36,7 @@ repos:
           - "@commitlint/config-conventional"
 
   - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: v9.9.1
+    rev: v8.56.0
     hooks:
       - id: eslint
 
@@ -46,8 +46,8 @@ repos:
       - id: prettier
         stages: [commit]
         additional_dependencies:
-          - prettier@3.1.0
-          - prettier-plugin-tailwindcss@0.5.14
+          - prettier@3.3.3
+          - prettier-plugin-tailwindcss@0.6.6
 
   - repo: https://github.com/streetsidesoftware/cspell-cli
     rev: v8.13.3
