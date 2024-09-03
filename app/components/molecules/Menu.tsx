@@ -13,10 +13,10 @@ export const Menu = () => {
       </li>
       <li>
         <Link
-          to="/projects"
+          to="/notes"
           className="font-eb-garamond-black text-base sm:text-lg"
         >
-          Projects
+          Notes
         </Link>
       </li>
       <li>
