@@ -1,0 +1,67 @@
+/**
+ * This file contains site-specific style overrides for Notion elements from
+ * react-notion-x.
+ *
+ * See https://github.com/NotionX/react-notion-x/blob/master/packages/react-notion-x/src/styles.css
+
+ * react-notion-x's goal is to match styling as close as possible to Notion,
+ * whereas I'm trying to make it look another way.
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .font-eb-garamond-regular {
+    font-family: "EB Garamond", serif;
+  }
+}
+
+.notion {
+  --notion-max-width: 900px;
+}
+
+.notion-header {
+  @apply hidden;
+}
+
+.notion-title {
+  @apply font-eb-garamond-regular text-center;
+}
+
+.notion-table-of-contents {
+  @apply font-eb-garamond-regular;
+}
+
+.notion-h1 {
+  @apply font-eb-garamond-regular;
+}
+
+.notion-h2 {
+  @apply font-eb-garamond-regular;
+}
+
+.notion-h3 {
+  @apply font-eb-garamond-regular;
+}
+
+.notion-list {
+  @apply font-eb-garamond-regular;
+}
+
+.notion-text {
+  @apply font-eb-garamond-regular;
+}
+
+.notion-asset-caption {
+  @apply font-eb-garamond-regular text-center;
+}
+
+.notion-list > div.notion-text {
+  margin-left: -1.7em !important;
+}
+
+.notion-list > span.notion-equation {
+  margin-left: -1.7em !important;
+}
