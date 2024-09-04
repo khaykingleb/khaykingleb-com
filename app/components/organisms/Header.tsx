@@ -14,7 +14,7 @@ export const Header = ({ backgroundImage }: HeaderProps) => {
         }}
       ></div>
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/20"></div>
-      <div className="relative flex-1">
+      <div className="relative mx-4 flex-1">
         <span className="font-eb-garamond-black text-lg text-white sm:text-2xl">
           khaykingleb
         </span>
