@@ -57,11 +57,3 @@
 .notion-asset-caption {
   @apply font-eb-garamond-regular text-center;
 }
-
-.notion-list > div.notion-text {
-  margin-left: -1.7em !important;
-}
-
-.notion-list > span.notion-equation {
-  margin-left: -1.7em !important;
-}
