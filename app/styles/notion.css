@@ -22,38 +22,16 @@
   --notion-max-width: 900px;
 }
 
-.notion-header {
-  @apply hidden;
-}
-
-.notion-title {
-  @apply font-eb-garamond-regular text-center;
-}
-
-.notion-table-of-contents {
-  @apply font-eb-garamond-regular;
-}
-
-.notion-h1 {
-  @apply font-eb-garamond-regular;
-}
-
-.notion-h2 {
-  @apply font-eb-garamond-regular;
-}
-
-.notion-h3 {
-  @apply font-eb-garamond-regular;
-}
-
-.notion-list {
-  @apply font-eb-garamond-regular;
-}
-
-.notion-text {
-  @apply font-eb-garamond-regular;
-}
-
+.notion-title,
 .notion-asset-caption {
   @apply font-eb-garamond-regular text-center;
+}
+
+.notion-table-of-contents,
+.notion-h1,
+.notion-h2,
+.notion-h3,
+.notion-list,
+.notion-text {
+  @apply font-eb-garamond-regular;
 }
