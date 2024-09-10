@@ -3,7 +3,7 @@ interface CarouselItem {
   title: string;
   content: string;
   tags: string[];
-};
+}
 
 interface CarouselProps {
   items: CarouselItem[];

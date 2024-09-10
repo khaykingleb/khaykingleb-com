@@ -54,7 +54,7 @@ function TagItem({ name, onClick, checked }: TagItemProps) {
 interface TagOption {
   name: string;
   selected: boolean;
-};
+}
 
 interface SearchByTagsProps {
   tagOptions: TagOption[];
