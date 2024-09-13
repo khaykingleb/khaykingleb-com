@@ -25,5 +25,6 @@ export default {
     "conventionalcommits",
     "vercel",
     "katex",
+    "pageid",
   ],
 };
