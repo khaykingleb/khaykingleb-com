@@ -19,7 +19,7 @@ export default function IndexRoute() {
       <div className="avatar flex items-center justify-center p-6">
         <Avatar />
       </div>
-      <div className="grow">
+      <div className="flex-grow">
         <div className="font-eb-garamond-light mx-auto max-w-lg text-pretty text-center text-sm sm:text-base">
           <p className="mb-2">
             Hi there! I&apos;m Gleb, a full-stack developer specializing in

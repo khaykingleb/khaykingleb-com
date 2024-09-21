@@ -187,9 +187,8 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-const POSTS_PER_PAGE = 5;
-
 export default function BlogRoute() {
+  const [postsPerPage, setPostsPerPage] = useState(6);
   const [currentPage, setCurrentPage] = useState(0);
   const [tagOptions, setTagOptions] = useState(
     Array.from(new Set(posts.flatMap((post) => post.tags)))
@@ -215,7 +214,23 @@ export default function BlogRoute() {
       ),
     [selectedTags],
   );
-  const pagesInTotal = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+
+  useEffect(() => {
+    const updatePostsPerPage = () => {
+      if (window.matchMedia("(min-height: 800px)").matches) {
+        setPostsPerPage(6);
+      } else {
+        setPostsPerPage(3);
+      }
+    };
+
+    updatePostsPerPage();
+    window.addEventListener("resize", updatePostsPerPage);
+
+    return () => window.removeEventListener("resize", updatePostsPerPage);
+  }, []);
+
+  const pagesInTotal = Math.ceil(filteredPosts.length / postsPerPage);
 
   const handlePageChange = useCallback(
     (pageIndex: number) => {
@@ -230,11 +245,11 @@ export default function BlogRoute() {
     <div className="flex min-h-screen flex-col">
       <Header backgroundImage="/img/van_gogh_wheatfield_under_thunderclouds.jpg" />
       <main className="flex flex-grow flex-col items-center justify-center">
-        <SearchByTags tagOptions={tagOptions} setTagOptions={setTagOptions} />
+        {/* <SearchByTags tagOptions={tagOptions} setTagOptions={setTagOptions} /> */}
         <Carousel
           items={filteredPosts.slice(
-            currentPage * POSTS_PER_PAGE,
-            (currentPage + 1) * POSTS_PER_PAGE,
+            currentPage * postsPerPage,
+            (currentPage + 1) * postsPerPage,
           )}
         />
         <Pagination
