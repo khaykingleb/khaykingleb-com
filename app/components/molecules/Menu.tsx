@@ -13,14 +13,6 @@ export const Menu = () => {
       </li>
       <li>
         <Link
-          to="/notes"
-          className="font-eb-garamond-black btn btn-ghost text-base sm:text-lg"
-        >
-          Notes
-        </Link>
-      </li>
-      <li>
-        <Link
           to="/resume.pdf"
           prefetch="intent"
           target="_blank"
