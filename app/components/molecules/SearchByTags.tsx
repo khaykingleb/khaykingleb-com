@@ -5,6 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { FaSearch } from "react-icons/fa"; // Import the search icon
 
 interface TextInputProps {
   value: string;
@@ -15,14 +16,17 @@ interface TextInputProps {
 
 function TextInput({ value, onChange, placeholder, onFocus }: TextInputProps) {
   return (
-    <input
-      type="text"
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      onFocus={onFocus}
-      className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-    />
+    <div className="relative">
+      <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+      <input
+        type="text"
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        onFocus={onFocus}
+        className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
   );
 }
 
@@ -112,7 +116,7 @@ export default function SearchByTags({
 
   return (
     <div
-      className="font-eb-garamond-light relative w-full max-w-xs"
+      className="font-eb-garamond-light relative mb-3 mt-6 w-full max-w-xs"
       ref={searchBarRef}
     >
       <TextInput
@@ -122,15 +126,21 @@ export default function SearchByTags({
         onFocus={() => setShowOptions(true)}
       />
       {showOptions && (
-        <div className="absolute z-10 mt-1 max-h-48 w-full overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg">
-          {filteredTagOptions.map((option: TagOption) => (
-            <TagItem
-              name={option.name}
-              key={option.name}
-              checked={option.selected}
-              onClick={() => toggleTagSelection(option.name)}
-            />
-          ))}
+        <div className="absolute z-10 mt-1 max-h-40 w-full overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg">
+          {filteredTagOptions.length > 0 ? (
+            filteredTagOptions.map((option: TagOption) => (
+              <TagItem
+                name={option.name}
+                key={option.name}
+                checked={option.selected}
+                onClick={() => toggleTagSelection(option.name)}
+              />
+            ))
+          ) : (
+            <div className="flex items-center justify-center px-4 py-2 text-gray-500">
+              No matching tags found
+            </div>
+          )}
         </div>
       )}
     </div>

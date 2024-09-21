@@ -16,7 +16,7 @@ export default function Pagination({
   const endPage = Math.min(startPage + MAX_VISIBLE_PAGES, pagesInTotal);
 
   return (
-    <div className="join mt-4">
+    <div className="join mt-auto">
       <button
         className="btn join-item btn-sm"
         onClick={() => onPageChange(currentPage - 1)}

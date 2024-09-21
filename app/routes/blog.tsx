@@ -187,7 +187,7 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-const POSTS_PER_PAGE = 4;
+const POSTS_PER_PAGE = 5;
 
 export default function BlogRoute() {
   const [currentPage, setCurrentPage] = useState(0);
