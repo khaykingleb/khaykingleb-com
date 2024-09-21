@@ -188,7 +188,7 @@ export const meta: MetaFunction = () => {
 };
 
 export default function BlogRoute() {
-  const [postsPerPage, setPostsPerPage] = useState(6);
+  const [postsPerPage, setPostsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(0);
   const [tagOptions, setTagOptions] = useState(
     Array.from(new Set(posts.flatMap((post) => post.tags)))
@@ -218,7 +218,7 @@ export default function BlogRoute() {
   useEffect(() => {
     const updatePostsPerPage = () => {
       if (window.matchMedia("(min-height: 800px)").matches) {
-        setPostsPerPage(6);
+        setPostsPerPage(5);
       } else {
         setPostsPerPage(3);
       }
@@ -244,19 +244,25 @@ export default function BlogRoute() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header backgroundImage="/img/van_gogh_wheatfield_under_thunderclouds.jpg" />
-      <main className="flex flex-grow flex-col items-center justify-center">
-        {/* <SearchByTags tagOptions={tagOptions} setTagOptions={setTagOptions} /> */}
-        <Carousel
-          items={filteredPosts.slice(
-            currentPage * postsPerPage,
-            (currentPage + 1) * postsPerPage,
-          )}
-        />
-        <Pagination
-          currentPage={currentPage}
-          pagesInTotal={pagesInTotal}
-          onPageChange={handlePageChange}
-        />
+      <main className="flex-grow px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex min-h-[calc(100vh-4rem-6rem)] max-w-[700px] flex-col">
+          <SearchByTags tagOptions={tagOptions} setTagOptions={setTagOptions} />
+          <div className="flex-grow">
+            <Carousel
+              items={filteredPosts.slice(
+                currentPage * postsPerPage,
+                (currentPage + 1) * postsPerPage,
+              )}
+            />
+          </div>
+          <div className="flex justify-center pb-4">
+            <Pagination
+              currentPage={currentPage}
+              pagesInTotal={pagesInTotal}
+              onPageChange={handlePageChange}
+            />
+          </div>
+        </div>
       </main>
       <Footer />
     </div>

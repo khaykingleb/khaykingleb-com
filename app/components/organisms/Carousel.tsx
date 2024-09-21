@@ -7,7 +7,7 @@ interface CarouselItem {
 
 export default function Carousel({ items }: { items: CarouselItem[] }) {
   return (
-    <div className="mt-4 w-full max-w-2xl">
+    <div className="w-full max-w-2xl">
       <div className="carousel carousel-vertical h-full w-full">
         {items.map((item, index) => (
           <div
@@ -24,7 +24,7 @@ export default function Carousel({ items }: { items: CarouselItem[] }) {
                 {item.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="badge badge-ghost mr-1 bg-blue-100 px-2 py-1"
+                    className="badge badge-ghost mr-1 bg-blue-100 bg-opacity-50 px-2 py-1"
                   >
                     {tag}
                   </span>
