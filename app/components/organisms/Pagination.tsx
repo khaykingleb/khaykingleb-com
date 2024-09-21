@@ -18,7 +18,7 @@ export default function Pagination({
   return (
     <div className="join mt-4">
       <button
-        className="btn join-item"
+        className="btn join-item btn-sm"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 0}
       >
@@ -27,14 +27,14 @@ export default function Pagination({
       {Array.from({ length: endPage - startPage }, (_, index) => (
         <button
           key={startPage + index}
-          className={`btn join-item ${startPage + index === currentPage ? "btn-active" : ""}`}
+          className={`btn join-item btn-sm ${startPage + index === currentPage ? "btn-active" : ""}`}
           onClick={() => onPageChange(startPage + index)}
         >
           {startPage + index + 1}
         </button>
       ))}
       <button
-        className="btn join-item"
+        className="btn join-item btn-sm"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === pagesInTotal - 1}
       >
