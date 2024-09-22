@@ -56,16 +56,15 @@ interface TagItemProps {
 function TagItem({ name, onClick, checked, isFocused }: TagItemProps) {
   return (
     <div
-      onClick={onClick}
-      onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => {
-        if (e.key === "Enter") onClick();
-      }}
       role="button"
       tabIndex={0}
+      onClick={onClick}
+      onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === "Enter" || e.key === "Space") onClick();
+      }}
       className={`flex cursor-pointer items-center px-4 py-2.5 transition-colors duration-150 ease-in-out hover:bg-gray-50 ${
         isFocused ? "bg-gray-100" : ""
       }`}
-      aria-checked={checked}
     >
       <span
         className={`mr-3 flex h-5 w-5 items-center justify-center rounded-full border-2 transition-colors duration-150 ease-in-out ${checked ? "border-blue-600 bg-blue-600" : "border-gray-300"}`}
@@ -138,6 +137,18 @@ export default function TagSearchBar({
     });
   }, [filterText, tagOptions]);
 
+  const getNextIndex = useCallback(
+    (currentIndex: number, direction: "next" | "prev") => {
+      const total = filteredTagOptions.length;
+      if (total === 0) return -1;
+
+      return direction === "next"
+        ? (currentIndex + 1) % total
+        : (currentIndex - 1 + total) % total;
+    },
+    [filteredTagOptions],
+  );
+
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (!showOptions) {
@@ -151,18 +162,18 @@ export default function TagSearchBar({
       switch (e.key) {
         case "ArrowDown":
           e.preventDefault();
-          setFocusedOptionIndex((prev) =>
-            prev < filteredTagOptions.length - 1 ? prev + 1 : prev,
-          );
+          setFocusedOptionIndex((prev) => getNextIndex(prev, "next"));
           break;
         case "ArrowUp":
           e.preventDefault();
-          setFocusedOptionIndex((prev) => (prev > 0 ? prev - 1 : prev));
+          setFocusedOptionIndex((prev) => getNextIndex(prev, "prev"));
           break;
         case "Enter":
+        case " ": // Space key
           e.preventDefault();
           if (focusedOptionIndex !== -1) {
             toggleTagSelection(filteredTagOptions[focusedOptionIndex].name);
+            // Stay on the same index after toggling
           }
           break;
         case "Escape":
@@ -171,7 +182,13 @@ export default function TagSearchBar({
           break;
       }
     },
-    [filteredTagOptions, focusedOptionIndex, showOptions, toggleTagSelection],
+    [
+      filteredTagOptions,
+      focusedOptionIndex,
+      showOptions,
+      toggleTagSelection,
+      getNextIndex,
+    ],
   );
 
   useEffect(() => {
@@ -200,6 +217,11 @@ export default function TagSearchBar({
       className={`relative mx-auto mt-8 w-full max-w-xs ${selectedTags.length > 0 ? "" : "mb-4"} font-eb-garamond-light`}
       ref={TagSearchBarRef}
       onKeyDown={handleKeyDown}
+      role="combobox"
+      aria-controls="options-listbox"
+      aria-haspopup="listbox"
+      aria-expanded={showOptions}
+      tabIndex={0}
     >
       <TextInput
         value={filterText}
