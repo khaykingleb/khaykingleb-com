@@ -1,9 +1,5 @@
 import { defer, LoaderFunction, LoaderFunctionArgs } from "@remix-run/node";
-import {
-  Await,
-  ClientLoaderFunctionArgs,
-  useLoaderData,
-} from "@remix-run/react";
+import { Await, useLoaderData } from "@remix-run/react";
 import { NotionAPI } from "notion-client";
 import React, { lazy, Suspense } from "react";
 import { ClientOnly } from "remix-utils/client-only";
@@ -94,36 +90,6 @@ export const loader: LoaderFunction = async ({
   const recordMapPromise = notion.getPage(pageId);
   return defer({ recordMap: recordMapPromise });
 };
-
-export const clientLoader = async ({
-  serverLoader,
-  params,
-}: ClientLoaderFunctionArgs) => {
-  const pageId = params.pageid ?? "";
-  const cacheKey = `notion-page-${pageId}`;
-  const cacheTTL = 60 * 60 * 1000; // 1 hour in milliseconds
-  const currentTime = Date.now();
-
-  const cache = localStorage.getItem(cacheKey);
-  if (cache) {
-    const { timestamp, recordMap } = JSON.parse(cache);
-    if (currentTime - timestamp < cacheTTL) {
-      return { recordMap };
-    }
-  }
-
-  // Fetch data from server if cache is expired or doesn't exist
-  const serverLoaderResult = await serverLoader();
-  const recordMap = await (
-    serverLoaderResult as { recordMap: ExtendedRecordMap }
-  ).recordMap;
-  localStorage.setItem(
-    cacheKey,
-    JSON.stringify({ timestamp: currentTime, recordMap }),
-  );
-  return { recordMap };
-};
-clientLoader.hydrate = true;
 
 export default function NotionRoute() {
   const { recordMap } = useLoaderData<typeof loader>();
