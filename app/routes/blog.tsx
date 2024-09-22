@@ -1,24 +1,107 @@
 import { MetaFunction } from "@remix-run/node";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 
+import { TagSearchBar } from "~/components/molecules/TagSearchBar";
+import type { CarouselItem } from "~/components/organisms/Carousel";
+import { Carousel } from "~/components/organisms/Carousel";
 import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
+import { Pagination } from "~/components/organisms/Pagination";
+
+const posts: CarouselItem[] = [
+  {
+    id: 1,
+    title: "Introduction to Digital Signal Processing",
+    content: "Created: 2024/09/22",
+    notionPageId: "5987cc697c874323920215fbaad8cbbd", // pragma: allowlist secret
+    tags: ["notes", "speech", "dsp"],
+  },
+];
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Blog | Gleb Khaykin" },
-    { property: "og:title", content: "Blog | Gleb Khaykin" },
+    { title: "Posts | Gleb Khaykin" },
+    { property: "og:title", content: "Posts | Gleb Khaykin" },
     { property: "og:description", content: "Gleb Khaykin's personal website" },
   ];
 };
 
-export default function Blog() {
+export default function BlogRoute() {
+  const [postsPerPage, setPostsPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [tagOptions, setTagOptions] = useState(
+    Array.from(new Set(posts.flatMap((post) => post.tags)))
+      .sort()
+      .map((tag) => ({ name: tag, selected: false })),
+  );
+
+  const selectedTags = useMemo(
+    () =>
+      tagOptions
+        .filter((option) => option.selected)
+        .map((option) => option.name),
+    [tagOptions],
+  );
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [selectedTags]);
+
+  const filteredPosts = useMemo(
+    () =>
+      posts.filter((post) =>
+        selectedTags.every((tag) => post.tags.includes(tag)),
+      ),
+    [selectedTags],
+  );
+
+  useEffect(() => {
+    const updatePostsPerPage = () => {
+      if (window.matchMedia("(min-height: 800px)").matches) {
+        setPostsPerPage(5);
+      } else {
+        setPostsPerPage(3);
+      }
+    };
+
+    updatePostsPerPage();
+    window.addEventListener("resize", updatePostsPerPage);
+
+    return () => window.removeEventListener("resize", updatePostsPerPage);
+  }, []);
+
+  const pagesInTotal = Math.ceil(filteredPosts.length / postsPerPage);
+
+  const handlePageChange = useCallback(
+    (pageIndex: number) => {
+      if (pageIndex >= 0 && pageIndex < pagesInTotal) {
+        setCurrentPage(pageIndex);
+      }
+    },
+    [pagesInTotal],
+  );
+
   return (
     <div className="flex min-h-screen flex-col">
-      <Header backgroundImage="/img/van_gogh_wheatfield_with_cypresses.jpg" />
-      <main className="flex flex-grow flex-col items-center justify-center">
-        <h1 className="font-eb-garamond-black text-center text-3xl">
-          Coming soon...
-        </h1>
+      <Header backgroundImage="/img/van_gogh_wheatfield_under_thunderclouds.jpg" />
+      <main className="flex flex-grow flex-col px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-full w-full max-w-[700px] flex-grow flex-col">
+          <TagSearchBar tagOptions={tagOptions} setTagOptions={setTagOptions} />
+          <div className="flex-grow">
+            <Carousel
+              items={filteredPosts.slice(
+                currentPage * postsPerPage,
+                (currentPage + 1) * postsPerPage,
+              )}
+            />
+          </div>
+          <div className="flex justify-center">
+            <Pagination
+              currentPage={currentPage}
+              pagesInTotal={pagesInTotal}
+              onPageChange={handlePageChange}
+            />
+          </div>
+        </div>
       </main>
       <Footer />
     </div>

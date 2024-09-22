@@ -8,6 +8,7 @@ prerequisite: ## Install prerequisite tools
 	@plugins=( \
 		"terraform https://github.com/asdf-community/asdf-hashicorp.git" \
 		"pnpm https://github.com/jonathanmorley/asdf-pnpm.git" \
+		"yarn https://github.com/twuni/asdf-yarn.git" \
 		"nodejs https://github.com/asdf-vm/asdf-nodejs.git" \
 		"pre-commit https://github.com/jonathanmorley/asdf-pre-commit.git" \
 	); \
@@ -26,6 +27,12 @@ prerequisite: ## Install prerequisite tools
 	asdf current
 .PHONY: prerequisite
 
+deps-notion: ## Install dependencies for react-notion-x
+	@echo "Installing dependencies for react-notion-x."
+	git submodule update --init --recursive
+	cd vendor/react-notion-x && yarn install --frozen-lockfile
+.PHONY: notion-deps
+
 deps: ## Install repo dependencies
 	@echo "Installing dependencies."
 	pnpm install
@@ -35,12 +42,17 @@ pre-commit: ## Install pre-commit hooks
 	@echo "Installing pre-commit hooks."
 	pre-commit install -t pre-commit -t commit-msg
 
-init: prerequisite deps pre-commit ## Initialize local environment for development
+init: prerequisite deps-notion deps pre-commit ## Initialize local environment for development
 .PHONY: init
 
 ##@ Scripts
 
-build:  ## Build project
+build-notion: ## Build react-notion-x
+	@echo "Building react-notion-x."
+	cd vendor/react-notion-x && yarn build
+.PHONY: build-notion
+
+build: build-notion ## Build project
 	@echo "Building project."
 	pnpm run build
 .PHONY: build
@@ -83,6 +95,8 @@ update-pre-commit-hooks:  ## Update pre-commit hooks
 clean: ## Clean project
 	@echo "Cleaning project."
 	rm -rf node_modules build
+	find vendor/react-notion-x -type d -name 'build' -exec rm -rf {} +
+	find vendor/react-notion-x -type d -name 'node_modules' -exec rm -rf {} +
 .PHONY: clean
 
 ##@ Helper

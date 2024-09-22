@@ -13,6 +13,7 @@ import {
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/remix";
 
+import notionStylesheetUrl from "./styles/notion.css?url";
 import tailwindStylesheetUrl from "./styles/tailwind.css?url";
 
 export const meta: MetaFunction = () => {
@@ -42,8 +43,17 @@ export const links: LinksFunction = () => {
       rel: "stylesheet",
       href: tailwindStylesheetUrl,
     },
+    {
+      rel: "stylesheet",
+      href: notionStylesheetUrl,
+    },
 
-    // Prefetch an image into the browser cache
+    // Prefetch PDF and images
+    {
+      rel: "prefetch",
+      href: "/Gleb_Khaykin.pdf",
+      as: "document",
+    },
     {
       rel: "prefetch",
       as: "image",
@@ -52,12 +62,17 @@ export const links: LinksFunction = () => {
     {
       rel: "prefetch",
       as: "image",
-      href: "/img/van_gogh_wheatfield_with_cypresses.jpg",
+      href: "/img/van_gogh_wheatfield_under_thunderclouds.jpg",
     },
     {
       rel: "prefetch",
       as: "image",
       href: "/img/van_gogh_wheatfield_with_crows.jpg",
+    },
+    {
+      rel: "prefetch",
+      as: "image",
+      href: "/img/van_gogh_wheatfield_with_cypresses.jpg",
     },
   ];
 };

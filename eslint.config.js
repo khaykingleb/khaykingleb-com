@@ -10,9 +10,9 @@ import globals from "globals";
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
-  // Ignore build directory
+  // Ignore specific directories
   {
-    ignores: ["build/**"],
+    ignores: ["build/**", "vendor/**"],
   },
 
   // Base config

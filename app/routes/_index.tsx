@@ -12,14 +12,14 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export default function Index() {
+export default function IndexRoute() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header backgroundImage="/img/van_gogh_wheatfield_with_crows.jpg" />
       <div className="avatar flex items-center justify-center p-6">
         <Avatar />
       </div>
-      <div className="grow">
+      <div className="flex-grow">
         <div className="font-eb-garamond-light mx-auto max-w-lg text-pretty text-center text-sm sm:text-base">
           <p className="mb-2">
             Hi there! I&apos;m Gleb, a full-stack developer specializing in
@@ -37,10 +37,10 @@ export default function Index() {
           <p className="mb-2">
             On this site, you&apos;ll find a collection of resources that
             I&apos;ve found valuable. Feel free to explore, and I hope you
-            discover some useful tools and materials! You can also find links to
-            my Telegram channel (in Russian) and X profile (in English) in the
-            footer below. It&apos;s where I share my thoughts and materials in a
-            more freestyle format.
+            discover some useful tools and materials for yourself! You can also
+            find links to my Telegram channel (in Russian) and X profile (in
+            English) in the footer below. It&apos;s where I share my thoughts
+            and materials in a more freestyle format.
           </p>
         </div>
       </div>

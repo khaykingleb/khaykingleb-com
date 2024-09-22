@@ -2,9 +2,9 @@ resource "vercel_project" "khaykingleb_com" {
   name      = "khaykingleb-com"
   framework = "remix"
 
-  install_command = "pnpm install"
-  build_command   = "pnpm run build"
-  dev_command     = "pnpm run dev"
+  install_command = "make deps-notion && make deps"
+  build_command   = "make build-notion && make build"
+  dev_command     = "make run-dev"
 
   git_repository = {
     type = "github"

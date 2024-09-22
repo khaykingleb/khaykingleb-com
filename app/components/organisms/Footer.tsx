@@ -3,7 +3,7 @@ import { SocialMedia } from "../molecules/SocialMedia";
 
 export const Footer = () => {
   return (
-    <footer className="footer bg-white p-6 text-gray-400">
+    <footer className="footer bg-white pb-2 pt-2 text-gray-400">
       <div className="container mx-auto flex flex-col items-center justify-between">
         <SocialMedia />
         <Copyright />
