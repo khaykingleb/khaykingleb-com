@@ -15,13 +15,13 @@ interface TextInputProps {
   onFocus: () => void;
 }
 
-function TextInput({
+const TextInput = ({
   value,
   onChange,
   onClear,
   placeholder,
   onFocus,
-}: TextInputProps) {
+}: TextInputProps) => {
   return (
     <div className="relative">
       <FaSearch className="absolute left-1 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -43,7 +43,7 @@ function TextInput({
       )}
     </div>
   );
-}
+};
 
 interface TagItemProps {
   name: string;
@@ -52,7 +52,7 @@ interface TagItemProps {
   isFocused: boolean;
 }
 
-function TagItem({ name, onClick, checked, isFocused }: TagItemProps) {
+const TagItem = ({ name, onClick, checked, isFocused }: TagItemProps) => {
   return (
     <div
       role="button"
@@ -73,7 +73,7 @@ function TagItem({ name, onClick, checked, isFocused }: TagItemProps) {
       <span className="text-sm font-medium">{name}</span>
     </div>
   );
-}
+};
 
 interface TagOption {
   name: string;
@@ -85,10 +85,10 @@ interface TagSearchBarProps {
   setTagOptions: (tagOptions: TagOption[]) => void;
 }
 
-export default function TagSearchBar({
+export const TagSearchBar = ({
   tagOptions,
   setTagOptions,
-}: TagSearchBarProps) {
+}: TagSearchBarProps) => {
   const [filterText, setFilterText] = useState("");
   const [showOptions, setShowOptions] = useState(false);
   const [focusedOptionIndex, setFocusedOptionIndex] = useState(-1);
@@ -263,4 +263,4 @@ export default function TagSearchBar({
       )}
     </div>
   );
-}
+};

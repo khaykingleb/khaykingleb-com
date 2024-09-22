@@ -1,19 +1,20 @@
 import { MetaFunction } from "@remix-run/node";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
-import TagSearchBar from "~/components/molecules/TagSearchBar";
-import Carousel from "~/components/organisms/Carousel";
+import { TagSearchBar } from "~/components/molecules/TagSearchBar";
+import type { CarouselItem } from "~/components/organisms/Carousel";
+import { Carousel } from "~/components/organisms/Carousel";
 import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
-import Pagination from "~/components/organisms/Pagination";
+import { Pagination } from "~/components/organisms/Pagination";
 
 // Sample posts data with tags
-const posts = [
+const posts: CarouselItem[] = [
   {
     id: 1,
     title: "Introduction to Digital Signal Processing",
     content: "Created: 2024/09/22",
-    notionPageId: "5987cc697c874323920215fbaad8cbbd",
+    notionPageId: "5987cc697c874323920215fbaad8cbbd", // pragma: allowlist secret
     tags: ["notes", "speech", "dsp"],
   },
   {
@@ -245,8 +246,8 @@ export default function BlogRoute() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header backgroundImage="/img/van_gogh_wheatfield_under_thunderclouds.jpg" />
-      <main className="flex-grow px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto flex h-full max-w-[700px] flex-col">
+      <main className="flex flex-grow flex-col px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-full w-full max-w-[700px] flex-grow flex-col">
           <TagSearchBar tagOptions={tagOptions} setTagOptions={setTagOptions} />
           <div className="flex-grow">
             <Carousel

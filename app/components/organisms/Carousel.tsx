@@ -8,7 +8,7 @@ interface CarouselItem {
   notionPageId: string;
 }
 
-export default function Carousel({ items }: { items: CarouselItem[] }) {
+export const Carousel = ({ items }: { items: CarouselItem[] }) => {
   return (
     <div className="mb-2 mt-2 w-full max-w-2xl">
       {items.length > 0 ? (
@@ -48,4 +48,4 @@ export default function Carousel({ items }: { items: CarouselItem[] }) {
       )}
     </div>
   );
-}
+};

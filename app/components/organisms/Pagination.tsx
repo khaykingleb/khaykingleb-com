@@ -6,11 +6,11 @@ interface PaginationProps {
 
 const MAX_VISIBLE_PAGES = 5;
 
-export default function Pagination({
+export const Pagination = ({
   currentPage,
   pagesInTotal,
   onPageChange,
-}: PaginationProps) {
+}: PaginationProps) => {
   const startPage =
     Math.floor(currentPage / MAX_VISIBLE_PAGES) * MAX_VISIBLE_PAGES;
   const endPage = Math.min(startPage + MAX_VISIBLE_PAGES, pagesInTotal);
@@ -42,4 +42,4 @@ export default function Pagination({
       </button>
     </div>
   );
-}
+};
