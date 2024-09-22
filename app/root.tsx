@@ -69,6 +69,11 @@ export const links: LinksFunction = () => {
       as: "image",
       href: "/img/van_gogh_wheatfield_with_crows.jpg",
     },
+    {
+      rel: "prefetch",
+      as: "image",
+      href: "/img/van_gogh_wheatfield_with_cypresses.jpg",
+    },
   ];
 };
 
