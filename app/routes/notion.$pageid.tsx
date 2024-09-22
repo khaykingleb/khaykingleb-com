@@ -1,31 +1,39 @@
-import { defer, LoaderFunction } from "@remix-run/node";
+import { defer, LoaderFunction, LoaderFunctionArgs } from "@remix-run/node";
 import {
   Await,
   ClientLoaderFunctionArgs,
   useLoaderData,
 } from "@remix-run/react";
 import { NotionAPI } from "notion-client";
-import React, { lazy, Suspense, useEffect } from "react";
-import { NotionRenderer } from "react-notion-x";
+import React, { lazy, Suspense } from "react";
 import { ClientOnly } from "remix-utils/client-only";
+import {
+  CodeBlock,
+  CollectionViewBlock,
+  EquationBlock,
+  PdfBlock,
+} from "vendor/react-notion-x/packages/notion-types/src/block";
 import { ExtendedRecordMap } from "vendor/react-notion-x/packages/notion-types/src/maps";
+import { NotionRenderer } from "vendor/react-notion-x/packages/react-notion-x";
 
 import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
 
 const Equation = lazy(() =>
   import("react-notion-x/build/third-party/equation").then((module) => ({
-    default: module.Equation,
-  })),
-);
-const Modal = lazy(() =>
-  import("react-notion-x/build/third-party/modal").then((module) => ({
-    default: module.Modal,
+    default: module.Equation as React.ComponentType<{
+      block: EquationBlock;
+      math?: string;
+      inline?: boolean;
+    }>,
   })),
 );
 const Pdf = lazy(() =>
   import("react-notion-x/build/third-party/pdf").then((module) => ({
-    default: module.Pdf,
+    default: (props: { block: PdfBlock }) => {
+      const PdfComponent = module.Pdf as React.ComponentType<{ file: string }>;
+      return <PdfComponent file={props.block.properties?.source?.[0]?.[0]} />;
+    },
   })),
 );
 const Code = lazy(() =>
@@ -35,12 +43,18 @@ const Code = lazy(() =>
       import("prismjs/components/prism-rust"),
       import("prismjs/components/prism-bash"),
     ]);
-    return { default: module.Code };
+    return {
+      default: module.Code as React.ComponentType<{
+        block: CodeBlock;
+      }>,
+    };
   }),
 );
 const Collection = lazy(() =>
   import("react-notion-x/build/third-party/collection").then((module) => ({
-    default: module.Collection,
+    default: module.Collection as React.ComponentType<{
+      block: CollectionViewBlock;
+    }>,
   })),
 );
 
@@ -52,15 +66,14 @@ function NotionPage({ recordMap }: { recordMap: ExtendedRecordMap }) {
       darkMode={false}
       disableHeader={true}
       components={{
-        Modal,
         Pdf,
         Collection,
-        Equation: (props) => (
+        Equation: (props: React.ComponentProps<typeof Equation>) => (
           <ClientOnly fallback={<div>Loading equation...</div>}>
             {() => <Equation {...props} />}
           </ClientOnly>
         ),
-        Code: (props) => (
+        Code: (props: React.ComponentProps<typeof Code>) => (
           <ClientOnly fallback={<div>Loading code...</div>}>
             {() => <Code {...props} />}
           </ClientOnly>
@@ -70,7 +83,9 @@ function NotionPage({ recordMap }: { recordMap: ExtendedRecordMap }) {
   );
 }
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({
+  params,
+}: LoaderFunctionArgs) => {
   const notion = new NotionAPI();
   const pageId = params.pageid ?? "";
   if (!pageId) {
@@ -80,33 +95,35 @@ export const loader: LoaderFunction = async ({ params }) => {
   return defer({ recordMap: recordMapPromise });
 };
 
-// export const clientLoader = async ({
-//   serverLoader,
-// }: ClientLoaderFunctionArgs) => {
-//   const cacheKey = `notion-page-da3f7c0bec29407ba43b9ab606b54876`;
-//   const cacheTTL = 60 * 60 * 1000; // 1 hour in milliseconds
-//   const currentTime = Date.now();
+export const clientLoader = async ({
+  serverLoader,
+  params,
+}: ClientLoaderFunctionArgs) => {
+  const pageId = params.pageid ?? "";
+  const cacheKey = `notion-page-${pageId}`;
+  const cacheTTL = 60 * 60 * 1000; // 1 hour in milliseconds
+  const currentTime = Date.now();
 
-//   const cache = localStorage.getItem(cacheKey);
-//   if (cache) {
-//     const { timestamp, recordMap } = JSON.parse(cache);
-//     if (currentTime - timestamp < cacheTTL) {
-//       return { recordMap };
-//     }
-//   }
+  const cache = localStorage.getItem(cacheKey);
+  if (cache) {
+    const { timestamp, recordMap } = JSON.parse(cache);
+    if (currentTime - timestamp < cacheTTL) {
+      return { recordMap };
+    }
+  }
 
-//   // Fetch data from server if cache is expired or doesn't exist
-//   const serverLoaderResult = await serverLoader();
-//   const recordMap = await (
-//     serverLoaderResult as { recordMap: ExtendedRecordMap }
-//   ).recordMap;
-//   localStorage.setItem(
-//     cacheKey,
-//     JSON.stringify({ timestamp: currentTime, recordMap }),
-//   );
-//   return { recordMap };
-// };
-// clientLoader.hydrate = true;
+  // Fetch data from server if cache is expired or doesn't exist
+  const serverLoaderResult = await serverLoader();
+  const recordMap = await (
+    serverLoaderResult as { recordMap: ExtendedRecordMap }
+  ).recordMap;
+  localStorage.setItem(
+    cacheKey,
+    JSON.stringify({ timestamp: currentTime, recordMap }),
+  );
+  return { recordMap };
+};
+clientLoader.hydrate = true;
 
 export default function NotionRoute() {
   const { recordMap } = useLoaderData<typeof loader>();
