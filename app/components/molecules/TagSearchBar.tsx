@@ -1,4 +1,3 @@
-import { AnimatePresence, motion } from "framer-motion";
 import React, {
   useCallback,
   useEffect,
@@ -64,7 +63,7 @@ function TagItem({ name, onClick, checked, isFocused }: TagItemProps) {
       }}
       className={`flex cursor-pointer items-center px-4 py-2.5 transition-colors duration-150 ease-in-out hover:bg-gray-50 ${
         isFocused ? "bg-gray-100" : ""
-      }`}
+      } focus:outline-none`}
     >
       <span
         className={`mr-3 flex h-5 w-5 items-center justify-center rounded-full border-2 transition-colors duration-150 ease-in-out ${checked ? "border-blue-600 bg-blue-600" : "border-gray-300"}`}
@@ -96,58 +95,12 @@ export default function TagSearchBar({
   const TagSearchBarRef = useRef<HTMLDivElement>(null);
   const optionsRef = useRef<HTMLDivElement>(null);
 
-  // Close the dropdown if the user clicks outside of the search bar
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        TagSearchBarRef.current &&
-        !TagSearchBarRef.current.contains(e.target as Node)
-      ) {
-        setShowOptions(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  // Change the selected state of the tag when tag is clicked (toggled) in the dropdown
-  const toggleTagSelection = useCallback(
-    (name: string) => {
-      setTagOptions(
-        tagOptions.map((option: TagOption) =>
-          option.name === name
-            ? { ...option, selected: !option.selected }
-            : option,
-        ),
-      );
-    },
-    [setTagOptions, tagOptions],
-  );
-
   // Filter the tag options based on the filter text
   const filteredTagOptions = useMemo(() => {
-    return tagOptions.filter((option: TagOption) => {
-      const textIsEmpty = filterText.length === 0;
-      const optionName = option.name.toUpperCase();
-      const textInOptionName = optionName.includes(filterText.toUpperCase());
-      return textIsEmpty || textInOptionName;
-    });
+    return tagOptions.filter((option: TagOption) =>
+      option.name.toLowerCase().includes(filterText.toLowerCase()),
+    );
   }, [filterText, tagOptions]);
-
-  const getNextIndex = useCallback(
-    (currentIndex: number, direction: "next" | "prev") => {
-      const total = filteredTagOptions.length;
-      if (total === 0) return -1;
-
-      return direction === "next"
-        ? (currentIndex + 1) % total
-        : (currentIndex - 1 + total) % total;
-    },
-    [filteredTagOptions],
-  );
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
@@ -162,18 +115,30 @@ export default function TagSearchBar({
       switch (e.key) {
         case "ArrowDown":
           e.preventDefault();
-          setFocusedOptionIndex((prev) => getNextIndex(prev, "next"));
+          setFocusedOptionIndex(
+            (prev) => (prev + 1) % filteredTagOptions.length,
+          );
           break;
         case "ArrowUp":
           e.preventDefault();
-          setFocusedOptionIndex((prev) => getNextIndex(prev, "prev"));
+          setFocusedOptionIndex(
+            (prev) =>
+              (prev - 1 + filteredTagOptions.length) %
+              filteredTagOptions.length,
+          );
           break;
         case "Enter":
         case " ": // Space key
           e.preventDefault();
           if (focusedOptionIndex !== -1) {
-            toggleTagSelection(filteredTagOptions[focusedOptionIndex].name);
-            // Stay on the same index after toggling
+            const selectedTag = filteredTagOptions[focusedOptionIndex];
+            setTagOptions(
+              tagOptions.map((tag) =>
+                tag.name === selectedTag.name
+                  ? { ...tag, selected: !tag.selected }
+                  : tag,
+              ),
+            );
           }
           break;
         case "Escape":
@@ -186,8 +151,8 @@ export default function TagSearchBar({
       filteredTagOptions,
       focusedOptionIndex,
       showOptions,
-      toggleTagSelection,
-      getNextIndex,
+      setTagOptions,
+      tagOptions,
     ],
   );
 
@@ -200,21 +165,33 @@ export default function TagSearchBar({
     }
   }, [focusedOptionIndex]);
 
-  // Ensure focusedOptionIndex is reset when filteredTagOptions change
   useEffect(() => {
-    setFocusedOptionIndex(-1);
-  }, [filteredTagOptions]);
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        TagSearchBarRef.current &&
+        !TagSearchBarRef.current.contains(event.target as Node)
+      ) {
+        setShowOptions(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const clearFilter = () => {
     setFilterText("");
-    setFocusedOptionIndex(-1);
+    setFocusedOptionIndex(0);
   };
 
-  const selectedTags = tagOptions.filter((option) => option.selected);
+  const selectedTags = tagOptions.filter((tag) => tag.selected);
+  const hasSelectedTags = selectedTags.length > 0;
 
   return (
     <div
-      className={`relative mx-auto mt-8 w-full max-w-xs ${selectedTags.length > 0 ? "" : "mb-4"} font-eb-garamond-light`}
+      className="font-eb-garamond-light relative mx-auto mt-8 w-full max-w-xs"
       ref={TagSearchBarRef}
       onKeyDown={handleKeyDown}
       role="combobox"
@@ -227,14 +204,14 @@ export default function TagSearchBar({
         value={filterText}
         onChange={(e) => {
           setFilterText(e.target.value);
-          setFocusedOptionIndex(-1);
+          setFocusedOptionIndex(0);
           setShowOptions(true);
         }}
         onClear={clearFilter}
         placeholder="Filter posts by tags"
         onFocus={() => setShowOptions(true)}
       />
-      {selectedTags.length > 0 && (
+      {hasSelectedTags && (
         <div className="mt-3 flex flex-wrap gap-2">
           {selectedTags.map((tag) => (
             <span
@@ -243,7 +220,13 @@ export default function TagSearchBar({
             >
               {tag.name}
               <button
-                onClick={() => toggleTagSelection(tag.name)}
+                onClick={() => {
+                  setTagOptions(
+                    tagOptions.map((t) =>
+                      t.name === tag.name ? { ...t, selected: false } : t,
+                    ),
+                  );
+                }}
                 className="ml-2 text-black transition duration-150 ease-in-out hover:text-gray-600 focus:outline-none"
               >
                 <FaTimes size={10} />
@@ -252,35 +235,32 @@ export default function TagSearchBar({
           ))}
         </div>
       )}
-      <AnimatePresence>
-        {showOptions && (
-          <motion.div
-            ref={optionsRef}
-            className="absolute left-0 right-0 z-10 mt-2 max-h-40 w-full overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg"
-            onKeyDown={handleKeyDown}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-          >
-            {filteredTagOptions.length > 0 ? (
-              filteredTagOptions.map((option: TagOption, index: number) => (
-                <TagItem
-                  name={option.name}
-                  key={option.name}
-                  checked={option.selected}
-                  onClick={() => toggleTagSelection(option.name)}
-                  isFocused={index === focusedOptionIndex}
-                />
-              ))
-            ) : (
-              <div className="flex items-center justify-center py-2 text-sm text-gray-500">
-                No matching tags found
-              </div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {showOptions && (
+        <div
+          ref={optionsRef}
+          className={`absolute left-0 right-0 z-10 w-full overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg ${
+            hasSelectedTags ? "mt-2" : "mt-0 rounded-t-none border-t-0"
+          } max-h-40`}
+        >
+          {filteredTagOptions.map((option: TagOption, index: number) => (
+            <TagItem
+              name={option.name}
+              key={option.name}
+              checked={option.selected}
+              onClick={() => {
+                setTagOptions(
+                  tagOptions.map((tag) =>
+                    tag.name === option.name
+                      ? { ...tag, selected: !tag.selected }
+                      : tag,
+                  ),
+                );
+              }}
+              isFocused={index === focusedOptionIndex}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

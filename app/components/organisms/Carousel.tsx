@@ -10,7 +10,7 @@ interface CarouselItem {
 
 export default function Carousel({ items }: { items: CarouselItem[] }) {
   return (
-    <div className="mb-2 w-full max-w-2xl">
+    <div className="mb-2 mt-2 w-full max-w-2xl">
       {items.length > 0 ? (
         <div className="carousel carousel-vertical h-full w-full">
           {items.map((item, index) => (
