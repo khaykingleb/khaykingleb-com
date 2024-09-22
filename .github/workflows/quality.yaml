@@ -33,7 +33,7 @@ jobs:
           yarn --version
 
       - name: Install dependencies
-        run: make deps-notion && make deps
+        run: make deps-notion && make deps && make build-notion
 
       - name: Check all files with pre-commit
         uses: pre-commit/action@v3.0.1
