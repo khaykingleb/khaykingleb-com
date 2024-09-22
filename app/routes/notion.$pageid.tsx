@@ -1,7 +1,7 @@
 import { defer, LoaderFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { Await, useLoaderData } from "@remix-run/react";
 import { NotionAPI } from "notion-client";
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { ClientOnly } from "remix-utils/client-only";
 import {
   CodeBlock,
@@ -55,6 +55,16 @@ const Collection = lazy(() =>
 );
 
 function NotionPage({ recordMap }: { recordMap: ExtendedRecordMap }) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Prevent hydration errors
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  if (!isMounted) {
+    return null;
+  }
+
   return (
     <NotionRenderer
       recordMap={recordMap}
