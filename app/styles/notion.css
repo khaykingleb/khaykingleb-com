@@ -35,3 +35,10 @@
 .notion-text {
   @apply font-eb-garamond-regular;
 }
+
+.notion-code,
+.notion-code pre,
+.notion-code code {
+  color: #24292e !important;
+  background-color: #f7f6f3 !important;
+}
