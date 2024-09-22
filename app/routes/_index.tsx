@@ -12,7 +12,6 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-
 export default function IndexRoute() {
   return (
     <div className="flex min-h-screen flex-col">

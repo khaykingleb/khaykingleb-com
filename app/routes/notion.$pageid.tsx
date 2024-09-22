@@ -1,43 +1,46 @@
 import { defer, LoaderFunction } from "@remix-run/node";
-import { Await, useLoaderData } from "@remix-run/react";
-import { NotionAPI } from "notion-client";
-import React, { lazy, Suspense } from "react";
 import {
-  CodeProps,
-  CollectionProps,
-  EquationProps,
-  ExtendedRecordMap,
-  ModalProps,
-  NotionRenderer,
-  PdfProps,
-} from "react-notion-x";
+  Await,
+  ClientLoaderFunctionArgs,
+  useLoaderData,
+} from "@remix-run/react";
+import { NotionAPI } from "notion-client";
+import React, { lazy, Suspense, useEffect } from "react";
+import { NotionRenderer } from "react-notion-x";
+import { ClientOnly } from "remix-utils/client-only";
+import { ExtendedRecordMap } from "vendor/react-notion-x/packages/notion-types/src/maps";
 
 import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
 
 const Equation = lazy(() =>
   import("react-notion-x/build/third-party/equation").then((module) => ({
-    default: module.Equation as React.ComponentType<EquationProps>,
+    default: module.Equation,
   })),
 );
 const Modal = lazy(() =>
   import("react-notion-x/build/third-party/modal").then((module) => ({
-    default: module.Modal as React.ComponentType<ModalProps>,
+    default: module.Modal,
   })),
 );
 const Pdf = lazy(() =>
   import("react-notion-x/build/third-party/pdf").then((module) => ({
-    default: module.Pdf as React.ComponentType<PdfProps>,
+    default: module.Pdf,
   })),
 );
 const Code = lazy(() =>
-  import("react-notion-x/build/third-party/code").then((module) => ({
-    default: module.Code as React.ComponentType<CodeProps>,
-  })),
+  import("react-notion-x/build/third-party/code").then(async (module) => {
+    await Promise.all([
+      import("prismjs/components/prism-python"),
+      import("prismjs/components/prism-rust"),
+      import("prismjs/components/prism-bash"),
+    ]);
+    return { default: module.Code };
+  }),
 );
 const Collection = lazy(() =>
   import("react-notion-x/build/third-party/collection").then((module) => ({
-    default: module.Collection as React.ComponentType<CollectionProps>,
+    default: module.Collection,
   })),
 );
 
@@ -48,7 +51,21 @@ function NotionPage({ recordMap }: { recordMap: ExtendedRecordMap }) {
       fullPage={true}
       darkMode={false}
       disableHeader={true}
-      components={{ Equation, Modal, Pdf, Code, Collection }}
+      components={{
+        Modal,
+        Pdf,
+        Collection,
+        Equation: (props) => (
+          <ClientOnly fallback={<div>Loading equation...</div>}>
+            {() => <Equation {...props} />}
+          </ClientOnly>
+        ),
+        Code: (props) => (
+          <ClientOnly fallback={<div>Loading code...</div>}>
+            {() => <Code {...props} />}
+          </ClientOnly>
+        ),
+      }}
     />
   );
 }
@@ -96,21 +113,23 @@ export default function NotionRoute() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header backgroundImage="/img/van_gogh_wheatfield_with_cypresses.jpg" />
-      <div className="flex-grow">
-        <Suspense
-          fallback={
-            <div className="flex min-h-[calc(100vh-200px)] items-center justify-center">
-              <div className="loading loading-infinity loading-md"></div>
-            </div>
-          }
-        >
-          <Await resolve={recordMap}>
-            {(resolvedRecordMap: ExtendedRecordMap) => (
-              <NotionPage recordMap={resolvedRecordMap} />
-            )}
-          </Await>
-        </Suspense>
-      </div>
+      <main className="flex-grow px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex min-h-[calc(100vh-4rem-6rem)] max-w-[700px] flex-col">
+          <Suspense
+            fallback={
+              <div className="flex min-h-[calc(100vh-200px)] items-center justify-center">
+                <div className="loading loading-infinity loading-md"></div>
+              </div>
+            }
+          >
+            <Await resolve={recordMap}>
+              {(resolvedRecordMap: ExtendedRecordMap) => (
+                <NotionPage recordMap={resolvedRecordMap} />
+              )}
+            </Await>
+          </Suspense>
+        </div>
+      </main>
       <Footer />
     </div>
   );

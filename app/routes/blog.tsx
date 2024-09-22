@@ -1,7 +1,7 @@
 import { MetaFunction } from "@remix-run/node";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
-import SearchByTags from "~/components/molecules/SearchByTags";
+import TagSearchBar from "~/components/molecules/TagSearchBar";
 import Carousel from "~/components/organisms/Carousel";
 import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
@@ -12,8 +12,9 @@ const posts = [
   {
     id: 1,
     title: "Introduction to Digital Signal Processing",
-    content: "Content of post 1",
-    tags: ["speech", "dsp", "notes"],
+    content: "Created: 2024/09/22",
+    notionPageId: "5987cc697c874323920215fbaad8cbbd",
+    tags: ["notes", "speech", "dsp"],
   },
   {
     id: 2,
@@ -245,8 +246,8 @@ export default function BlogRoute() {
     <div className="flex min-h-screen flex-col">
       <Header backgroundImage="/img/van_gogh_wheatfield_under_thunderclouds.jpg" />
       <main className="flex-grow px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto flex min-h-[calc(100vh-4rem-6rem)] max-w-[700px] flex-col">
-          <SearchByTags tagOptions={tagOptions} setTagOptions={setTagOptions} />
+        <div className="mx-auto flex h-full max-w-[700px] flex-col">
+          <TagSearchBar tagOptions={tagOptions} setTagOptions={setTagOptions} />
           <div className="flex-grow">
             <Carousel
               items={filteredPosts.slice(
@@ -255,7 +256,7 @@ export default function BlogRoute() {
               )}
             />
           </div>
-          <div className="flex justify-center pb-4">
+          <div className="flex justify-center">
             <Pagination
               currentPage={currentPage}
               pagesInTotal={pagesInTotal}
