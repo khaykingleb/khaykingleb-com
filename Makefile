@@ -95,6 +95,8 @@ update-pre-commit-hooks:  ## Update pre-commit hooks
 clean: ## Clean project
 	@echo "Cleaning project."
 	rm -rf node_modules build
+	find vendor/react-notion-x -type d -name 'build' -exec rm -rf {} +
+	find vendor/react-notion-x -type d -name 'node_modules' -exec rm -rf {} +
 .PHONY: clean
 
 ##@ Helper
