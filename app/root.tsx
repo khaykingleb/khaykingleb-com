@@ -51,7 +51,7 @@ export const links: LinksFunction = () => {
     // Prefetch PDF and images
     {
       rel: "prefetch",
-      href: "/resume.pdf",
+      href: "/Gleb_Khaykin.pdf",
       as: "document",
     },
     {

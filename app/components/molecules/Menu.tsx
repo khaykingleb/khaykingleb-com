@@ -13,7 +13,7 @@ export const Menu = () => {
       </li>
       <li>
         <Link
-          to="/resume.pdf"
+          to="/Gleb_Khaykin.pdf"
           prefetch="intent"
           target="_blank"
           className="font-eb-garamond-bold btn btn-ghost text-base sm:text-lg"
