@@ -48,7 +48,12 @@ export const links: LinksFunction = () => {
       href: notionStylesheetUrl,
     },
 
-    // Prefetch an image into the browser cache
+    // Prefetch PDF and images
+    {
+      rel: "prefetch",
+      href: "/resume.pdf",
+      as: "document",
+    },
     {
       rel: "prefetch",
       as: "image",
@@ -57,7 +62,7 @@ export const links: LinksFunction = () => {
     {
       rel: "prefetch",
       as: "image",
-      href: "/img/van_gogh_wheatfield_with_cypresses.jpg",
+      href: "/img/van_gogh_wheatfield_under_thunderclouds.jpg",
     },
     {
       rel: "prefetch",
