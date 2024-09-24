@@ -1,7 +1,7 @@
 import { defer, LoaderFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { Await, useLoaderData } from "@remix-run/react";
 import { NotionAPI } from "notion-client";
-import React, { lazy, Suspense, useEffect, useState } from "react";
+import React, { lazy, Suspense } from "react";
 import { ClientOnly } from "remix-utils/client-only";
 import {
   CodeBlock,
@@ -54,40 +54,33 @@ const Collection = lazy(() =>
   })),
 );
 
-function NotionPage({ recordMap }: { recordMap: ExtendedRecordMap }) {
-  const [isMounted, setIsMounted] = useState(false);
-
-  // Prevent hydration errors
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-  if (!isMounted) {
-    return null;
-  }
-
-  return (
-    <NotionRenderer
-      recordMap={recordMap}
-      fullPage={true}
-      darkMode={false}
-      disableHeader={true}
-      components={{
-        Pdf,
-        Collection,
-        Equation: (props: React.ComponentProps<typeof Equation>) => (
-          <ClientOnly fallback={<div>Loading equation...</div>}>
-            {() => <Equation {...props} />}
-          </ClientOnly>
-        ),
-        Code: (props: React.ComponentProps<typeof Code>) => (
-          <ClientOnly fallback={<div>Loading code...</div>}>
-            {() => <Code {...props} />}
-          </ClientOnly>
-        ),
-      }}
-    />
-  );
-}
+const NotionPage = React.memo(
+  ({ recordMap }: { recordMap: ExtendedRecordMap }) => {
+    return (
+      <NotionRenderer
+        recordMap={recordMap}
+        fullPage={true}
+        darkMode={false}
+        disableHeader={true}
+        components={{
+          Pdf,
+          Collection,
+          Equation: (props: React.ComponentProps<typeof Equation>) => (
+            <ClientOnly fallback={<div>Loading equation...</div>}>
+              {() => <Equation {...props} />}
+            </ClientOnly>
+          ),
+          Code: (props: React.ComponentProps<typeof Code>) => (
+            <ClientOnly fallback={<div>Loading code...</div>}>
+              {() => <Code {...props} />}
+            </ClientOnly>
+          ),
+        }}
+      />
+    );
+  },
+);
+NotionPage.displayName = "NotionPage";
 
 export const loader: LoaderFunction = async ({
   params,
