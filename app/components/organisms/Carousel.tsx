@@ -15,7 +15,7 @@ export const Carousel = ({ items }: { items: CarouselItem[] }) => {
         <div className="carousel carousel-vertical h-full w-full">
           {items.map((item, index) => (
             <Link
-              to={`/notion/${item.notionPageId}`}
+              to={`/blog/${item.notionPageId}`}
               id={`item${index}`}
               key={item.id}
               className="carousel-item block w-full cursor-pointer transition-all duration-300 hover:bg-gray-100"
