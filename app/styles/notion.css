@@ -19,7 +19,7 @@
 }
 
 .notion {
-  --notion-max-width: 900px;
+  --notion-max-width: 100%;
 }
 
 .notion-title,
@@ -34,6 +34,7 @@
 .notion-list,
 .notion-text {
   @apply font-eb-garamond-regular;
+  max-width: 100%;
 }
 
 .notion-code,
