@@ -1,28 +1,22 @@
 import { MetaFunction } from "@remix-run/node";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { TagSearchBar } from "~/components/molecules/TagSearchBar";
-import type { CarouselItem } from "~/components/organisms/Carousel";
 import { Carousel } from "~/components/organisms/Carousel";
 import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
 import { Pagination } from "~/components/organisms/Pagination";
-
-const posts: CarouselItem[] = [
-  {
-    id: 1,
-    title: "Introduction to Digital Signal Processing",
-    content: "Created: 2024/09/22",
-    notionPageId: "5987cc697c874323920215fbaad8cbbd", // pragma: allowlist secret
-    tags: ["notes", "speech", "dsp"],
-  },
-];
+import { posts } from "~/data/posts";
 
 export const meta: MetaFunction = () => {
   return [
     { title: "Posts | Gleb Khaykin" },
     { property: "og:title", content: "Posts | Gleb Khaykin" },
     { property: "og:description", content: "Gleb Khaykin's personal website" },
+    {
+      property: "og:image",
+      content: "/img/van_gogh_wheatfield_under_thunderclouds.jpg",
+    },
   ];
 };
 
