@@ -77,6 +77,16 @@ format: ## Format project
 	pnpm run format
 .PHONY: format
 
+ngrok-dev: ## Run ngrok for development server
+	@echo "Running ngrok."
+	ngrok http 5173
+.PHONY: ngrok-dev
+
+ngrok-prod: ## Run ngrok for production server
+	@echo "Running ngrok."
+	ngrok http 3000
+.PHONY: ngrok-prod
+
 ##@ Miscullaneous
 
 create-secrets-baseline:  ## Create secrets baseline file
