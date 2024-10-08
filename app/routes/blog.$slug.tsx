@@ -86,18 +86,24 @@ NotionPage.displayName = "NotionPage";
 export const loader: LoaderFunction = async ({
   params,
 }: LoaderFunctionArgs) => {
-  const notion = new NotionAPI();
-  const pageId = params.pageid ?? "";
-  if (!pageId) {
-    throw new Error("Page ID is required");
+  const slug = params.slug;
+  if (!slug) {
+    throw new Response("Slug is required", { status: 400 });
   }
-  const recordMapPromise = notion.getPage(pageId);
-  const post = posts.find((p) => p.notionPageId === pageId);
-  return defer({ recordMap: recordMapPromise, post });
+
+  const post = posts.find((p) => p.slug === slug);
+  if (!post) {
+    throw new Response("Post not found", { status: 404 });
+  }
+
+  const notion = new NotionAPI();
+  const recordMapPromise = notion.getPage(post.notionPageId);
+  return defer({ recordMap: recordMapPromise });
 };
 
 export default function NotionRoute() {
   const { recordMap } = useLoaderData<typeof loader>();
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header backgroundImage="/img/van_gogh_wheatfield_with_cypresses.jpg" />
