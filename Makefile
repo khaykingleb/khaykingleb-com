@@ -62,10 +62,10 @@ run-dev: ## Run development server
 	pnpm run dev
 .PHONY: run-dev
 
-run: build ## Run production server
+run-prod: build ## Run production server
 	@echo "Starting server."
 	pnpm run start
-.PHONY: run
+.PHONY: run-prod
 
 lint: ## Lint project
 	@echo "Linting project."
