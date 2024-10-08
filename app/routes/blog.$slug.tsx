@@ -98,7 +98,7 @@ export const loader: LoaderFunction = async ({
 
   const notion = new NotionAPI();
   const recordMapPromise = notion.getPage(post.notionPageId);
-  return defer({ recordMap: recordMapPromise }); //, post });
+  return defer({ recordMap: recordMapPromise });
 };
 
 export default function NotionRoute() {
