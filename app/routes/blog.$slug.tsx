@@ -1,5 +1,5 @@
 import { defer, LoaderFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { Await, MetaFunction, useLoaderData } from "@remix-run/react";
+import { Await, useLoaderData } from "@remix-run/react";
 import { NotionAPI } from "notion-client";
 import React, { lazy, Suspense } from "react";
 import { ClientOnly } from "remix-utils/client-only";
@@ -14,7 +14,7 @@ import { NotionRenderer } from "vendor/react-notion-x/packages/react-notion-x";
 
 import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
-import { Post, posts } from "~/data/posts";
+import { posts } from "~/data/posts";
 
 const Equation = lazy(() =>
   import("react-notion-x/build/third-party/equation").then((module) => ({
@@ -86,37 +86,24 @@ NotionPage.displayName = "NotionPage";
 export const loader: LoaderFunction = async ({
   params,
 }: LoaderFunctionArgs) => {
-  const notion = new NotionAPI();
-  const pageId = params.pageid ?? "";
-  if (!pageId) {
-    throw new Error("Page ID is required");
+  const slug = params.slug;
+  if (!slug) {
+    throw new Response("Slug is required", { status: 400 });
   }
-  const recordMapPromise = notion.getPage(pageId);
-  const post = posts.find((p) => p.notionPageId === pageId);
-  return defer({ recordMap: recordMapPromise, post });
-};
 
-export const meta: MetaFunction<typeof loader> = ({
-  data,
-}: {
-  data: { post: Post };
-}) => {
-  const { title, content, tags } = data.post;
-  const description = `${content}; Tags: ${tags.join(", ")}`;
-  return [
-    { title: `${title} | Gleb Khaykin` },
-    { property: "og:title", content: `${title} | Gleb Khaykin` },
-    { property: "og:description", content: description },
-    { property: "og:type", content: "article" },
-    {
-      property: "og:image",
-      content: "/img/van_gogh_wheatfield_with_cypresses.jpg",
-    },
-  ];
+  const post = posts.find((p) => p.slug === slug);
+  if (!post) {
+    throw new Response("Post not found", { status: 404 });
+  }
+
+  const notion = new NotionAPI();
+  const recordMapPromise = notion.getPage(post.notionPageId);
+  return defer({ recordMap: recordMapPromise }); //, post });
 };
 
 export default function NotionRoute() {
   const { recordMap } = useLoaderData<typeof loader>();
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header backgroundImage="/img/van_gogh_wheatfield_with_cypresses.jpg" />
