@@ -1,5 +1,5 @@
 import { defer, LoaderFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { Await, useLoaderData } from "@remix-run/react";
+import { Await, useLoaderData, useParams } from "@remix-run/react";
 import { NotionAPI } from "notion-client";
 import React, { lazy, Suspense } from "react";
 import { ClientOnly } from "remix-utils/client-only";
@@ -103,6 +103,8 @@ export const loader: LoaderFunction = async ({
 
 export default function NotionRoute() {
   const { recordMap } = useLoaderData<typeof loader>();
+  const { slug } = useParams();
+  const post = posts.find((p) => p.slug === slug);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -117,9 +119,12 @@ export default function NotionRoute() {
             }
           >
             <Await resolve={recordMap}>
-              {(resolvedRecordMap: ExtendedRecordMap) => (
-                <NotionPage recordMap={resolvedRecordMap} />
-              )}
+              {(resolvedRecordMap: ExtendedRecordMap) => {
+                if (post) {
+                  document.title = post.title;
+                }
+                return <NotionPage recordMap={resolvedRecordMap} />;
+              }}
             </Await>
           </Suspense>
         </div>
