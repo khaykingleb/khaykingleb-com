@@ -4,6 +4,7 @@ interface CarouselItem {
   id: number;
   title: string;
   content: string;
+  slug: string;
   tags: string[];
   notionPageId: string;
 }
@@ -13,10 +14,9 @@ export const Carousel = ({ items }: { items: CarouselItem[] }) => {
     <div className="mb-2 mt-2 w-full max-w-2xl">
       {items.length > 0 ? (
         <div className="carousel carousel-vertical h-full w-full">
-          {items.map((item, index) => (
+          {items.map((item) => (
             <Link
               to={`/blog/${item.slug}`}
-              id={`item${index}`}
               key={item.id}
               className="carousel-item block w-full cursor-pointer transition-all duration-300 hover:bg-gray-100"
             >
