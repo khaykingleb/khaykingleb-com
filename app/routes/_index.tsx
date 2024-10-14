@@ -9,6 +9,9 @@ export const meta: MetaFunction = () => {
     { title: "About | Gleb Khaykin" },
     { property: "og:title", content: "About | Gleb Khaykin" },
     { property: "og:description", content: "Gleb Khaykin's personal website" },
+    { property: "og:author", content: "Gleb Khaykin" },
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://khaykingleb.com" },
     {
       property: "og:image",
       content: "/img/van_gogh_wheatfield_with_crows.jpg",

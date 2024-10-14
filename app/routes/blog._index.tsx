@@ -13,6 +13,9 @@ export const meta: MetaFunction = () => {
     { title: "Posts | Gleb Khaykin" },
     { property: "og:title", content: "Posts | Gleb Khaykin" },
     { property: "og:description", content: "Gleb Khaykin's personal website" },
+    { property: "og:author", content: "Gleb Khaykin" },
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://khaykingleb.com/blog" },
     {
       property: "og:image",
       content: "/img/van_gogh_wheatfield_under_thunderclouds.jpg",

@@ -109,13 +109,17 @@ export const loader: LoaderFunction = async ({
 
 export const meta: MetaFunction = ({ data }: { data: { post: Post } }) => {
   const { post } = data;
+
   return [
     { title: post.title },
     { name: "og:title", content: post.title },
     { name: "og:description", content: post.content },
+    { name: "og:author", content: "Gleb Khaykin" },
+    { name: "og:type", content: "article" },
+    { name: "og:url", content: `https://khaykingleb.com/blog/${post.slug}` },
     {
       name: "og:image",
-      content: "/img/van_gogh_wheatfield_with_cypresses.jpg",
+      content: post.imageUrl || "/img/van_gogh_wheatfield_with_cypresses.jpg",
     },
   ];
 };
