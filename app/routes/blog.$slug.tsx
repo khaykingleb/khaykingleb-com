@@ -109,18 +109,23 @@ export const loader: LoaderFunction = async ({
 
 export const meta: MetaFunction = ({ data }: { data: { post: Post } }) => {
   const { post } = data;
+  const description = `Created at ${post.publishDate.replace(/-/g, "/")}`;
 
   return [
     { title: post.title },
-    { name: "og:title", content: post.title },
-    { name: "og:description", content: post.content },
-    { name: "og:author", content: "Gleb Khaykin" },
-    { name: "og:type", content: "article" },
-    { name: "og:url", content: `https://khaykingleb.com/blog/${post.slug}` },
+    { author: "Gleb Khaykin" },
     {
-      name: "og:image",
+      property: "og:image",
       content: post.imageUrl || "/img/van_gogh_wheatfield_with_cypresses.jpg",
     },
+    { property: "og:title", content: post.title },
+    { property: "og:description", content: description },
+    { property: "og:type", content: "article" },
+    {
+      property: "og:url",
+      content: `https://khaykingleb.com/blog/${post.slug}`,
+    },
+    { property: "og:publish_date", content: post.publishDate },
   ];
 };
 

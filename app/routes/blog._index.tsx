@@ -11,9 +11,9 @@ import { posts } from "~/data/posts";
 export const meta: MetaFunction = () => {
   return [
     { title: "Posts | Gleb Khaykin" },
+    { author: "Gleb Khaykin" },
     { property: "og:title", content: "Posts | Gleb Khaykin" },
     { property: "og:description", content: "Gleb Khaykin's personal website" },
-    { property: "og:author", content: "Gleb Khaykin" },
     { property: "og:type", content: "website" },
     { property: "og:url", content: "https://khaykingleb.com/blog" },
     {
