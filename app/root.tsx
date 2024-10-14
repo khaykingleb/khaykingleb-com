@@ -20,7 +20,6 @@ export const meta: MetaFunction = () => {
   return [
     { charset: "utf-8" },
     { name: "viewport", content: "width=device-width, initial-scale=1" },
-    { title: "Gleb Khaykin" },
     { property: "og:title", content: "Gleb Khaykin" },
     { property: "og:description", content: "Personal website" },
     {
