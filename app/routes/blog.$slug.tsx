@@ -112,8 +112,7 @@ export const meta: MetaFunction = ({ data }: { data: { post: Post } }) => {
   const description = `Created at ${post.publishDate.replace(/-/g, "/")}`;
 
   return [
-    { title: post.title },
-    { author: "Gleb Khaykin" },
+    { name: "author", content: "Gleb Khaykin" },
     {
       property: "og:image",
       content: post.imageUrl || "/img/van_gogh_wheatfield_with_cypresses.jpg",
@@ -121,11 +120,11 @@ export const meta: MetaFunction = ({ data }: { data: { post: Post } }) => {
     { property: "og:title", content: post.title },
     { property: "og:description", content: description },
     { property: "og:type", content: "article" },
+    { property: "article:published_time", content: post.publishDate },
     {
       property: "og:url",
       content: `https://khaykingleb.com/blog/${post.slug}`,
     },
-    { property: "og:publish_date", content: post.publishDate },
   ];
 };
 
