@@ -10,6 +10,7 @@ import { posts } from "~/data/posts";
 
 export const meta: MetaFunction = () => {
   return [
+    { charset: "utf-8" },
     { name: "author", content: "Gleb Khaykin" },
     { property: "og:title", content: "Posts | Gleb Khaykin" },
     { property: "og:description", content: "Gleb Khaykin's personal website" },

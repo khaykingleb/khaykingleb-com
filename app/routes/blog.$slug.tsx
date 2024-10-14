@@ -112,6 +112,7 @@ export const meta: MetaFunction = ({ data }: { data: { post: Post } }) => {
   const description = `Created at ${post.publishDate.replace(/-/g, "/")}`;
 
   return [
+    { charset: "utf-8" },
     { name: "author", content: "Gleb Khaykin" },
     {
       property: "og:image",
