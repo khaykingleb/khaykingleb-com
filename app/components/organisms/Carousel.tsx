@@ -1,15 +1,8 @@
 import { Link } from "@remix-run/react";
 
-interface CarouselItem {
-  id: number;
-  title: string;
-  content: string;
-  slug: string;
-  tags: string[];
-  notionPageId: string;
-}
+import { Post } from "~/data/posts";
 
-export const Carousel = ({ items }: { items: CarouselItem[] }) => {
+export const Carousel = ({ items }: { items: Post[] }) => {
   return (
     <div className="mb-2 mt-2 w-full max-w-2xl">
       {items.length > 0 ? (
@@ -25,7 +18,7 @@ export const Carousel = ({ items }: { items: CarouselItem[] }) => {
                   {item.title}
                 </h2>
                 <p className="font-eb-garamond-light mb-2 text-sm">
-                  {item.content}
+                  Created at {item.publishDate.replace(/-/g, "/")}
                 </p>
                 <div className="font-eb-garamond-light">
                   {item.tags.map((tag) => (
