@@ -113,6 +113,10 @@ export const meta: MetaFunction = ({ data }: { data: { post: Post } }) => {
     { title: post.title },
     { name: "og:title", content: post.title },
     { name: "og:description", content: post.content },
+    {
+      name: "og:image",
+      content: "/img/van_gogh_wheatfield_with_cypresses.jpg",
+    },
   ];
 };
 
