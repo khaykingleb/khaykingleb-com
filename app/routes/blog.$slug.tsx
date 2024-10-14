@@ -1,5 +1,10 @@
-import { defer, LoaderFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { Await, useLoaderData, useParams } from "@remix-run/react";
+import {
+  defer,
+  LoaderFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@remix-run/node";
+import { Await, useLoaderData } from "@remix-run/react";
 import { NotionAPI } from "notion-client";
 import React, { lazy, Suspense } from "react";
 import { ClientOnly } from "remix-utils/client-only";
@@ -12,9 +17,10 @@ import {
 import { ExtendedRecordMap } from "vendor/react-notion-x/packages/notion-types/src/maps";
 import { NotionRenderer } from "vendor/react-notion-x/packages/react-notion-x";
 
+import { LoadingSpinner } from "~/components/atoms/LoadingSpinner";
 import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
-import { posts } from "~/data/posts";
+import { Post, posts } from "~/data/posts";
 
 const Equation = lazy(() =>
   import("react-notion-x/build/third-party/equation").then((module) => ({
@@ -90,7 +96,6 @@ export const loader: LoaderFunction = async ({
   if (!slug) {
     throw new Response("Slug is required", { status: 400 });
   }
-
   const post = posts.find((p) => p.slug === slug);
   if (!post) {
     throw new Response("Post not found", { status: 404 });
@@ -98,31 +103,30 @@ export const loader: LoaderFunction = async ({
 
   const notion = new NotionAPI();
   const recordMapPromise = notion.getPage(post.notionPageId);
-  return defer({ recordMap: recordMapPromise });
+
+  return defer({ post, recordMap: recordMapPromise });
 };
 
-export default function NotionRoute() {
+export const meta: MetaFunction = ({ data }: { data: { post: Post } }) => {
+  const { post } = data;
+  return [
+    { title: post.title },
+    { name: "og:title", content: post.title },
+    { name: "og:description", content: post.content },
+  ];
+};
+
+export default function BlogPostRoute() {
   const { recordMap } = useLoaderData<typeof loader>();
-  const { slug } = useParams();
-  const post = posts.find((p) => p.slug === slug);
 
   return (
     <div className="flex min-h-screen flex-col">
       <Header backgroundImage="/img/van_gogh_wheatfield_with_cypresses.jpg" />
       <main className="flex-grow px-4 sm:px-6 lg:px-8">
         <div className="mx-auto flex min-h-[calc(100vh-4rem-6rem)] max-w-[700px] flex-col">
-          <Suspense
-            fallback={
-              <div className="flex min-h-[calc(100vh-200px)] items-center justify-center">
-                <div className="loading loading-infinity loading-md"></div>
-              </div>
-            }
-          >
+          <Suspense fallback={<LoadingSpinner />}>
             <Await resolve={recordMap}>
               {(resolvedRecordMap: ExtendedRecordMap) => {
-                if (post) {
-                  document.title = post.title;
-                }
                 return <NotionPage recordMap={resolvedRecordMap} />;
               }}
             </Await>
