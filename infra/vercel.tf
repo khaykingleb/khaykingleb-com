@@ -2,8 +2,8 @@ resource "vercel_project" "khaykingleb_com" {
   name      = "khaykingleb-com"
   framework = "remix"
 
-  install_command = "make deps-notion && make deps"
-  build_command   = "make build-notion && make build"
+  install_command = "make deps-prod"
+  build_command   = "make build"
   dev_command     = "make run-dev"
 
   git_repository = {

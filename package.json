@@ -10,7 +10,8 @@
     "start": "remix-serve ./build/server/index.js",
     "lint": "eslint --fix --cache --cache-location ./node_modules/.cache/eslint .",
     "format": "prettier --write .",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "stylelint": "stylelint --cache --cache-location ./node_modules/.cache/stylelint \"app/**/*.{css,js}\""
   },
   "dependencies": {
     "@remix-run/node": "^2.11.2",

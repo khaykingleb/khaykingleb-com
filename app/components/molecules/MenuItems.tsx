@@ -1,12 +1,12 @@
 import { Link } from "@remix-run/react";
 
-export const Menu = () => {
+export const MenuItems = () => {
   return (
     <ul className="menu menu-horizontal menu-md px-1 text-white">
       <li>
         <Link
           to="/blog"
-          className="font-eb-garamond-bold btn btn-ghost text-base sm:text-lg"
+          className="font-eb-garamond-black btn btn-ghost text-base sm:text-xl"
         >
           Blog
         </Link>
@@ -16,7 +16,7 @@ export const Menu = () => {
           to="/Gleb_Khaykin.pdf"
           prefetch="intent"
           target="_blank"
-          className="font-eb-garamond-bold btn btn-ghost text-base sm:text-lg"
+          className="font-eb-garamond-black btn btn-ghost text-base sm:text-xl"
         >
           CV
         </Link>
@@ -24,7 +24,7 @@ export const Menu = () => {
       <li>
         <Link
           to="/"
-          className="font-eb-garamond-bold btn btn-ghost text-base sm:text-lg"
+          className="font-eb-garamond-black btn btn-ghost text-base sm:text-xl"
         >
           About
         </Link>

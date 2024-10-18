@@ -34,7 +34,55 @@
 .notion-list,
 .notion-text {
   @apply font-eb-garamond-regular;
+
   max-width: 100%;
+}
+
+.notion-title {
+  margin-top: -1.5rem !important;
+  font-size: 1.75rem !important;
+}
+
+.notion-h1 {
+  font-size: 1.5rem !important;
+}
+
+.notion-h2 {
+  font-size: 1.25rem !important;
+}
+
+.notion-h3 {
+  font-size: 1rem !important;
+}
+
+.notion-table-of-contents,
+.notion-list,
+.notion-text {
+  font-size: 0.875rem !important;
+}
+
+@media (width >= 640px) {
+  .notion-title {
+    font-size: 2.5rem !important;
+  }
+
+  .notion-h1 {
+    font-size: 1.75rem !important;
+  }
+
+  .notion-h2 {
+    font-size: 1.5rem !important;
+  }
+
+  .notion-h3 {
+    font-size: 1.25rem !important;
+  }
+
+  .notion-table-of-contents,
+  .notion-list,
+  .notion-text {
+    font-size: 1rem !important;
+  }
 }
 
 .notion-code,

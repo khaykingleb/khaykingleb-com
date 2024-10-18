@@ -33,10 +33,15 @@ deps-notion: ## Install dependencies for react-notion-x
 	cd vendor/react-notion-x && yarn install --frozen-lockfile
 .PHONY: notion-deps
 
-deps: ## Install repo dependencies
+deps: deps-notion ## Install repo dependencies
 	@echo "Installing dependencies."
 	pnpm install
 .PHONY: deps
+
+deps-prod: deps-notion ## Install production dependencies
+	@echo "Installing production dependencies."
+	pnpm install --frozen-lockfile
+.PHONY: deps-prod
 
 pre-commit: ## Install pre-commit hooks
 	@echo "Installing pre-commit hooks."
@@ -69,7 +74,7 @@ run-prod: build ## Run production server
 
 lint: ## Lint project
 	@echo "Linting project."
-	pnpm run lint
+	pnpm run lint && pnpm run stylelint && pnpm run typecheck
 .PHONY: lint
 
 format: ## Format project

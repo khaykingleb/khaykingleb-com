@@ -37,8 +37,8 @@ repos:
 
   - repo: local
     hooks:
-      - id: eslint
-        name: eslint
+      - id: lint
+        name: lint
         entry: make lint
         language: system
         types: [file]

@@ -42,8 +42,11 @@ const Pdf = lazy(() =>
 const Code = lazy(() =>
   import("react-notion-x/build/third-party/code").then(async (module) => {
     await Promise.all([
+      // @ts-expect-error: Expect missing type declarations for prism components
       import("prismjs/components/prism-python"),
+      // @ts-expect-error: Expect missing type declarations for prism components
       import("prismjs/components/prism-rust"),
+      // @ts-expect-error: Expect missing type declarations for prism components
       import("prismjs/components/prism-bash"),
     ]);
     return {
@@ -64,6 +67,7 @@ const Collection = lazy(() =>
 const NotionPage = React.memo(
   ({ recordMap }: { recordMap: ExtendedRecordMap }) => {
     return (
+      // @ts-expect-error: Expect missing type declarations for NotionRenderer
       <NotionRenderer
         recordMap={recordMap}
         fullPage={true}
@@ -107,6 +111,7 @@ export const loader: LoaderFunction = async ({
   return defer({ post, recordMap: recordMapPromise });
 };
 
+// @ts-expect-error: Expect not assignable type (otherwise, it would be a server timeout)
 export const meta: MetaFunction = ({ data }: { data: { post: Post } }) => {
   const { post } = data;
   const description = `Created at ${post.publishDate.replace(/-/g, "/")}`;
@@ -114,6 +119,7 @@ export const meta: MetaFunction = ({ data }: { data: { post: Post } }) => {
   return [
     { charset: "utf-8" },
     { name: "author", content: "Gleb Khaykin" },
+    { name: "viewport", content: "width=device-width, initial-scale=1" },
     {
       property: "og:image",
       content: post.imageUrl || "/img/van_gogh_wheatfield_with_cypresses.jpg",

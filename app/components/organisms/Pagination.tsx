@@ -16,7 +16,7 @@ export const Pagination = ({
   const endPage = Math.min(startPage + MAX_VISIBLE_PAGES, pagesInTotal);
 
   return (
-    <div className="join mt-auto">
+    <div className="join mt-auto flex justify-center space-x-0">
       <button
         className="btn join-item btn-sm"
         onClick={() => onPageChange(currentPage - 1)}
