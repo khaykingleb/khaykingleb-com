@@ -114,6 +114,7 @@ export const meta: MetaFunction = ({ data }: { data: { post: Post } }) => {
   return [
     { charset: "utf-8" },
     { name: "author", content: "Gleb Khaykin" },
+    { name: "viewport", content: "width=device-width, initial-scale=1" },
     {
       property: "og:image",
       content: post.imageUrl || "/img/van_gogh_wheatfield_with_cypresses.jpg",

@@ -11,6 +11,7 @@ import { posts } from "~/data/posts";
 export const meta: MetaFunction = () => {
   return [
     { charset: "utf-8" },
+    { name: "viewport", content: "width=device-width, initial-scale=1" },
     { name: "author", content: "Gleb Khaykin" },
     { property: "og:title", content: "Posts | Gleb Khaykin" },
     { property: "og:description", content: "Gleb Khaykin's personal website" },
@@ -18,7 +19,7 @@ export const meta: MetaFunction = () => {
     { property: "og:url", content: "https://khaykingleb.com/blog" },
     {
       property: "og:image",
-      content: "/img/van_gogh_wheatfield_under_thunderclouds.jpg",
+      content: "/img/van_gogh_wheatfield_with_cypresses.jpg",
     },
   ];
 };
@@ -79,7 +80,7 @@ export default function BlogRoute() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header backgroundImage="/img/van_gogh_wheatfield_under_thunderclouds.jpg" />
+      <Header backgroundImage="/img/van_gogh_wheatfield_with_cypresses.jpg" />
       <main className="flex flex-grow flex-col px-4 sm:px-6 lg:px-8">
         <div className="mx-auto flex h-full w-full max-w-[700px] flex-grow flex-col">
           <TagSearchBar tagOptions={tagOptions} setTagOptions={setTagOptions} />

@@ -7,6 +7,7 @@ import { Header } from "~/components/organisms/Header";
 export const meta: MetaFunction = () => {
   return [
     { charset: "utf-8" },
+    { name: "viewport", content: "width=device-width, initial-scale=1" },
     { name: "author", content: "Gleb Khaykin" },
     { property: "og:title", content: "About | Gleb Khaykin" },
     { property: "og:description", content: "Gleb Khaykin's personal website" },
@@ -14,7 +15,7 @@ export const meta: MetaFunction = () => {
     { property: "og:url", content: "https://khaykingleb.com" },
     {
       property: "og:image",
-      content: "/img/van_gogh_wheatfield_with_crows.jpg",
+      content: "/img/avatar.jpg",
     },
   ];
 };
@@ -27,7 +28,7 @@ export default function IndexRoute() {
         <Avatar />
       </div>
       <div className="flex-grow">
-        <div className="font-eb-garamond-light mx-auto max-w-lg text-pretty text-center text-sm sm:text-base">
+        <div className="font-eb-garamond-light mx-6 mx-auto max-w-lg text-pretty text-center text-sm sm:mx-0 sm:text-base">
           <p className="mb-2">
             Hi there! I&apos;m Gleb, a full-stack developer specializing in
             DevOps and MLOps engineering. My background includes distributed
