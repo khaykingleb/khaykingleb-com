@@ -10,7 +10,7 @@ export const MobileMenuItems = () => (
       <li>
         <Link
           to="/blog"
-          className="font-eb-garamond-bold btn btn-ghost text-lg hover:bg-gray-100"
+          className="font-eb-garamond-bold btn btn-ghost text-base hover:bg-gray-100"
         >
           Blog
         </Link>
@@ -21,7 +21,7 @@ export const MobileMenuItems = () => (
           to="/Gleb_Khaykin.pdf"
           prefetch="intent"
           target="_blank"
-          className="font-eb-garamond-bold btn btn-ghost text-lg hover:bg-gray-100"
+          className="font-eb-garamond-bold btn btn-ghost text-base hover:bg-gray-100"
         >
           CV
         </Link>
@@ -30,7 +30,7 @@ export const MobileMenuItems = () => (
       <li>
         <Link
           to="/"
-          className="font-eb-garamond-bold btn btn-ghost text-lg hover:bg-gray-100"
+          className="font-eb-garamond-bold btn btn-ghost text-base hover:bg-gray-100"
         >
           About
         </Link>
