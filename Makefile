@@ -74,7 +74,7 @@ run-prod: build ## Run production server
 
 lint: ## Lint project
 	@echo "Linting project."
-	pnpm run lint
+	pnpm run lint && pnpm run stylelint && pnpm run typecheck
 .PHONY: lint
 
 format: ## Format project
