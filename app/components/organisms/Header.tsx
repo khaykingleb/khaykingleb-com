@@ -1,4 +1,5 @@
-import { Menu } from "../molecules/Menu";
+import { MenuItems } from "../molecules/MenuItems";
+import { MobileMenuItems } from "../molecules/MobileMenuItems";
 
 interface HeaderProps {
   backgroundImage: string;
@@ -15,11 +16,14 @@ export const Header = ({ backgroundImage }: HeaderProps) => {
       ></div>
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/20"></div>
       <div className="relative z-10 mx-auto flex w-full max-w-[700px] items-center justify-between">
-        <span className="font-eb-garamond-black text-lg text-white sm:text-2xl">
+        <span className="font-eb-garamond-black text-xl text-white sm:text-2xl">
           ~/khaykingleb
         </span>
-        <nav>
-          <Menu />
+        <nav className="hidden sm:block">
+          <MenuItems />
+        </nav>
+        <nav className="flex items-center sm:hidden">
+          <MobileMenuItems />
         </nav>
       </div>
     </header>
