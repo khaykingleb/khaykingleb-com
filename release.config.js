@@ -8,20 +8,20 @@ export default {
         preset: "angular",
         releaseRules: [
           {
-            message: "*",
-            release: "patch",
+            type: "BREAKING CHANGE",
+            release: "major",
           },
           {
-            message: "feat:*",
+            type: "feat!",
+            release: "major",
+          },
+          {
+            type: "feat",
             release: "minor",
           },
           {
-            message: "BREAKING CHANGE:*",
-            release: "major",
-          },
-          {
-            message: "feat!:*",
-            release: "major",
+            message: "*",
+            release: "patch",
           },
         ],
       },
