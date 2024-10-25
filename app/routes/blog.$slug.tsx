@@ -122,7 +122,7 @@ export const meta: MetaFunction = ({ data }: { data: { post: Post } }) => {
     { name: "viewport", content: "width=device-width, initial-scale=1" },
     {
       property: "og:image",
-      content: post.imageUrl || "/img/van_gogh_wheatfield_with_cypresses.jpg",
+      content: post.imageUrl || "/img/van_gogh_wheatfield_with_crows.jpg",
     },
     { property: "og:title", content: post.title },
     { property: "og:description", content: description },
@@ -140,7 +140,7 @@ export default function BlogPostRoute() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header backgroundImage="/img/van_gogh_wheatfield_with_cypresses.jpg" />
+      <Header backgroundImage="/img/van_gogh_wheatfield_with_crows.jpg" />
       <main className="flex-grow px-4 sm:px-6 lg:px-8">
         <div className="mx-auto flex min-h-[calc(100vh-4rem-6rem)] max-w-[700px] flex-col">
           <Suspense fallback={<LoadingSpinner />}>

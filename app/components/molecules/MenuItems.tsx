@@ -2,7 +2,7 @@ import { Link } from "@remix-run/react";
 
 export const MenuItems = () => {
   return (
-    <ul className="menu menu-horizontal menu-md px-1 text-white">
+    <ul className="menu menu-horizontal menu-md text-white">
       <li>
         <Link
           to="/blog"

@@ -191,7 +191,7 @@ export const TagSearchBar = ({
 
   return (
     <div
-      className="font-eb-garamond-light relative mx-auto mt-8 w-full max-w-xs"
+      className="font-eb-garamond-light relative mx-auto mt-6 w-full max-w-xs"
       ref={TagSearchBarRef}
       onKeyDown={handleKeyDown}
       role="combobox"

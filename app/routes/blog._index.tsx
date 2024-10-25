@@ -19,7 +19,7 @@ export const meta: MetaFunction = () => {
     { property: "og:url", content: "https://khaykingleb.com/blog" },
     {
       property: "og:image",
-      content: "/img/van_gogh_wheatfield_with_cypresses.jpg",
+      content: "/img/van_gogh_wheatfield_with_crows.jpg",
     },
   ];
 };
@@ -80,7 +80,7 @@ export default function BlogRoute() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header backgroundImage="/img/van_gogh_wheatfield_with_cypresses.jpg" />
+      <Header backgroundImage="/img/van_gogh_wheatfield_with_crows.jpg" />
       <main className="flex flex-grow flex-col px-4 sm:px-6 lg:px-8">
         <div className="mx-auto flex h-full w-full max-w-[700px] flex-grow flex-col">
           <TagSearchBar tagOptions={tagOptions} setTagOptions={setTagOptions} />

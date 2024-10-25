@@ -4,7 +4,7 @@ import { MdEmail } from "react-icons/md";
 
 export const SocialMedia = () => {
   return (
-    <div className="flex space-x-4">
+    <div className="mt-2 flex space-x-3">
       <a
         href="https://www.linkedin.com/in/khaykingleb"
         target="_blank"
