@@ -47,6 +47,29 @@ export const links: LinksFunction = () => {
       href: notionStylesheetUrl,
     },
 
+    // Favicons
+    {
+      rel: "apple-touch-icon",
+      sizes: "180x180",
+      href: "/apple-touch-icon.png",
+    },
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "32x32",
+      href: "/favicon-32x32.png",
+    },
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "16x16",
+      href: "/favicon-16x16.png",
+    },
+    {
+      rel: "manifest",
+      href: "/site.webmanifest",
+    },
+
     // Prefetch PDF and images
     {
       rel: "prefetch",
@@ -61,17 +84,7 @@ export const links: LinksFunction = () => {
     {
       rel: "prefetch",
       as: "image",
-      href: "/img/van_gogh_wheatfield_under_thunderclouds.jpg",
-    },
-    {
-      rel: "prefetch",
-      as: "image",
       href: "/img/van_gogh_wheatfield_with_crows.jpg",
-    },
-    {
-      rel: "prefetch",
-      as: "image",
-      href: "/img/van_gogh_wheatfield_with_cypresses.jpg",
     },
   ];
 };
