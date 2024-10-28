@@ -26,5 +26,6 @@ export default {
     "vercel",
     "katex",
     "pageid",
+    "changefreq",
   ],
 };

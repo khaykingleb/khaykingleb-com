@@ -1,3 +1,4 @@
+import { SEOHandle } from "@nasa-gcn/remix-seo";
 import { MetaFunction } from "@remix-run/node";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -7,6 +8,12 @@ import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
 import { Pagination } from "~/components/organisms/Pagination";
 import { posts } from "~/data/posts";
+
+export const handle: SEOHandle = {
+  getSitemapEntries: async () => {
+    return [{ route: "/blog", priority: 1, changefreq: "weekly" }];
+  },
+};
 
 export const meta: MetaFunction = () => {
   return [
