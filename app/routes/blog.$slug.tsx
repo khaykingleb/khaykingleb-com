@@ -1,3 +1,4 @@
+import { SEOHandle } from "@nasa-gcn/remix-seo";
 import {
   defer,
   LoaderFunction,
@@ -109,6 +110,16 @@ export const loader: LoaderFunction = async ({
   const recordMapPromise = notion.getPage(post.notionPageId);
 
   return defer({ post, recordMap: recordMapPromise });
+};
+
+export const handle: SEOHandle = {
+  getSitemapEntries: async () => {
+    return posts.map((post) => ({
+      route: `/blog/${post.slug}`,
+      priority: 0.7,
+      changefreq: "monthly",
+    }));
+  },
 };
 
 // @ts-expect-error: Expect not assignable type (otherwise, it would be a server timeout)

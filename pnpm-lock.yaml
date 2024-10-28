@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@nasa-gcn/remix-seo':
+        specifier: ^2.0.1
+        version: 2.0.1(@remix-run/react@2.11.2(react-dom@19.0.0-rc-cd22717c-20241013(react@19.0.0-rc-cd22717c-20241013))(react@19.0.0-rc-cd22717c-20241013)(typescript@5.5.4))(@remix-run/server-runtime@2.11.2(typescript@5.5.4))
       '@remix-run/node':
         specifier: ^2.11.2
         version: 2.11.2(typescript@5.5.4)
@@ -637,6 +640,12 @@ packages:
 
   '@mdx-js/mdx@2.3.0':
     resolution: {integrity: sha512-jLuwRlz8DQfQNiUCJR50Y09CGPq3fLtmtUQfVrj79E0JWu3dvsVcxVIcfhR5h0iXu+/z++zDrYeiJqifRynJkA==}
+
+  '@nasa-gcn/remix-seo@2.0.1':
+    resolution: {integrity: sha512-g9biDdYfsdFBnOU7lM+7vPGEXSEMRnWmfVLDQ98pT0PnTT/O3pFuA+s3DA0Mj9IwnAq9IcLs2Wee/aL6fvEA+A==}
+    peerDependencies:
+      '@remix-run/react': ^1.0.0 || ^2.0.0
+      '@remix-run/server-runtime': ^1.0.0 || ^2.0.0
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -4460,6 +4469,12 @@ snapshots:
       vfile: 5.3.7
     transitivePeerDependencies:
       - supports-color
+
+  '@nasa-gcn/remix-seo@2.0.1(@remix-run/react@2.11.2(react-dom@19.0.0-rc-cd22717c-20241013(react@19.0.0-rc-cd22717c-20241013))(react@19.0.0-rc-cd22717c-20241013)(typescript@5.5.4))(@remix-run/server-runtime@2.11.2(typescript@5.5.4))':
+    dependencies:
+      '@remix-run/react': 2.11.2(react-dom@19.0.0-rc-cd22717c-20241013(react@19.0.0-rc-cd22717c-20241013))(react@19.0.0-rc-cd22717c-20241013)(typescript@5.5.4)
+      '@remix-run/server-runtime': 2.11.2(typescript@5.5.4)
+      lodash: 4.17.21
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:

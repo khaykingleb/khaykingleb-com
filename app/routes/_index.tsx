@@ -1,3 +1,4 @@
+import { SEOHandle } from "@nasa-gcn/remix-seo";
 import { MetaFunction } from "@remix-run/node";
 
 import { Avatar } from "~/components/atoms/Avatar";
@@ -18,6 +19,12 @@ export const meta: MetaFunction = () => {
       content: "/img/avatar.jpg",
     },
   ];
+};
+
+export const handle: SEOHandle = {
+  getSitemapEntries: async () => {
+    return [{ route: "/", priority: 1, changefreq: "monthly" }];
+  },
 };
 
 export default function IndexRoute() {
