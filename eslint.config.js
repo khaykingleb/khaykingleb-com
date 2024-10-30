@@ -2,10 +2,12 @@ import eslint from "@eslint/js";
 import tseslint from "@typescript-eslint/eslint-plugin";
 import tseslintParser from "@typescript-eslint/parser";
 import importPlugin from "eslint-plugin-import";
+import jsdocPlugin from "eslint-plugin-jsdoc";
 import jsxA11yPlugin from "eslint-plugin-jsx-a11y";
 import reactPlugin from "eslint-plugin-react";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
 import simpleImportSortPlugin from "eslint-plugin-simple-import-sort";
+import tsdocPlugin from "eslint-plugin-tsdoc";
 import globals from "globals";
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
@@ -100,6 +102,33 @@ export default [
           alwaysTryTypes: true,
         },
       },
+    },
+  },
+
+
+  // TSDoc and JSDoc
+  {
+    files: ["**/*.{ts,tsx,js,jsx}"],
+    plugins: {
+      "tsdoc": tsdocPlugin,
+      "jsdoc": jsdocPlugin,
+    },
+    rules: {
+      "tsdoc/syntax": "warn",
+      "jsdoc/require-jsdoc": [
+        "warn",
+        {
+          require: {
+            FunctionDeclaration: true,
+            MethodDefinition: true,
+            ClassDeclaration: true,
+            ArrowFunctionExpression: true,
+            FunctionExpression: true,
+          },
+        },
+      ],
+      "jsdoc/require-param": "warn",
+      "jsdoc/require-returns": "warn",
     },
   },
 ];
