@@ -31,8 +31,11 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+const MAX_POSTS_PER_PAGE_DESKTOP = 4;
+const MAX_POSTS_PER_PAGE_MOBILE = 3;
+
 export default function BlogRoute() {
-  const [postsPerPage, setPostsPerPage] = useState(5);
+  const [postsPerPage, setPostsPerPage] = useState(MAX_POSTS_PER_PAGE_DESKTOP);
   const [currentPage, setCurrentPage] = useState(0);
   const [tagOptions, setTagOptions] = useState(
     Array.from(new Set(posts.flatMap((post) => post.tags)))
@@ -62,9 +65,9 @@ export default function BlogRoute() {
   useEffect(() => {
     const updatePostsPerPage = () => {
       if (window.matchMedia("(min-height: 800px)").matches) {
-        setPostsPerPage(5);
+        setPostsPerPage(MAX_POSTS_PER_PAGE_DESKTOP);
       } else {
-        setPostsPerPage(3);
+        setPostsPerPage(MAX_POSTS_PER_PAGE_MOBILE);
       }
     };
 
@@ -89,7 +92,7 @@ export default function BlogRoute() {
     <div className="flex min-h-screen flex-col">
       <Header backgroundImage="/img/van_gogh_wheatfield_with_crows.jpg" />
       <main className="flex flex-grow flex-col px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto flex h-full w-full max-w-[720px] flex-grow flex-col">
+        <div className="mx-auto flex h-full w-full max-w-[750px] flex-grow flex-col">
           <TagSearchBar tagOptions={tagOptions} setTagOptions={setTagOptions} />
           <div className="flex-grow">
             <Carousel

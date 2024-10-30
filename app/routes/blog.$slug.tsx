@@ -153,7 +153,7 @@ export default function BlogPostRoute() {
     <div className="flex min-h-screen flex-col">
       <Header backgroundImage="/img/van_gogh_wheatfield_with_crows.jpg" />
       <main className="flex-grow px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto flex min-h-[calc(100vh-4rem-6rem)] max-w-[720px] flex-col">
+        <div className="mx-auto flex min-h-[calc(100vh-4rem-6rem)] max-w-[750px] flex-col">
           <Suspense fallback={<LoadingSpinner />}>
             <Await resolve={recordMap}>
               {(resolvedRecordMap: ExtendedRecordMap) => {
