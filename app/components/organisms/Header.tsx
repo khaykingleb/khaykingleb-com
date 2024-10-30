@@ -15,7 +15,7 @@ export const Header = ({ backgroundImage }: HeaderProps) => {
         }}
       ></div>
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/20"></div>
-      <div className="font-gill-sans-bold relative z-10 mx-auto flex w-full max-w-[800px] items-center justify-between text-white">
+      <div className="font-gill-sans-bold relative z-10 mx-auto flex w-full max-w-[720px] items-center justify-between text-white">
         <span className="text-xl sm:text-2xl">~/khaykingleb</span>
         <nav className="hidden sm:block">
           <MenuItems />

@@ -17,7 +17,7 @@ export const Carousel = ({ items }: { items: Post[] }) => {
                 <h2 className="font-gill-sans-semibold mb-1 text-lg">
                   {item.title}
                 </h2>
-                <p className="font-gill-sans-light mb-2 text-sm">
+                <p className="font-gill-sans-regular mb-2 text-sm">
                   Created at {item.publishDate.replace(/-/g, "/")}
                 </p>
                 <div className="font-gill-sans-regular">
