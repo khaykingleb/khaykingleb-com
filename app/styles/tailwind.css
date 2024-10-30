@@ -1,43 +1,47 @@
-@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer utilities {
-  .font-eb-garamond-thin {
-    font-family: "EB Garamond", serif;
+  .font-gill-sans-thin {
+    font-family: "Gill Sans", sans-serif;
     font-weight: 100;
     font-style: normal;
   }
 
-  .font-eb-garamond-light {
-    font-family: "EB Garamond", serif;
+  .font-gill-sans-light {
+    font-family: "Gill Sans", sans-serif;
     font-weight: 300;
     font-style: normal;
   }
 
-  .font-eb-garamond-regular {
-    font-family: "EB Garamond", serif;
+  .font-gill-sans-regular {
+    font-family: "Gill Sans", sans-serif;
     font-weight: 400;
     font-style: normal;
   }
 
-  .font-eb-garamond-medium {
-    font-family: "EB Garamond", serif;
+  .font-gill-sans-medium {
+    font-family: "Gill Sans", sans-serif;
     font-weight: 500;
     font-style: normal;
   }
 
-  .font-eb-garamond-bold {
-    font-family: "EB Garamond", serif;
+  .font-gill-sans-semibold {
+    font-family: "Gill Sans", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  .font-gill-sans-bold {
+    font-family: "Gill Sans", sans-serif;
     font-weight: 700;
     font-style: normal;
   }
 
-  .font-eb-garamond-black {
-    font-family: "EB Garamond", serif;
-    font-weight: 900;
+  .font-gill-sans-extrabold {
+    font-family: "Gill Sans", sans-serif;
+    font-weight: 800;
     font-style: normal;
   }
 }

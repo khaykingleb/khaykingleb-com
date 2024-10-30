@@ -4,7 +4,7 @@ import { Post } from "~/data/posts";
 
 export const Carousel = ({ items }: { items: Post[] }) => {
   return (
-    <div className="mb-2 mt-2 w-full max-w-2xl">
+    <div className="mb-2 mt-2">
       {items.length > 0 ? (
         <div className="carousel carousel-vertical h-full w-full">
           {items.map((item) => (
@@ -14,13 +14,13 @@ export const Carousel = ({ items }: { items: Post[] }) => {
               className="carousel-item block w-full cursor-pointer transition-all duration-300 hover:bg-gray-100"
             >
               <div className="w-full p-3">
-                <h2 className="font-eb-garamond-black mb-1 text-lg font-bold">
+                <h2 className="font-gill-sans-semibold mb-1 text-lg">
                   {item.title}
                 </h2>
-                <p className="font-eb-garamond-light mb-2 text-sm">
+                <p className="font-gill-sans-light mb-2 text-sm">
                   Created at {item.publishDate.replace(/-/g, "/")}
                 </p>
-                <div className="font-eb-garamond-light">
+                <div className="font-gill-sans-regular">
                   {item.tags.map((tag) => (
                     <span
                       key={tag}
@@ -36,7 +36,7 @@ export const Carousel = ({ items }: { items: Post[] }) => {
         </div>
       ) : (
         <div className="pt-52 text-center">
-          <p className="font-eb-garamond-bold text-xl">No posts found</p>
+          <p className="font-gill-sans-bold text-xl">No posts found</p>
         </div>
       )}
     </div>
