@@ -91,3 +91,9 @@
   color: #24292e !important;
   background-color: #f7f6f3 !important;
 }
+
+.katex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
