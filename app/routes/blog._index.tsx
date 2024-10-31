@@ -92,7 +92,7 @@ export default function BlogRoute() {
     <div className="flex min-h-screen flex-col">
       <Header backgroundImage="/img/van_gogh_wheatfield_with_crows.jpg" />
       <main className="flex flex-grow flex-col px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto flex h-full w-full max-w-[750px] flex-grow flex-col">
+        <div className="mx-auto flex w-full max-w-[750px] flex-grow flex-col">
           <TagSearchBar tagOptions={tagOptions} setTagOptions={setTagOptions} />
           <div className="flex-grow">
             <Carousel
