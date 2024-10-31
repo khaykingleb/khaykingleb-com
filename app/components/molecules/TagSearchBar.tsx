@@ -24,14 +24,14 @@ const TextInput = ({
 }: TextInputProps) => {
   return (
     <div className="relative">
-      <FaSearch className="absolute left-1 top-1/2 -translate-y-1/2 text-gray-400" />
+      <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
       <input
         type="text"
         value={value}
         onChange={onChange}
         placeholder={placeholder}
         onFocus={onFocus}
-        className="input input-bordered h-8 w-full pl-6 pr-6 text-sm"
+        className="input input-bordered left-3 h-8 w-full pl-8 pr-6 text-sm"
       />
       {value && (
         <button
@@ -70,7 +70,7 @@ const TagItem = ({ name, onClick, checked, isFocused }: TagItemProps) => {
       >
         {checked && <FaCheck className="text-xs text-white" />}
       </span>
-      <span className="text-sm font-medium">{name}</span>
+      <span className="font-gill-sans-regular text-sm">{name}</span>
     </div>
   );
 };
@@ -191,7 +191,7 @@ export const TagSearchBar = ({
 
   return (
     <div
-      className="font-eb-garamond-light relative mx-auto mt-6 w-full max-w-xs"
+      className="font-gill-sans-light relative mx-auto mt-6 w-full max-w-xs"
       ref={TagSearchBarRef}
       onKeyDown={handleKeyDown}
       role="combobox"

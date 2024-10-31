@@ -13,8 +13,8 @@
 @tailwind utilities;
 
 @layer utilities {
-  .font-eb-garamond-regular {
-    font-family: "EB Garamond", serif;
+  .font-gill-sans {
+    font-family: "Gill Sans", serif;
   }
 }
 
@@ -24,7 +24,7 @@
 
 .notion-title,
 .notion-asset-caption {
-  @apply font-eb-garamond-regular text-center;
+  @apply font-gill-sans text-center;
 }
 
 .notion-table-of-contents,
@@ -33,9 +33,9 @@
 .notion-h3,
 .notion-list,
 .notion-text {
-  @apply font-eb-garamond-regular;
+  @apply font-gill-sans;
 
-  max-width: 100%;
+  width: 100%;
 }
 
 .notion-title {
