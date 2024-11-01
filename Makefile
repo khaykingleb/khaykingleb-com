@@ -62,6 +62,15 @@ build: build-notion ## Build project
 	pnpm run build
 .PHONY: build
 
+build-cloudflare: ## Build project for Cloudflare Pages
+	@echo "Building project for Cloudflare Pages."
+	@echo "Remove .tool-versions file because of https://community.cloudflare.com/t/how-to-disable-automatic-installs-of-tool-versions-and-package-json/570450."
+	rm .tool-versions
+	@echo "Building project."
+	cd vendor/react-notion-x && yarn build
+	pnpm run build
+.PHONY: build-cloudflare
+
 run-dev: ## Run development server
 	@echo "Running development server."
 	pnpm run dev
