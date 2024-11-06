@@ -105,16 +105,38 @@ export default [
     },
   },
 
-
-  // TSDoc and JSDoc
+  // TSDoc
   {
-    files: ["**/*.{ts,tsx,js,jsx}"],
+    files: ["app/**/*.{ts,tsx}"],
     plugins: {
-      "tsdoc": tsdocPlugin,
-      "jsdoc": jsdocPlugin,
+      tsdoc: tsdocPlugin,
+      jsdoc: jsdocPlugin,
     },
     rules: {
       "tsdoc/syntax": "warn",
+      "jsdoc/require-jsdoc": [
+        "warn",
+        {
+          require: {
+            FunctionDeclaration: true,
+            MethodDefinition: true,
+            ClassDeclaration: true,
+            ArrowFunctionExpression: true,
+            FunctionExpression: true,
+          },
+        },
+      ],
+      "jsdoc/require-returns": "warn",
+    },
+  },
+
+  // JSDoc
+  {
+    files: ["**/*.{js,jsx}"],
+    plugins: {
+      jsdoc: jsdocPlugin,
+    },
+    rules: {
       "jsdoc/require-jsdoc": [
         "warn",
         {
