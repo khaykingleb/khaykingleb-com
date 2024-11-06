@@ -2,6 +2,12 @@ import { Link } from "@remix-run/react";
 
 import { Post } from "~/data/posts";
 
+/**
+ * Carousel component to display a list of posts
+ *
+ * @param items - Array of post items to display
+ * @returns Carousel component
+ */
 export const Carousel = ({ items }: { items: Post[] }) => {
   return (
     <div className="mb-2 mt-2">
@@ -35,15 +41,15 @@ export const Carousel = ({ items }: { items: Post[] }) => {
                 <img
                   src={item.imageUrl}
                   alt={item.title}
-                  className="h-28 w-auto"
+                  className="h-20 w-auto"
                 />
               </div>
             </Link>
           ))}
         </div>
       ) : (
-        <div className="pt-52 text-center">
-          <p className="font-gill-sans-bold text-xl">No posts found</p>
+        <div className="pt-40 text-center">
+          <p className="font-gill-sans-bold text-lg">No posts found</p>
         </div>
       )}
     </div>

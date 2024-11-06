@@ -10,20 +10,48 @@ import { Pagination } from "~/components/organisms/Pagination";
 import { posts } from "~/data/posts";
 
 export const handle: SEOHandle = {
+  /**
+   * Asynchronously retrieve sitemap.xml entries for the route
+   *
+   * @returns The sitemap.xml entries for the route
+   */
   getSitemapEntries: async () => {
     return [{ route: "/blog", priority: 1, changefreq: "weekly" }];
   },
 };
 
+/**
+ * Generate metadata for the route
+ *
+ * @returns The meta tags for the route
+ */
 export const meta: MetaFunction = () => {
   return [
     { charset: "utf-8" },
-    { name: "viewport", content: "width=device-width, initial-scale=1" },
-    { name: "author", content: "Gleb Khaykin" },
-    { property: "og:title", content: "Posts | Gleb Khaykin" },
-    { property: "og:description", content: "Gleb Khaykin's personal website" },
-    { property: "og:type", content: "website" },
-    { property: "og:url", content: "https://khaykingleb.com/blog" },
+    {
+      name: "viewport",
+      content: "width=device-width, initial-scale=1",
+    },
+    {
+      name: "author",
+      content: "Gleb Khaykin",
+    },
+    {
+      property: "og:title",
+      content: "Posts | Gleb Khaykin",
+    },
+    {
+      property: "og:description",
+      content: "Gleb Khaykin's personal website",
+    },
+    {
+      property: "og:type",
+      content: "website",
+    },
+    {
+      property: "og:url",
+      content: "https://khaykingleb.com/blog",
+    },
     {
       property: "og:image",
       content: "/img/van_gogh_wheatfield_with_crows.jpg",
@@ -31,9 +59,15 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+// TODO: have conflict with Pagination component
 const MAX_POSTS_PER_PAGE_DESKTOP = 4;
 const MAX_POSTS_PER_PAGE_MOBILE = 3;
 
+/**
+ * The main component for the route
+ *
+ * @returns The route layout
+ */
 export default function BlogRoute() {
   const [postsPerPage, setPostsPerPage] = useState(MAX_POSTS_PER_PAGE_DESKTOP);
   const [currentPage, setCurrentPage] = useState(0);
@@ -90,9 +124,9 @@ export default function BlogRoute() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header backgroundImage="/img/van_gogh_wheatfield_with_crows.jpg" />
+      <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.jpg" />
       <main className="flex flex-grow flex-col px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto flex h-full w-full max-w-[750px] flex-grow flex-col">
+        <div className="mx-auto flex w-full max-w-[750px] flex-grow flex-col">
           <TagSearchBar tagOptions={tagOptions} setTagOptions={setTagOptions} />
           <div className="flex-grow">
             <Carousel

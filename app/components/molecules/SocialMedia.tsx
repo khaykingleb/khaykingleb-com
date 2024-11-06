@@ -2,9 +2,14 @@ import { FaGithub, FaLinkedin, FaTelegram } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 
+/**
+ * Social media component
+ *
+ * @returns Social media component
+ */
 export const SocialMedia = () => {
   return (
-    <div className="mt-2 flex space-x-3">
+    <div className="mt-1 flex space-x-3">
       <a
         href="https://www.linkedin.com/in/khaykingleb"
         target="_blank"

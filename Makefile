@@ -47,7 +47,7 @@ pre-commit: ## Install pre-commit hooks
 	@echo "Installing pre-commit hooks."
 	pre-commit install -t pre-commit -t commit-msg
 
-init: prerequisite deps-notion deps pre-commit ## Initialize local environment for development
+init: prerequisite deps pre-commit ## Initialize local environment for development
 .PHONY: init
 
 ##@ Scripts

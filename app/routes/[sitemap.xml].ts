@@ -5,6 +5,12 @@ import type { LoaderFunctionArgs } from "@remix-run/node";
 // eslint-disable-next-line import/no-unresolved
 import { routes } from "virtual:remix/server-build";
 
+/**
+ * Handle the generation of the sitemap.xml file for the website
+ *
+ * @param request - The incoming request object
+ * @returns The generated sitemap response
+ */
 export function loader({ request }: LoaderFunctionArgs) {
   return generateSitemap(request, routes, {
     siteUrl: "https://khaykingleb.com",

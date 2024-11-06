@@ -24,3 +24,8 @@ resource "vercel_project_domain" "www_khaykingleb_com" {
   redirect             = vercel_project_domain.khaykingleb_com.domain
   redirect_status_code = 308
 }
+
+resource "vercel_attack_challenge_mode" "example" {
+  project_id = vercel_project.khaykingleb_com.id
+  enabled    = true
+}

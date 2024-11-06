@@ -2,16 +2,22 @@ import { MenuItems } from "../molecules/MenuItems";
 import { MobileMenuItems } from "../molecules/MobileMenuItems";
 
 interface HeaderProps {
-  backgroundImage: string;
+  backgroundImageUrl: string;
 }
 
-export const Header = ({ backgroundImage }: HeaderProps) => {
+/**
+ * Header component
+ *
+ * @param backgroundImageUrl - The background image URL
+ * @returns Header component
+ */
+export const Header = ({ backgroundImageUrl }: HeaderProps) => {
   return (
     <header className="h-18 relative flex items-center px-4 sm:px-6 lg:px-8">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: `url(${backgroundImage})`,
+          backgroundImage: `url(${backgroundImageUrl})`,
         }}
       ></div>
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/20"></div>
