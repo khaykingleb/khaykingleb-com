@@ -60,7 +60,7 @@ export const meta: MetaFunction = () => {
 };
 
 // TODO: have conflict with Pagination component
-const MAX_POSTS_PER_PAGE_DESKTOP = 6;
+const MAX_POSTS_PER_PAGE_DESKTOP = 4;
 const MAX_POSTS_PER_PAGE_MOBILE = 3;
 
 /**
