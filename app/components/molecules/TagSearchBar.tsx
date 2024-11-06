@@ -119,7 +119,9 @@ export const TagSearchBar = ({
   const TagSearchBarRef = useRef<HTMLDivElement>(null);
   const optionsRef = useRef<HTMLDivElement>(null);
 
-  // Filter the tag options based on the filter text
+  /**
+   * Filter the tag options based on the filter text
+   */
   const filteredTagOptions = useMemo(() => {
     return tagOptions.filter((option: TagOption) =>
       option.name.toLowerCase().includes(filterText.toLowerCase()),
@@ -208,9 +210,6 @@ export const TagSearchBar = ({
     };
   }, []);
 
-  /**
-   *
-   */
   const clearFilter = () => {
     setFilterText("");
     setFocusedOptionIndex(0);

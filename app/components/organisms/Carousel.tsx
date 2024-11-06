@@ -3,9 +3,9 @@ import { Link } from "@remix-run/react";
 import { Post } from "~/data/posts";
 
 /**
- * Carousel component to display a list of posts.
+ * Carousel component to display a list of posts
  *
- * @param items - Array of post items to display.
+ * @param items - Array of post items to display
  * @returns Carousel component
  */
 export const Carousel = ({ items }: { items: Post[] }) => {

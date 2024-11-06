@@ -1,9 +1,9 @@
 import { generateRobotsTxt } from "@nasa-gcn/remix-seo";
 
 /**
- * Loader function for generating the robots.txt file for the website.
+ * Loader function for generating the robots.txt file for the website
  *
- * @returns The generated robots.txt content.
+ * @returns The generated robots.txt content
  */
 export function loader() {
   return generateRobotsTxt([

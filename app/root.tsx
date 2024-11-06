@@ -17,7 +17,7 @@ import notionStylesheetUrl from "./styles/notion.css?url";
 import tailwindStylesheetUrl from "./styles/tailwind.css?url";
 
 /**
- * Generate link tags for the application.
+ * Generate link tags for the application
  *
  * @returns An array of link tag objects
  */
@@ -38,7 +38,7 @@ export const links: LinksFunction = () => {
       href: notionStylesheetUrl,
     },
 
-    // Favicons
+    // Favicons and manifest
     {
       rel: "apple-touch-icon",
       sizes: "180x180",
@@ -81,7 +81,7 @@ export const links: LinksFunction = () => {
 };
 
 /**
- * The main application component.
+ * The main application component
  *
  * @returns The rendered application component
  */

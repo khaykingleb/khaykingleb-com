@@ -6,19 +6,37 @@ import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
 
 /**
- * Generate metadata for the route.
+ * Generate metadata for the route
  *
- * @returns An array of meta tag objects for the route.
+ * @returns An array of meta tag objects for the route
  */
 export const meta: MetaFunction = () => {
   return [
     { charset: "utf-8" },
-    { name: "viewport", content: "width=device-width, initial-scale=1" },
-    { name: "author", content: "Gleb Khaykin" },
-    { property: "og:title", content: "About | Gleb Khaykin" },
-    { property: "og:description", content: "Gleb Khaykin's personal website" },
-    { property: "og:type", content: "website" },
-    { property: "og:url", content: "https://khaykingleb.com" },
+    {
+      name: "viewport",
+      content: "width=device-width, initial-scale=1",
+    },
+    {
+      name: "author",
+      content: "Gleb Khaykin",
+    },
+    {
+      property: "og:title",
+      content: "About | Gleb Khaykin",
+    },
+    {
+      property: "og:description",
+      content: "Gleb Khaykin's personal website",
+    },
+    {
+      property: "og:type",
+      content: "website",
+    },
+    {
+      property: "og:url",
+      content: "https://khaykingleb.com",
+    },
     {
       property: "og:image",
       content: "/img/avatar.jpg",
@@ -28,9 +46,9 @@ export const meta: MetaFunction = () => {
 
 export const handle: SEOHandle = {
   /**
-   * Asynchronously retrieve sitemap.xml entries for the route.
+   * Asynchronously retrieve sitemap.xml entries for the route
    *
-   * @returns The sitemap.xml entries for the route.
+   * @returns The sitemap.xml entries for the route
    */
   getSitemapEntries: async () => {
     return [{ route: "/", priority: 1, changefreq: "monthly" }];
@@ -38,9 +56,9 @@ export const handle: SEOHandle = {
 };
 
 /**
- * The main component for the route.
+ * The main component for the route
  *
- * @returns The route layout..
+ * @returns The route layout
  */
 export default function IndexRoute() {
   return (

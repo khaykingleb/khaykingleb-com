@@ -4,7 +4,7 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-const MAX_VISIBLE_PAGES = 5;
+const MAX_PAGES_PER_PAGE = 5;
 
 /**
  * Pagination component
@@ -20,8 +20,8 @@ export const Pagination = ({
   onPageChange,
 }: PaginationProps) => {
   const startPage =
-    Math.floor(currentPage / MAX_VISIBLE_PAGES) * MAX_VISIBLE_PAGES;
-  const endPage = Math.min(startPage + MAX_VISIBLE_PAGES, pagesInTotal);
+    Math.floor(currentPage / MAX_PAGES_PER_PAGE) * MAX_PAGES_PER_PAGE;
+  const endPage = Math.min(startPage + MAX_PAGES_PER_PAGE, pagesInTotal);
 
   return (
     <div className="font-gill-sans-regular join mt-auto flex justify-center space-x-0">
