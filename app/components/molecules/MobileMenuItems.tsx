@@ -1,6 +1,11 @@
 import { Link } from "@remix-run/react";
 import { IoMdMenu } from "react-icons/io";
 
+/**
+ * Mobile menu items component
+ *
+ * @returns Mobile menu items component
+ */
 export const MobileMenuItems = () => (
   <details className="dropdown dropdown-end">
     <summary className="btn btn-circle btn-ghost">

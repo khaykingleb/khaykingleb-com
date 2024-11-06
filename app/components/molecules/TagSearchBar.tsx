@@ -15,6 +15,15 @@ interface TextInputProps {
   onFocus: () => void;
 }
 
+/**
+ * Text input component
+ *
+ * @param onChange - The function to call when the input value changes
+ * @param onClear - The function to call to clear the input
+ * @param placeholder - The placeholder text for the input
+ * @param onFocus - The function to call when the input is focused
+ * @returns Text input component
+ */
 const TextInput = ({
   value,
   onChange,
@@ -52,6 +61,14 @@ interface TagItemProps {
   isFocused: boolean;
 }
 
+/**
+ * Tag item component
+ *
+ * @param onClick - The function to call when the tag is clicked
+ * @param checked - Whether the tag is checked
+ * @param isFocused - Whether the tag is focused
+ * @returns Tag item component
+ */
 const TagItem = ({ name, onClick, checked, isFocused }: TagItemProps) => {
   return (
     <div
@@ -85,6 +102,13 @@ interface TagSearchBarProps {
   setTagOptions: (tagOptions: TagOption[]) => void;
 }
 
+/**
+ * Tag search bar component
+ *
+ * @param tagOptions - The list of tag options available for selection
+ * @param setTagOptions - The function to update the tag options
+ * @returns Tag search bar component
+ */
 export const TagSearchBar = ({
   tagOptions,
   setTagOptions,
@@ -166,6 +190,9 @@ export const TagSearchBar = ({
   }, [focusedOptionIndex]);
 
   useEffect(() => {
+    /**
+     * @param event - The mouse event that triggers the click outside handler
+     */
     function handleClickOutside(event: MouseEvent) {
       if (
         TagSearchBarRef.current &&
@@ -181,6 +208,9 @@ export const TagSearchBar = ({
     };
   }, []);
 
+  /**
+   *
+   */
   const clearFilter = () => {
     setFilterText("");
     setFocusedOptionIndex(0);
@@ -191,7 +221,7 @@ export const TagSearchBar = ({
 
   return (
     <div
-      className="font-gill-sans-light relative mx-auto mt-6 w-full max-w-xs"
+      className="font-gill-sans-light relative mx-auto mt-4 w-full max-w-xs"
       ref={TagSearchBarRef}
       onKeyDown={handleKeyDown}
       role="combobox"

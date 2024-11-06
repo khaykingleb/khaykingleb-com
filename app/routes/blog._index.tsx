@@ -10,11 +10,21 @@ import { Pagination } from "~/components/organisms/Pagination";
 import { posts } from "~/data/posts";
 
 export const handle: SEOHandle = {
+  /**
+   * Asynchronously retrieve sitemap.xml entries for the route.
+   *
+   * @returns The sitemap.xml entries for the route.
+   */
   getSitemapEntries: async () => {
     return [{ route: "/blog", priority: 1, changefreq: "weekly" }];
   },
 };
 
+/**
+ * Generate metadata for the route.
+ *
+ * @returns The meta tags for the route.
+ */
 export const meta: MetaFunction = () => {
   return [
     { charset: "utf-8" },
@@ -31,9 +41,14 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-const MAX_POSTS_PER_PAGE_DESKTOP = 4;
+const MAX_POSTS_PER_PAGE_DESKTOP = 6;
 const MAX_POSTS_PER_PAGE_MOBILE = 3;
 
+/**
+ * The main component for the route.
+ *
+ * @returns The route layout.
+ */
 export default function BlogRoute() {
   const [postsPerPage, setPostsPerPage] = useState(MAX_POSTS_PER_PAGE_DESKTOP);
   const [currentPage, setCurrentPage] = useState(0);
@@ -63,6 +78,9 @@ export default function BlogRoute() {
   );
 
   useEffect(() => {
+    /**
+     *
+     */
     const updatePostsPerPage = () => {
       if (window.matchMedia("(min-height: 800px)").matches) {
         setPostsPerPage(MAX_POSTS_PER_PAGE_DESKTOP);
@@ -90,7 +108,7 @@ export default function BlogRoute() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header backgroundImage="/img/van_gogh_wheatfield_with_crows.jpg" />
+      <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.jpg" />
       <main className="flex flex-grow flex-col px-4 sm:px-6 lg:px-8">
         <div className="mx-auto flex w-full max-w-[750px] flex-grow flex-col">
           <TagSearchBar tagOptions={tagOptions} setTagOptions={setTagOptions} />

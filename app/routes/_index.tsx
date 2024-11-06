@@ -5,6 +5,11 @@ import { Avatar } from "~/components/atoms/Avatar";
 import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
 
+/**
+ * Generate metadata for the route.
+ *
+ * @returns An array of meta tag objects for the route.
+ */
 export const meta: MetaFunction = () => {
   return [
     { charset: "utf-8" },
@@ -22,15 +27,25 @@ export const meta: MetaFunction = () => {
 };
 
 export const handle: SEOHandle = {
+  /**
+   * Asynchronously retrieve sitemap.xml entries for the route.
+   *
+   * @returns The sitemap.xml entries for the route.
+   */
   getSitemapEntries: async () => {
     return [{ route: "/", priority: 1, changefreq: "monthly" }];
   },
 };
 
+/**
+ * The main component for the route.
+ *
+ * @returns The route layout..
+ */
 export default function IndexRoute() {
   return (
     <div className="flex min-h-screen flex-col">
-      <Header backgroundImage="/img/van_gogh_wheatfield_with_crows.jpg" />
+      <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.jpg" />
       <div className="avatar mb-6 mt-6 flex items-center justify-center">
         <Avatar />
       </div>

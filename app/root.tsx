@@ -2,7 +2,7 @@ import "react-notion-x/src/styles.css";
 import "prismjs/themes/prism-tomorrow.css";
 import "katex/dist/katex.min.css";
 
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
+import type { LinksFunction } from "@remix-run/node";
 import {
   Links,
   Meta,
@@ -16,20 +16,11 @@ import { SpeedInsights } from "@vercel/speed-insights/remix";
 import notionStylesheetUrl from "./styles/notion.css?url";
 import tailwindStylesheetUrl from "./styles/tailwind.css?url";
 
-export const meta: MetaFunction = () => {
-  return [
-    { charset: "utf-8" },
-    { name: "viewport", content: "width=device-width, initial-scale=1" },
-    { property: "og:title", content: "Gleb Khaykin" },
-    { property: "og:description", content: "Personal website" },
-    {
-      name: "keywords",
-      content:
-        "Gleb Khaykin, Computer Science, Finance, Deep Learning, Machine Learning, MLOps",
-    },
-  ];
-};
-
+/**
+ * Generate link tags for the application.
+ *
+ * @returns An array of link tag objects
+ */
 export const links: LinksFunction = () => {
   return [
     // Preload styles for speed
@@ -89,6 +80,11 @@ export const links: LinksFunction = () => {
   ];
 };
 
+/**
+ * The main application component.
+ *
+ * @returns The rendered application component
+ */
 export default function App() {
   return (
     <html lang="en">

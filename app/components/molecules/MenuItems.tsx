@@ -1,5 +1,10 @@
 import { Link } from "@remix-run/react";
 
+/**
+ * Menu items component
+ *
+ * @returns Menu items component
+ */
 export const MenuItems = () => {
   return (
     <ul className="menu menu-horizontal menu-md">

@@ -6,6 +6,14 @@ interface PaginationProps {
 
 const MAX_VISIBLE_PAGES = 5;
 
+/**
+ * Pagination component
+ *
+ * @param currentPage - The current page number
+ * @param pagesInTotal - The total number of pages
+ * @param onPageChange - The function to call when the page changes
+ * @returns Pagination component
+ */
 export const Pagination = ({
   currentPage,
   pagesInTotal,
@@ -16,7 +24,7 @@ export const Pagination = ({
   const endPage = Math.min(startPage + MAX_VISIBLE_PAGES, pagesInTotal);
 
   return (
-    <div className="join mt-auto flex justify-center space-x-0">
+    <div className="font-gill-sans-regular join mt-auto flex justify-center space-x-0">
       <button
         className="btn join-item btn-sm"
         onClick={() => onPageChange(currentPage - 1)}

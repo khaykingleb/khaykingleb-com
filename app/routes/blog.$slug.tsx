@@ -34,6 +34,12 @@ const Equation = lazy(() =>
 );
 const Pdf = lazy(() =>
   import("react-notion-x/build/third-party/pdf").then((module) => ({
+    /**
+     * Default component for rendering PDF blocks.
+     *
+     * @param props - The properties object
+     * @returns The PDF component
+     */
     default: (props: { block: PdfBlock }) => {
       const PdfComponent = module.Pdf as React.ComponentType<{ file: string }>;
       return <PdfComponent file={props.block.properties?.source?.[0]?.[0]} />;
@@ -77,11 +83,23 @@ const NotionPage = React.memo(
         components={{
           Pdf,
           Collection,
+          /**
+           * Component for rendering equation blocks.
+           *
+           * @param props - The properties for the equation component
+           * @returns The equation component wrapped in ClientOnly
+           */
           Equation: (props: React.ComponentProps<typeof Equation>) => (
             <ClientOnly fallback={<div>Loading equation...</div>}>
               {() => <Equation {...props} />}
             </ClientOnly>
           ),
+          /**
+           * Component for rendering code blocks.
+           *
+           * @param props - The properties for the code component
+           * @returns The code component wrapped in ClientOnly
+           */
           Code: (props: React.ComponentProps<typeof Code>) => (
             <ClientOnly fallback={<div>Loading code...</div>}>
               {() => <Code {...props} />}
@@ -94,6 +112,12 @@ const NotionPage = React.memo(
 );
 NotionPage.displayName = "NotionPage";
 
+/**
+ * Loader function for the route.
+ *
+ * @param params - The parameters object
+ * @returns The loader data
+ */
 export const loader: LoaderFunction = async ({
   params,
 }: LoaderFunctionArgs) => {
@@ -113,6 +137,11 @@ export const loader: LoaderFunction = async ({
 };
 
 export const handle: SEOHandle = {
+  /**
+   * Asynchronously retrieve sitemap.xml entries for the route.
+   *
+   * @returns The sitemap.xml entries for the route.
+   */
   getSitemapEntries: async () => {
     return posts.map((post) => ({
       route: `/blog/${post.slug}`,
@@ -122,7 +151,12 @@ export const handle: SEOHandle = {
   },
 };
 
-// @ts-expect-error: Expect not assignable type (otherwise, it would be a server timeout)
+/**
+ * Generate metadata for the route.
+ *
+ * @param post - The post object
+ * @returns The meta tags
+ */
 export const meta: MetaFunction = ({ data }: { data: { post: Post } }) => {
   const { post } = data;
   const description = `Created at ${post.publishDate.replace(/-/g, "/")}`;
@@ -146,12 +180,17 @@ export const meta: MetaFunction = ({ data }: { data: { post: Post } }) => {
   ];
 };
 
+/**
+ * The main component for the route.
+ *
+ * @returns The route layout.
+ */
 export default function BlogPostRoute() {
   const { recordMap } = useLoaderData<typeof loader>();
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header backgroundImage="/img/van_gogh_wheatfield_with_crows.jpg" />
+      <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.jpg" />
       <main className="flex-grow px-4 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-[750px] flex-col">
           <Suspense fallback={<LoadingSpinner />}>
