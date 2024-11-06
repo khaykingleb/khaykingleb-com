@@ -106,14 +106,20 @@ export function ErrorBoundary() {
       <body className="flex min-h-screen flex-col">
         <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.jpg" />
         <main className="font-gill-sans-regular flex flex-grow flex-col items-center justify-center text-center">
-          <h1 className="mb-2 text-2xl font-bold">Something went wrong!</h1>
-          <h2 className="mb-4 text-lg">
-            {isRouteErrorResponse(error)
-              ? `Error ${error.status}: ${error.statusText}`
-              : error instanceof Error
-                ? error.message
-                : "An unexpected error occurred."}
-          </h2>
+          {isRouteErrorResponse(error) && error.status === 404 ? (
+            <h2 className="mb-4 text-2xl font-semibold">
+              Page doesn&apos;t exist
+            </h2>
+          ) : (
+            <>
+              <h1 className="mb-2 text-2xl font-semibold">
+                Something went wrong!
+              </h1>
+              <h2 className="mb-4 text-lg">
+                Please try again later or contact me if the issue persists.
+              </h2>
+            </>
+          )}
         </main>
         <Footer />
         <Scripts />

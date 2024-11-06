@@ -27,5 +27,6 @@ export default {
     "katex",
     "pageid",
     "changefreq",
+    "doesn",
   ],
 };
