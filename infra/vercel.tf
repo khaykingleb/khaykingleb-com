@@ -27,5 +27,5 @@ resource "vercel_project_domain" "www_khaykingleb_com" {
 
 resource "vercel_attack_challenge_mode" "example" {
   project_id = vercel_project.khaykingleb_com.id
-  enabled    = true
+  enabled    = false
 }
