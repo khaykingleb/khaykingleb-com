@@ -129,7 +129,7 @@ export function ErrorBoundary() {
 }
 
 /**
- * The main application component
+ * The main application component that renders the entire application
  *
  * @returns The rendered application component
  */
