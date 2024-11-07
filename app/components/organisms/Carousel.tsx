@@ -19,7 +19,7 @@ export const Carousel = ({ items }: { items: Post[] }) => {
               key={item.id}
               className="carousel-item block w-full cursor-pointer transition-all duration-300 hover:bg-gray-100"
             >
-              <div className="flex w-full p-3">
+              <div className="flex w-full items-center p-3">
                 <div className="flex-grow">
                   <h2 className="font-gill-sans-semibold mb-1 text-base sm:text-lg">
                     {item.title}
@@ -41,7 +41,7 @@ export const Carousel = ({ items }: { items: Post[] }) => {
                 <img
                   src={item.imageUrl}
                   alt={item.title}
-                  className="h-20 w-auto"
+                  className="h-28 w-auto"
                 />
               </div>
             </Link>
