@@ -66,21 +66,16 @@ export const links: LinksFunction = () => {
       href: "/site.webmanifest",
     },
 
-    // Prefetch PDF and images
+    // Images
     {
-      rel: "prefetch",
-      href: "/Gleb_Khaykin.pdf",
-      as: "document",
+      rel: "preload",
+      as: "image",
+      href: "/avatar.webp",
     },
     {
-      rel: "prefetch",
+      rel: "preload",
       as: "image",
-      href: "/avatar.jpg",
-    },
-    {
-      rel: "prefetch",
-      as: "image",
-      href: "/img/van_gogh_wheatfield_with_crows.jpg",
+      href: "/img/van_gogh_wheatfield_with_crows.webp",
     },
   ];
 };
@@ -104,7 +99,7 @@ export function ErrorBoundary() {
         <Links />
       </head>
       <body className="flex min-h-screen flex-col">
-        <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.jpg" />
+        <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.webp" />
         <main className="font-gill-sans-regular flex flex-grow flex-col items-center justify-center text-center">
           {isRouteErrorResponse(error) && error.status === 404 ? (
             <h2 className="mb-4 text-2xl font-semibold">

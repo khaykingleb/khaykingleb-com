@@ -39,7 +39,7 @@ export const meta: MetaFunction = () => {
     },
     {
       property: "og:image",
-      content: "/img/avatar.jpg",
+      content: "/avatar.webp",
     },
   ];
 };
@@ -63,7 +63,7 @@ export const handle: SEOHandle = {
 export default function IndexRoute() {
   return (
     <div className="flex min-h-screen flex-col">
-      <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.jpg" />
+      <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.webp" />
       <div className="avatar mb-6 mt-6 flex items-center justify-center">
         <Avatar />
       </div>

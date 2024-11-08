@@ -54,7 +54,7 @@ export const meta: MetaFunction = () => {
     },
     {
       property: "og:image",
-      content: "/img/van_gogh_wheatfield_with_crows.jpg",
+      content: "/img/van_gogh_wheatfield_with_crows.webp",
     },
   ];
 };
@@ -124,7 +124,7 @@ export default function BlogRoute() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.jpg" />
+      <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.webp" />
       <main className="flex flex-grow flex-col px-4 sm:px-6 lg:px-8">
         <div className="mx-auto flex w-full max-w-[750px] flex-grow flex-col">
           <TagSearchBar tagOptions={tagOptions} setTagOptions={setTagOptions} />
