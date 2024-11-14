@@ -39,7 +39,7 @@ export const meta: MetaFunction = () => {
     },
     {
       property: "og:image",
-      content: "/img/avatar.jpg",
+      content: "/avatar.webp",
     },
   ];
 };
@@ -63,12 +63,12 @@ export const handle: SEOHandle = {
 export default function IndexRoute() {
   return (
     <div className="flex min-h-screen flex-col">
-      <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.jpg" />
+      <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.webp" />
       <div className="avatar mb-6 mt-6 flex items-center justify-center">
         <Avatar />
       </div>
       <div className="flex-grow">
-        <div className="font-gill-sans-regular mx-auto max-w-[550px] px-4 text-center text-sm sm:text-base">
+        <div className="font-gill-sans mx-auto max-w-[550px] px-4 text-center text-sm sm:text-base">
           <p className="mb-3">
             Hi there! I&apos;m Gleb, a full-stack developer specializing in
             DevOps and MLOps engineering. My background includes distributed

@@ -14,7 +14,7 @@ export const posts: Post[] = [
     id: 1,
     imageUrl: "/img/posts/introduction-to-digital-signal-processing.webp",
     title: "Introduction to Digital Signal Processing",
-    tags: ["notes", "speech", "dsp"],
+    tags: ["notes", "speech"],
     notionPageId: "5987cc697c874323920215fbaad8cbbd", // pragma: allowlist secret
     slug: "introduction-to-digital-signal-processing",
     publishDate: "2024-09-22",
