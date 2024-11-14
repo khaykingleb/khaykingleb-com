@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { NavLink } from "@remix-run/react";
 
 /**
  * Menu items component
@@ -9,24 +9,39 @@ export const MenuItems = () => {
   return (
     <ul className="menu menu-horizontal menu-md">
       <li>
-        <Link to="/blog" className="btn btn-ghost text-xl sm:text-2xl">
+        <NavLink
+          to="/blog"
+          className={({ isActive }) =>
+            `btn btn-ghost text-lg sm:text-xl ${isActive ? "active" : "no-animation"}`
+          }
+          style={{ fontWeight: "bold" }}
+        >
           Blog
-        </Link>
+        </NavLink>
       </li>
       <li>
-        <Link
+        <NavLink
           to="/Gleb_Khaykin.pdf"
           prefetch="intent"
           target="_blank"
-          className="btn btn-ghost text-xl sm:text-2xl"
+          className={({ isActive }) =>
+            `btn btn-ghost text-lg sm:text-xl ${isActive ? "active" : "no-animation"}`
+          }
+          style={{ fontWeight: "bold" }}
         >
           CV
-        </Link>
+        </NavLink>
       </li>
       <li>
-        <Link to="/" className="btn btn-ghost text-xl sm:text-2xl">
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `btn btn-ghost text-lg sm:text-xl ${isActive ? "active" : "no-animation"}`
+          }
+          style={{ fontWeight: "bold" }}
+        >
           About
-        </Link>
+        </NavLink>
       </li>
     </ul>
   );

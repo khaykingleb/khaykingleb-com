@@ -100,7 +100,7 @@ export function ErrorBoundary() {
       </head>
       <body className="flex min-h-screen flex-col">
         <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.webp" />
-        <main className="font-gill-sans-regular flex flex-grow flex-col items-center justify-center text-center">
+        <main className="font-gill-sans flex flex-grow flex-col items-center justify-center text-center">
           {isRouteErrorResponse(error) && error.status === 404 ? (
             <h2 className="mb-4 text-2xl font-semibold">
               Page doesn&apos;t exist

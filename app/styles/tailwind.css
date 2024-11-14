@@ -3,45 +3,7 @@
 @tailwind utilities;
 
 @layer utilities {
-  .font-gill-sans-thin {
+  .font-gill-sans {
     font-family: "Gill Sans", sans-serif;
-    font-weight: 100;
-    font-style: normal;
-  }
-
-  .font-gill-sans-light {
-    font-family: "Gill Sans", sans-serif;
-    font-weight: 300;
-    font-style: normal;
-  }
-
-  .font-gill-sans-regular {
-    font-family: "Gill Sans", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-  }
-
-  .font-gill-sans-medium {
-    font-family: "Gill Sans", sans-serif;
-    font-weight: 500;
-    font-style: normal;
-  }
-
-  .font-gill-sans-semibold {
-    font-family: "Gill Sans", sans-serif;
-    font-weight: 600;
-    font-style: normal;
-  }
-
-  .font-gill-sans-bold {
-    font-family: "Gill Sans", sans-serif;
-    font-weight: 700;
-    font-style: normal;
-  }
-
-  .font-gill-sans-extrabold {
-    font-family: "Gill Sans", sans-serif;
-    font-weight: 800;
-    font-style: normal;
   }
 }

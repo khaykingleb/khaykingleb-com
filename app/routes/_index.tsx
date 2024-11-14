@@ -68,7 +68,7 @@ export default function IndexRoute() {
         <Avatar />
       </div>
       <div className="flex-grow">
-        <div className="font-gill-sans-regular mx-auto max-w-[550px] px-4 text-center text-sm sm:text-base">
+        <div className="font-gill-sans mx-auto max-w-[550px] px-4 text-center text-sm sm:text-base">
           <p className="mb-3">
             Hi there! I&apos;m Gleb, a full-stack developer specializing in
             DevOps and MLOps engineering. My background includes distributed

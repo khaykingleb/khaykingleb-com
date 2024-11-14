@@ -87,7 +87,7 @@ const TagItem = ({ name, onClick, checked, isFocused }: TagItemProps) => {
       >
         {checked && <FaCheck className="text-xs text-white" />}
       </span>
-      <span className="font-gill-sans-regular text-sm">{name}</span>
+      <span className="font-gill-sans text-sm">{name}</span>
     </div>
   );
 };
@@ -220,7 +220,7 @@ export const TagSearchBar = ({
 
   return (
     <div
-      className="font-gill-sans-light relative mx-auto mt-4 w-full max-w-xs"
+      className="font-gill-sans relative mx-auto mt-4 w-full max-w-xs font-light"
       ref={TagSearchBarRef}
       onKeyDown={handleKeyDown}
       role="combobox"

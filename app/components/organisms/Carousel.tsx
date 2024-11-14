@@ -21,17 +21,17 @@ export const Carousel = ({ items }: { items: Post[] }) => {
             >
               <div className="flex w-full items-center p-3">
                 <div className="flex-grow">
-                  <h2 className="font-gill-sans-semibold mb-1 text-base sm:text-lg">
+                  <h2 className="font-gill-sans mb-1 text-base font-semibold sm:text-base">
                     {item.title}
                   </h2>
-                  <p className="font-gill-sans-regular mb-2 text-sm">
+                  <p className="font-gill-sans mb-1 text-sm">
                     Created at {item.publishDate.replace(/-/g, "/")}
                   </p>
-                  <div className="font-gill-sans-regular">
+                  <div className="font-gill-sans">
                     {item.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="badge badge-ghost mr-1 bg-blue-100 bg-opacity-50 px-1.5 py-0.5 text-xs"
+                        className="badge badge-ghost ml-[-0.2rem] mr-1 bg-blue-100 bg-opacity-50 px-1.5 py-0.5 text-xs"
                       >
                         {tag}
                       </span>
@@ -49,7 +49,7 @@ export const Carousel = ({ items }: { items: Post[] }) => {
         </div>
       ) : (
         <div className="pt-40 text-center">
-          <p className="font-gill-sans-bold text-lg">No posts found</p>
+          <p className="font-gill-sans text-lg font-semibold">No posts found</p>
         </div>
       )}
     </div>
