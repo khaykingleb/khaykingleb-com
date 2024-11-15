@@ -1,6 +1,7 @@
+import { AiFillInstagram } from "react-icons/ai";
 import { FaGithub, FaLinkedin, FaTelegram } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
-import { MdEmail } from "react-icons/md";
+import { ImMail4 } from "react-icons/im";
 
 /**
  * Social media component
@@ -42,8 +43,16 @@ export const SocialMedia = () => {
       >
         <FaSquareXTwitter className="h-6 w-6" />
       </a>
+      <a
+        href="https://instagram.com/khaykingleb"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Instagram"
+      >
+        <AiFillInstagram className="-mt-0.5 h-7 w-7" />
+      </a>
       <a href="mailto:khaykingleb@gmail.com" aria-label="Email">
-        <MdEmail className="h-6 w-6" />
+        <ImMail4 className="h-6 w-6" />
       </a>
     </div>
   );
