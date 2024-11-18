@@ -23,7 +23,7 @@ export const meta: MetaFunction = () => {
     },
     {
       property: "og:title",
-      content: "About | Gleb Khaykin",
+      content: "About",
     },
     {
       property: "og:description",
