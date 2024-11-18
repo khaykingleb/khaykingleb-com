@@ -38,7 +38,7 @@ export const meta: MetaFunction = () => {
     },
     {
       property: "og:title",
-      content: "Posts | Gleb Khaykin",
+      content: "Blog",
     },
     {
       property: "og:description",
