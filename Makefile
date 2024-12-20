@@ -1,37 +1,58 @@
-SHELL := /bin/bash
 .DEFAULT_GOAL = help
+SHELL := /bin/bash
+VENDOR_DIR := vendor/react-notion-x
 
+# https://supabase.com/docs/guides/local-development/overview#database-migrations
+# https://supabase.com/docs/guides/local-development/seeding-your-database
+# https://supabase.com/docs/guides/self-hosting/docker
+# https://supabase.com/docs/reference/javascript/typescript-support?queryGroups=platform&platform=pnpm
+
+# Load environment variables from .env
+ifneq (,$(wildcard ./.env))
+    include .env
+    export
+endif
+
+##=============================================================================
 ##@ Repo Initialization
+##=============================================================================
 
-prerequisite: ## Install prerequisite tools
+PLUGINS := \
+	direnv https://github.com/asdf-community/asdf-direnv.git \
+	pre-commit https://github.com/jonathanmorley/asdf-pre-commit.git \
+	nodejs https://github.com/asdf-vm/asdf-nodejs.git \
+	pnpm https://github.com/jonathanmorley/asdf-pnpm.git \
+	yarn https://github.com/twuni/asdf-yarn.git \
+	terraform https://github.com/asdf-community/asdf-hashicorp.git
+
+prerequisites: ## Install prerequisite tools
 	@echo "Checking and installing required plugins."
-	@plugins=( \
-		"terraform https://github.com/asdf-community/asdf-hashicorp.git" \
-		"pnpm https://github.com/jonathanmorley/asdf-pnpm.git" \
-		"yarn https://github.com/twuni/asdf-yarn.git" \
-		"nodejs https://github.com/asdf-vm/asdf-nodejs.git" \
-		"pre-commit https://github.com/jonathanmorley/asdf-pre-commit.git" \
-	); \
-	for info in "$${plugins[@]}"; do \
-		read plugin url <<< "$$info"; \
+	@echo "$(PLUGINS)" | tr ' ' '\n' | paste - - | while read -r plugin url; do \
 		if asdf plugin-list | grep -q $$plugin; then \
 			echo "Plugin '$$plugin' is already installed."; \
 		else \
 			echo "Adding plugin '$$plugin'."; \
 			asdf plugin-add $$plugin $$url; \
 		fi; \
-	done;
+	done
 	@echo  "Installing specified versions."
 	asdf install
 	@echo  "Currently installed versions:"
 	asdf current
-.PHONY: prerequisite
+.PHONY: prerequisites
+
+env: ## Create .env file if it doesn't exist
+	@if ! [ -e .env ]; then \
+		cp .env.example .env; \
+		echo "Created .env file. Please edit it according to your setup."; \
+	fi
+.PHONY: env
 
 deps-notion: ## Install dependencies for react-notion-x
 	@echo "Installing dependencies for react-notion-x."
 	git submodule update --init --recursive
-	cd vendor/react-notion-x && yarn install --frozen-lockfile
-.PHONY: notion-deps
+	cd $(VENDOR_DIR) && yarn install --frozen-lockfile
+.PHONY: deps-notion
 
 deps: deps-notion ## Install repo dependencies
 	@echo "Installing dependencies."
@@ -46,15 +67,18 @@ deps-prod: deps-notion ## Install production dependencies
 pre-commit: ## Install pre-commit hooks
 	@echo "Installing pre-commit hooks."
 	pre-commit install -t pre-commit -t commit-msg
+.PHONY: pre-commit
 
-init: prerequisite deps pre-commit ## Initialize local environment for development
+init: prerequisites env deps pre-commit ## Initialize local environment for development
 .PHONY: init
 
+##=============================================================================
 ##@ Scripts
+##=============================================================================
 
 build-notion: ## Build react-notion-x
 	@echo "Building react-notion-x."
-	cd vendor/react-notion-x && yarn build
+	cd $(VENDOR_DIR) && yarn build
 .PHONY: build-notion
 
 build: build-notion ## Build project
@@ -89,33 +113,59 @@ ngrok-dev: ## Run ngrok for development server
 
 ngrok-prod: ## Run ngrok for production server
 	@echo "Running ngrok."
-	ngrok http 3000
+	ngrok http 55203
 .PHONY: ngrok-prod
 
-##@ Miscullaneous
+##=============================================================================
+##@ Supabase
+##=============================================================================
 
-create-secrets-baseline:  ## Create secrets baseline file
+supabase-run: ## Run supabase stack
+	@echo "Running supabase."
+	docker compose up -d
+	@echo "PG Connection URI: ${POSTGRES_URI}"
+	@echo
+	@echo "JWT Secret: ${JWT_SECRET}"
+	@echo "Anon Key: ${ANON_KEY}"
+	@echo "Service Key: ${SERVICE_ROLE_KEY}"
+	@echo
+	@echo "API Server: http://localhost:${KONG_HTTP_PORT}/rest/v1/"
+	@echo "Supabase Studio (Dashboard): http://localhost:${STUDIO_PORT}"
+.PHONY: supabase-run
+
+supabase-stop: ## Stop supabase stack
+	@echo "Stopping supabase."
+	docker compose down
+.PHONY: supabase-stop
+
+##=============================================================================
+##@ Miscellaneous
+##=============================================================================
+
+create-secrets-baseline: ## Create secrets baseline file
 	detect-secrets scan > .secrets.baseline
 .PHONY: create-secrets-baseline
 
-audit-secrets-baseline:  ## Check updated .secrets.baseline file
+audit-secrets-baseline: ## Check updated .secrets.baseline file
 	detect-secrets audit .secrets.baseline
 	git commit .secrets.baseline --no-verify -m "build(security): update secrets.baseline"
 .PHONY: audit-secrets-baseline
 
-update-pre-commit-hooks:  ## Update pre-commit hooks
+update-pre-commit-hooks: ## Update pre-commit hooks
 	pre-commit autoupdate
 .PHONY: update-pre-commit-hooks
 
 clean: ## Clean project
 	@echo "Cleaning project."
 	rm -rf node_modules build
-	find vendor/react-notion-x -type d -name 'build' -exec rm -rf {} +
-	find vendor/react-notion-x -type d -name 'node_modules' -exec rm -rf {} +
+	find $(VENDOR_DIR) -type d -name 'build' -exec rm -rf {} +
+	find $(VENDOR_DIR) -type d -name 'node_modules' -exec rm -rf {} +
 .PHONY: clean
 
+##=============================================================================
 ##@ Helper
+##=============================================================================
 
-help:  ## Display help
-	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage: \033[36m\033[0m\n"} /^[a-zA-Z\.\%-]+:.*?##/ { printf "  \033[36m%-24s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+help: ## Display help
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-24s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 .PHONY: help
