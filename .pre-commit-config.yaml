@@ -44,6 +44,7 @@ repos:
         types: [file]
         files: \.(js|ts|jsx|tsx)$
         args: ["--quiet"]
+        exclude: ^(vendor/|volumes/)
 
   - repo: local
     hooks:
@@ -53,6 +54,7 @@ repos:
         language: system
         types: [file]
         files: \.(js|ts|jsx|tsx|css|md|json|yaml)$
+        exclude: ^(vendor/|volumes/)
 
   - repo: https://github.com/streetsidesoftware/cspell-cli
     rev: v8.13.3
