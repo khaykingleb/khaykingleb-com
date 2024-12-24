@@ -153,9 +153,9 @@ ngrok-prod: ## Run ngrok for production server
 	@ngrok http 55203
 .PHONY: ngrok-prod
 
-##=============================================================================
-##@ Miscellaneous
-##=============================================================================
+#==============================================================================
+##@ Security
+##==============================================================================
 
 create-secrets-baseline: ## Create secrets baseline file
 	@detect-secrets scan > .secrets.baseline
@@ -163,8 +163,15 @@ create-secrets-baseline: ## Create secrets baseline file
 
 audit-secrets-baseline: ## Check updated .secrets.baseline file
 	@detect-secrets audit .secrets.baseline
-	@git commit .secrets.baseline --no-verify -m "build(security): update secrets.baseline"
 .PHONY: audit-secrets-baseline
+
+detect-secrets: ## Scan for secrets
+	@detect-secrets scan --baseline .secrets.baseline
+.PHONY: detect-secrets
+
+##=============================================================================
+##@ Miscellaneous
+##=============================================================================
 
 update-pre-commit-hooks: ## Update pre-commit hooks
 	@pre-commit autoupdate
