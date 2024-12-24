@@ -9,7 +9,7 @@ terraform.tfvars
 .terraform
 
 # Supabase
-volumes/db/data
+supabase/volumes/db/data
 
 # Misc
 .env
