@@ -1,11 +1,16 @@
+# Node
 node_modules
-/.cache
 /build
-.env
 
+# Terraform
 terraform.tfstate
 terraform.tfstate.backup
 terraform.tfvars
 .terraform
 
+# Supabase
+volumes/db/data
+
+# Misc
+.env
 .DS_Store
