@@ -14,7 +14,7 @@ import globals from "globals";
 export default [
   // Ignore specific directories
   {
-    ignores: ["build/**", "vendor/**"],
+    ignores: ["build/**", "vendor/**", "supabase/**"],
   },
 
   // Base config

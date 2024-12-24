@@ -11,6 +11,8 @@ export default {
     "node_modules",
     "package.json",
     "pnpm-lock.yaml",
+    "volumes",
+    "docker-compose.yaml",
   ],
   words: [
     "workdir",
@@ -28,5 +30,6 @@ export default {
     "pageid",
     "changefreq",
     "doesn",
+    "supabase",
   ],
 };
