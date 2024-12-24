@@ -106,16 +106,6 @@ format: ## Format project
 	@pnpm run format
 .PHONY: format
 
-ngrok-dev: ## Run ngrok for development server
-	@echo "Running ngrok."
-	@ngrok http 5173
-.PHONY: ngrok-dev
-
-ngrok-prod: ## Run ngrok for production server
-	@echo "Running ngrok."
-	@ngrok http 55203
-.PHONY: ngrok-prod
-
 ##=============================================================================
 ##@ Supabase
 ##=============================================================================
@@ -147,6 +137,21 @@ supabase-show-config: ## Show supabase config
 	@echo "Showing supabase config."
 	@docker compose config
 .PHONY: supabase-show-config
+
+
+#==============================================================================
+##@ Ngrok
+##==============================================================================
+
+ngrok-dev: ## Run ngrok for development server
+	@echo "Running ngrok."
+	@ngrok http 5173
+.PHONY: ngrok-dev
+
+ngrok-prod: ## Run ngrok for production server
+	@echo "Running ngrok."
+	@ngrok http 55203
+.PHONY: ngrok-prod
 
 ##=============================================================================
 ##@ Miscellaneous
