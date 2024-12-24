@@ -116,15 +116,25 @@ supabase-start: ## Start supabase containers
 	@supabase start
 .PHONY: supabase-start
 
-supabase-stop: ## Stop supabase containers
-	@echo "Stopping supabase."
-	@supabase stop
-.PHONY: supabase-stop
-
 supabase-status: ## Check supabase status
 	@echo "Checking supabase status."
 	@supabase status
 .PHONY: supabase-status
+
+supabase-reset: ## Reset supabase database (runs migrations and seeds)
+	@echo "Resetting supabase database."
+	@supabase db reset
+.PHONY: supabase-reset
+
+supabase-create-migration-%: ## Create supabase migration
+	@echo "Creating custom migration: supabase/migrations/some_timestamp_$*.sql"
+	@supabase db diff --use-migra -f $*
+.PHONY: supabase-create-migration
+
+supabase-stop: ## Stop supabase containers
+	@echo "Stopping supabase."
+	@supabase stop
+.PHONY: supabase-stop
 
 # supabase-start: ## Start supabase containers
 # 	@echo "Starting supabase."
@@ -205,5 +215,7 @@ clean: ## Clean project
 ##=============================================================================
 
 help: ## Display help
-	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-24s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} \
+	/^[a-zA-Z_-]+%?:.*?##/ { printf "  \033[36m%-24s\033[0m %s\n", $$1, $$2 } \
+	/^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 .PHONY: help
