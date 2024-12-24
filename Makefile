@@ -23,6 +23,7 @@ PLUGINS := \
 	nodejs https://github.com/asdf-vm/asdf-nodejs.git \
 	pnpm https://github.com/jonathanmorley/asdf-pnpm.git \
 	yarn https://github.com/twuni/asdf-yarn.git \
+	supabase-cli https://github.com/gavinying/asdf-supabase-cli.git \
 	terraform https://github.com/asdf-community/asdf-hashicorp.git
 
 prerequisites: ## Install prerequisite tools
@@ -112,31 +113,46 @@ format: ## Format project
 
 supabase-start: ## Start supabase containers
 	@echo "Starting supabase."
-	@docker compose --file supabase/docker-compose.yaml up --detach
-	@echo "PG Connection URI: ${POSTGRES_URI}"
-	@echo
-	@echo "JWT Secret: ${JWT_SECRET}"
-	@echo "Anon Key: ${ANON_KEY}"
-	@echo "Service Key: ${SERVICE_ROLE_KEY}"
-	@echo
-	@echo "API Server: http://localhost:${KONG_HTTP_PORT}/rest/v1/"
-	@echo "Supabase Studio: http://localhost:${STUDIO_PORT}"
+	@supabase start
 .PHONY: supabase-start
 
 supabase-stop: ## Stop supabase containers
 	@echo "Stopping supabase."
-	@docker compose --file supabase/docker-compose.yaml down
+	@supabase stop
 .PHONY: supabase-stop
 
-supabase-drop: ## Drop supabase database
-	@echo "Dropping supabase database."
-	@docker compose --file supabase/docker-compose.yaml down --volumes --remove-orphans
-.PHONY: supabase-drop
+supabase-status: ## Check supabase status
+	@echo "Checking supabase status."
+	@supabase status
+.PHONY: supabase-status
 
-supabase-show-config: ## Show supabase config
-	@echo "Showing supabase config."
-	@docker compose config
-.PHONY: supabase-show-config
+# supabase-start: ## Start supabase containers
+# 	@echo "Starting supabase."
+# 	@docker compose --file supabase/docker-compose.yaml up --detach
+# 	@echo "PG Connection URI: ${POSTGRES_URI}"
+# 	@echo
+# 	@echo "JWT Secret: ${JWT_SECRET}"
+# 	@echo "Anon Key: ${ANON_KEY}"
+# 	@echo "Service Key: ${SERVICE_ROLE_KEY}"
+# 	@echo
+# 	@echo "API Server: http://localhost:${KONG_HTTP_PORT}/rest/v1/"
+# 	@echo "Supabase Studio: http://localhost:${STUDIO_PORT}"
+# .PHONY: supabase-start
+
+# supabase-stop: ## Stop supabase containers
+# 	@echo "Stopping supabase."
+# 	@docker compose --file supabase/docker-compose.yaml down
+# .PHONY: supabase-stop
+
+# supabase-drop: ## Drop supabase database
+# 	@echo "Dropping supabase database."
+# 	@docker compose --file supabase/docker-compose.yaml down --volumes --remove-orphans
+# .PHONY: supabase-drop
+
+# supabase-show-config: ## Show supabase config
+# 	@echo "Showing supabase config."
+# 	@docker compose config
+# .PHONY: supabase-show-config
 
 
 #==============================================================================
