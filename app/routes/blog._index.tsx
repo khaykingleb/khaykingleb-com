@@ -63,8 +63,8 @@ export const meta: MetaFunction = () => {
 
 export const loader = async () => {
   const supabase = createClient(
-    import.meta.env.SUPABASE_URL!,
-    import.meta.env.SUPABASE_SERVICE_ROLE_KEY!,
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
   );
 
   const { data, error } = await supabase

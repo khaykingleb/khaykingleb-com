@@ -21,11 +21,12 @@ export default [
   // The one coming after would override the one before it
   eslint.configs.recommended,
 
-  // Browser environment
+  // Use both browser and node environments
   {
     languageOptions: {
       globals: {
         ...globals.browser,
+        ...globals.node,
       },
     },
   },

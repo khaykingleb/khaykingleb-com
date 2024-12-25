@@ -110,8 +110,8 @@ export const loader: LoaderFunction = async ({
   }
 
   const supabase = createClient(
-    import.meta.env.SUPABASE_URL!,
-    import.meta.env.SUPABASE_SERVICE_ROLE_KEY!,
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
   );
   const { data: post, error } = await supabase
     .from("posts")
@@ -137,8 +137,8 @@ export const handle: SEOHandle = {
    */
   getSitemapEntries: async () => {
     const supabase = createClient(
-      import.meta.env.SUPABASE_URL!,
-      import.meta.env.SUPABASE_SERVICE_ROLE_KEY!,
+      process.env.SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!,
     );
     const { data: posts } = await supabase
       .from("posts")
