@@ -2,11 +2,6 @@
 SHELL := /bin/bash
 VENDOR_DIR := vendor/react-notion-x
 
-# https://supabase.com/docs/guides/local-development/overview#database-migrations
-# https://supabase.com/docs/guides/local-development/seeding-your-database
-# https://supabase.com/docs/guides/self-hosting/docker
-# https://supabase.com/docs/reference/javascript/typescript-support?queryGroups=platform&platform=pnpm
-
 # Load environment variables from .env
 ifneq (,$(wildcard ./.env))
     include .env
