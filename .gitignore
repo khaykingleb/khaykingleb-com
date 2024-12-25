@@ -14,3 +14,4 @@ supabase/volumes/db/data
 # Misc
 .env
 .DS_Store
+.vscode/
