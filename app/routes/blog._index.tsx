@@ -1,5 +1,7 @@
 import { SEOHandle } from "@nasa-gcn/remix-seo";
-import { MetaFunction } from "@remix-run/node";
+import { json, MetaFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+import { createClient } from "@supabase/supabase-js";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { TagSearchBar } from "~/components/molecules/TagSearchBar";
@@ -7,7 +9,7 @@ import { Carousel } from "~/components/organisms/Carousel";
 import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
 import { Pagination } from "~/components/organisms/Pagination";
-import { posts } from "~/data/posts";
+import { Tables } from "~/integrations/supabase/database.types";
 
 export const handle: SEOHandle = {
   /**
@@ -59,6 +61,24 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+export const loader = async () => {
+  const supabase = createClient(
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  );
+
+  const { data, error } = await supabase
+    .from("posts")
+    .select("*")
+    .returns<Tables<"posts">[]>();
+
+  if (error) {
+    throw new Response("Failed to load posts", { status: 500 });
+  }
+
+  return json({ posts: data });
+};
+
 // TODO: have conflict with Pagination component
 const MAX_POSTS_PER_PAGE_DESKTOP = 4;
 const MAX_POSTS_PER_PAGE_MOBILE = 3;
@@ -71,6 +91,8 @@ const MAX_POSTS_PER_PAGE_MOBILE = 3;
 export default function BlogRoute() {
   const [postsPerPage, setPostsPerPage] = useState(MAX_POSTS_PER_PAGE_DESKTOP);
   const [currentPage, setCurrentPage] = useState(0);
+
+  const { posts } = useLoaderData<typeof loader>();
   const [tagOptions, setTagOptions] = useState(
     Array.from(new Set(posts.flatMap((post) => post.tags)))
       .sort()
@@ -93,7 +115,7 @@ export default function BlogRoute() {
       posts.filter((post) =>
         selectedTags.every((tag) => post.tags.includes(tag)),
       ),
-    [selectedTags],
+    [selectedTags, posts],
   );
 
   useEffect(() => {
@@ -130,7 +152,7 @@ export default function BlogRoute() {
           <TagSearchBar tagOptions={tagOptions} setTagOptions={setTagOptions} />
           <div className="flex-grow">
             <Carousel
-              items={filteredPosts.slice(
+              posts={filteredPosts.slice(
                 currentPage * postsPerPage,
                 (currentPage + 1) * postsPerPage,
               )}
