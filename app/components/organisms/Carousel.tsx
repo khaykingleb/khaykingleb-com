@@ -1,34 +1,39 @@
 import { Link } from "@remix-run/react";
 
-import { Post } from "~/data/posts";
+import { Tables } from "~/integrations/supabase/database.types";
 
 /**
  * Carousel component to display a list of posts
  *
- * @param items - Array of post items to display
+ * @param posts - Array of post items to display
  * @returns Carousel component
  */
-export const Carousel = ({ items }: { items: Post[] }) => {
+export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
   return (
     <div className="mb-2 mt-2">
-      {items.length > 0 ? (
+      {posts.length > 0 ? (
         <div className="carousel carousel-vertical h-full w-full">
-          {items.map((item) => (
+          {posts.map((post) => (
             <Link
-              to={`/blog/${item.slug}`}
-              key={item.id}
+              to={`/blog/${post.slug}`}
+              key={post.id}
               className="carousel-item block w-full cursor-pointer transition-all duration-300 hover:bg-gray-100"
             >
               <div className="flex w-full items-center p-3">
                 <div className="flex-grow">
                   <h2 className="font-gill-sans mb-1 text-base font-semibold sm:text-base">
-                    {item.title}
+                    {post.title}
                   </h2>
                   <p className="font-gill-sans mb-1 text-sm">
-                    Created at {item.publishDate.replace(/-/g, "/")}
+                    Created at{" "}
+                    {new Date(post.created_at).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "numeric",
+                      day: "numeric",
+                    })}
                   </p>
                   <div className="font-gill-sans">
-                    {item.tags.map((tag) => (
+                    {post.tags.map((tag) => (
                       <span
                         key={tag}
                         className="badge badge-ghost ml-[-0.2rem] mr-1 bg-blue-100 bg-opacity-50 px-1.5 py-0.5 text-xs"
@@ -39,8 +44,8 @@ export const Carousel = ({ items }: { items: Post[] }) => {
                   </div>
                 </div>
                 <img
-                  src={item.imageUrl}
-                  alt={item.title}
+                  src={post.image_url}
+                  alt={post.title}
                   className="h-28 w-auto"
                 />
               </div>

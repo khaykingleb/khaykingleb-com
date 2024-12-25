@@ -6,6 +6,7 @@ import {
   MetaFunction,
 } from "@remix-run/node";
 import { Await, useLoaderData } from "@remix-run/react";
+import { createClient } from "@supabase/supabase-js";
 import { NotionAPI } from "notion-client";
 import React, { Suspense } from "react";
 import { ClientOnly } from "remix-utils/client-only";
@@ -21,7 +22,7 @@ import { NotionRenderer } from "vendor/react-notion-x/packages/react-notion-x";
 import { LoadingSpinner } from "~/components/atoms/LoadingSpinner";
 import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
-import { Post, posts } from "~/data/posts";
+import { Tables } from "~/integrations/supabase/database.types";
 
 const Equation = React.lazy(() =>
   import("react-notion-x/build/third-party/equation").then((module) => ({
@@ -108,14 +109,23 @@ export const loader: LoaderFunction = async ({
     throw new Response("Slug is required", { status: 400 });
   }
 
-  const post = posts.find((p) => p.slug === slug);
-  if (!post) {
+  const supabase = createClient(
+    import.meta.env.SUPABASE_URL!,
+    import.meta.env.SUPABASE_SERVICE_ROLE_KEY!,
+  );
+  const { data: post, error } = await supabase
+    .from("posts")
+    .select("*")
+    .eq("slug", slug)
+    .returns<Tables<"posts">[]>()
+    .single();
+
+  if (error) {
     throw new Response("Post not found", { status: 404 });
   }
 
   const notion = new NotionAPI();
-  const recordMapPromise = notion.getPage(post.notionPageId);
-
+  const recordMapPromise = notion.getPage(post.notion_page_id);
   return defer({ post, recordMap: recordMapPromise });
 };
 
@@ -126,7 +136,16 @@ export const handle: SEOHandle = {
    * @returns The sitemap.xml entries for the route
    */
   getSitemapEntries: async () => {
-    return posts.map((post) => ({
+    const supabase = createClient(
+      import.meta.env.SUPABASE_URL!,
+      import.meta.env.SUPABASE_SERVICE_ROLE_KEY!,
+    );
+    const { data: posts } = await supabase
+      .from("posts")
+      .select("slug")
+      .returns<Tables<"posts">[]>();
+
+    return (posts || []).map((post) => ({
       route: `/blog/${post.slug}`,
       priority: 0.7,
       changefreq: "monthly",
@@ -141,9 +160,19 @@ export const handle: SEOHandle = {
  * @returns The meta tags
  */
 // @ts-expect-error: Expect not assignable type (otherwise, it would be a server timeout)
-export const meta: MetaFunction = ({ data }: { data: { post: Post } }) => {
+export const meta: MetaFunction = ({
+  data,
+}: {
+  data: { post: Tables<"posts"> };
+}) => {
   const { post } = data;
-  const description = `Created at ${post.publishDate.replace(/-/g, "/")}`;
+
+  const dateStr = new Date(post.created_at).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  });
+  const description = `Created at ${dateStr}`;
 
   return [
     { charset: "utf-8" },
@@ -157,7 +186,7 @@ export const meta: MetaFunction = ({ data }: { data: { post: Post } }) => {
     },
     {
       property: "og:image",
-      content: post.imageUrl || "/img/van_gogh_wheatfield_with_crows.webp",
+      content: post.image_url || "/img/van_gogh_wheatfield_with_crows.webp",
     },
     {
       property: "og:title",
@@ -173,7 +202,7 @@ export const meta: MetaFunction = ({ data }: { data: { post: Post } }) => {
     },
     {
       property: "article:published_time",
-      content: post.publishDate,
+      content: post.created_at,
     },
     {
       property: "og:url",

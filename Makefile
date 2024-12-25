@@ -126,44 +126,20 @@ supabase-reset: ## Reset supabase database (runs migrations and seeds)
 	@supabase db reset
 .PHONY: supabase-reset
 
-supabase-create-migration-%: ## Create supabase migration
+supabase-migration-%: ## Create supabase migration
 	@echo "Creating custom migration: supabase/migrations/some_timestamp_$*.sql"
 	@supabase db diff --use-migra -f $*
-.PHONY: supabase-create-migration
+.PHONY: supabase-migration-%
+
+supabase-generate-types: ## Generate supabase types
+	@echo "Generating supabase types."
+	@supabase gen types typescript --local > app/integrations/supabase/database.types.ts
+.PHONY: supabase-generate-types
 
 supabase-stop: ## Stop supabase containers
 	@echo "Stopping supabase."
 	@supabase stop
 .PHONY: supabase-stop
-
-# supabase-start: ## Start supabase containers
-# 	@echo "Starting supabase."
-# 	@docker compose --file supabase/docker-compose.yaml up --detach
-# 	@echo "PG Connection URI: ${POSTGRES_URI}"
-# 	@echo
-# 	@echo "JWT Secret: ${JWT_SECRET}"
-# 	@echo "Anon Key: ${ANON_KEY}"
-# 	@echo "Service Key: ${SERVICE_ROLE_KEY}"
-# 	@echo
-# 	@echo "API Server: http://localhost:${KONG_HTTP_PORT}/rest/v1/"
-# 	@echo "Supabase Studio: http://localhost:${STUDIO_PORT}"
-# .PHONY: supabase-start
-
-# supabase-stop: ## Stop supabase containers
-# 	@echo "Stopping supabase."
-# 	@docker compose --file supabase/docker-compose.yaml down
-# .PHONY: supabase-stop
-
-# supabase-drop: ## Drop supabase database
-# 	@echo "Dropping supabase database."
-# 	@docker compose --file supabase/docker-compose.yaml down --volumes --remove-orphans
-# .PHONY: supabase-drop
-
-# supabase-show-config: ## Show supabase config
-# 	@echo "Showing supabase config."
-# 	@docker compose config
-# .PHONY: supabase-show-config
-
 
 #==============================================================================
 ##@ Ngrok
