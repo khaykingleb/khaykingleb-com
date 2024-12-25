@@ -51,5 +51,8 @@ jobs:
         with:
           version: latest
 
-      - name: Deploy
-        run: supabase functions deploy --project-ref ${{ env.PROJECT_ID }}
+      - name: Run Migrations
+        run: supabase db push --project-ref ${{ env.PROJECT_ID }}
+
+      - name: Seed Database
+        run: supabase db seed --project-ref ${{ env.PROJECT_ID }}
