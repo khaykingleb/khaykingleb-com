@@ -19,7 +19,6 @@ import {
 import { ExtendedRecordMap } from "vendor/react-notion-x/packages/notion-types/src/maps";
 import { NotionRenderer } from "vendor/react-notion-x/packages/react-notion-x";
 
-import { LoadingSpinner } from "~/components/atoms/LoadingSpinner";
 import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
 import { Tables } from "~/integrations/supabase/database.types";
@@ -95,6 +94,7 @@ const NotionPage = ({ recordMap }: { recordMap: ExtendedRecordMap }) => {
   );
 };
 
+// TODO: use cache to avoid re-fetching posts on every page load
 /**
  * Loader function for the route.
  *
@@ -222,9 +222,13 @@ export default function BlogPostRoute() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.webp" />
-      <main className="flex-grow px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-[750px] flex-col">
-          <Suspense fallback={<LoadingSpinner />}>
+      <main className="flex flex-grow px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex w-full max-w-[750px] flex-col">
+          <Suspense
+            fallback={
+              <div className="mb-2 mt-4 w-full flex-grow animate-pulse rounded-lg bg-gray-200" />
+            }
+          >
             <Await resolve={recordMap}>
               {(resolvedRecordMap: ExtendedRecordMap) => {
                 return <NotionPage recordMap={resolvedRecordMap} />;
