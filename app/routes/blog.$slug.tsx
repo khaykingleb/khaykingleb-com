@@ -5,7 +5,11 @@ import {
   LoaderFunctionArgs,
   MetaFunction,
 } from "@remix-run/node";
-import { Await, useLoaderData } from "@remix-run/react";
+import {
+  Await,
+  ClientLoaderFunctionArgs,
+  useLoaderData,
+} from "@remix-run/react";
 import { createClient } from "@supabase/supabase-js";
 import { NotionAPI } from "notion-client";
 import React, { Suspense } from "react";
@@ -113,103 +117,175 @@ export const loader: LoaderFunction = async ({
     process.env.SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
   );
-  const { data: post, error } = await supabase
+  const postPromise = supabase
     .from("posts")
     .select("*")
     .eq("slug", slug)
     .returns<Tables<"posts">[]>()
-    .single();
-
-  if (error) {
-    throw new Response("Post not found", { status: 404 });
-  }
+    .single()
+    .then(({ data, error }) => {
+      if (error) throw new Response("Failed to load post", { status: 500 });
+      return data;
+    });
 
   const notion = new NotionAPI();
-  const recordMapPromise = notion.getPage(post.notion_page_id);
-  return defer({ post, recordMap: recordMapPromise });
+  const recordMapPromise = postPromise.then((post) =>
+    notion.getPage(post.notion_page_id),
+  );
+
+  return defer({ post: postPromise, recordMap: recordMapPromise });
 };
 
-export const handle: SEOHandle = {
-  /**
-   * Asynchronously retrieve sitemap.xml entries for the route
-   *
-   * @returns The sitemap.xml entries for the route
-   */
-  getSitemapEntries: async () => {
-    const supabase = createClient(
-      process.env.SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    );
-    const { data: posts } = await supabase
-      .from("posts")
-      .select("slug")
-      .returns<Tables<"posts">[]>();
+const CACHE_DURATION = 24 * 60 * 60 * 1000; // 1 day in milliseconds
 
-    return (posts || []).map((post) => ({
-      route: `/blog/${post.slug}`,
-      priority: 0.7,
-      changefreq: "monthly",
-    }));
-  },
+export const clientLoader = async ({
+  params,
+  serverLoader,
+}: ClientLoaderFunctionArgs) => {
+  const cachedData = sessionStorage.getItem(`blogPosts-${params.slug}`);
+  const cachedTimestamp = sessionStorage.getItem(
+    `blogPostsTimestamp-${params.slug}`,
+  );
+
+  // Use cached data if it's valid
+  if (cachedData && cachedTimestamp) {
+    const isExpired = Date.now() - Number(cachedTimestamp) > CACHE_DURATION;
+    const parsedData = JSON.parse(cachedData);
+    if (!isExpired && parsedData.post && parsedData.recordMap) {
+      return {
+        post: Promise.resolve(parsedData.post),
+        recordMap: Promise.resolve(parsedData.recordMap),
+      };
+    }
+  }
+
+  // Get fresh data from server
+  const serverData = (await serverLoader()) as {
+    post: Promise<Tables<"posts">>;
+    recordMap: Promise<ExtendedRecordMap>;
+  };
+
+  // Cache the data after it resolves
+  Promise.all([serverData.post, serverData.recordMap]).then(
+    ([post, recordMap]) => {
+      sessionStorage.setItem(
+        `blogPosts-${params.slug}`,
+        JSON.stringify({ post, recordMap }),
+      );
+      sessionStorage.setItem(
+        `blogPostsTimestamp-${params.slug}`,
+        Date.now().toString(),
+      );
+      console.log("Cached fresh data");
+    },
+  );
+
+  return serverData;
 };
+// Tell Remix to use the client loader during hydration
+clientLoader.hydrate = true;
 
-/**
- * Generate metadata for the route
- *
- * @param post - The post object
- * @returns The meta tags
- */
-// @ts-expect-error: Expect not assignable type (otherwise, it would be a server timeout)
-export const meta: MetaFunction = ({
-  data,
-}: {
-  data: { post: Tables<"posts"> };
-}) => {
-  const { post } = data;
+// export const handle: SEOHandle = {
+//   /**
+//    * Asynchronously retrieve sitemap.xml entries for the route
+//    *
+//    * @returns The sitemap.xml entries for the route
+//    */
+//   getSitemapEntries: async () => {
+//     const supabase = createClient(
+//       process.env.SUPABASE_URL!,
+//       process.env.SUPABASE_SERVICE_ROLE_KEY!,
+//     );
+//     const { data: posts } = await supabase
+//       .from("posts")
+//       .select("slug")
+//       .returns<Tables<"posts">[]>();
 
-  const dateStr = new Date(post.created_at).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "numeric",
-    day: "numeric",
-  });
-  const description = `Created at ${dateStr}`;
+//     return (posts || []).map((post) => ({
+//       route: `/blog/${post.slug}`,
+//       priority: 0.7,
+//       changefreq: "monthly",
+//     }));
+//   },
+// };
 
-  return [
-    { charset: "utf-8" },
-    {
-      name: "author",
-      content: "Gleb Khaykin",
-    },
-    {
-      name: "viewport",
-      content: "width=device-width, initial-scale=1",
-    },
-    {
-      property: "og:image",
-      content: post.image_url || "/img/van_gogh_wheatfield_with_crows.webp",
-    },
-    {
-      property: "og:title",
-      content: post.title,
-    },
-    {
-      property: "og:description",
-      content: description,
-    },
-    {
-      property: "og:type",
-      content: "article",
-    },
-    {
-      property: "article:published_time",
-      content: post.created_at,
-    },
-    {
-      property: "og:url",
-      content: `https://khaykingleb.com/blog/${post.slug}`,
-    },
-  ];
-};
+// /**
+//  * Generate metadata for the route
+//  *
+//  * @param post - The post object
+//  * @returns The meta tags
+//  */
+// export const meta: MetaFunction<typeof loader> = ({ data }) => {
+//   // If no data at all
+//   if (!data) {
+//     return [
+//       { title: "Post not found" },
+//       { description: "The requested blog post could not be found" }
+//     ];
+//   }
+
+//   // If post is a promise (still loading)
+//   if (data.post instanceof Promise) {
+//     return [
+//       { title: "Loading..." },
+//       { description: "Loading blog post..." }
+//     ];
+//   }
+
+//   // Format the date in a more readable way
+//   const createdDate = new Date(data.post.created_at);
+//   const formattedDate = createdDate.toLocaleDateString('en-US', {
+//     year: 'numeric',
+//     month: 'long',
+//     day: 'numeric'
+//   });
+
+//   return [
+//     { title: data.post.title },
+//     { description: `Published on ${formattedDate}` },
+//     { charset: "utf-8" },
+//     {
+//       name: "viewport",
+//       content: "width=device-width, initial-scale=1",
+//     },
+//     {
+//       name: "author",
+//       content: "Gleb Khaykin",
+//     },
+//     {
+//       property: "og:title",
+//       content: data.post.title,
+//     },
+//     {
+//       property: "og:description",
+//       content: `Published on ${formattedDate}`,
+//     },
+//     {
+//       property: "og:type",
+//       content: "article",
+//     },
+//     {
+//       property: "og:url",
+//       content: `https://khaykingleb.com/blog/${data.post.slug}`,
+//     },
+//     {
+//       property: "og:image",
+//       content: data.post.image_url || "/img/van_gogh_wheatfield_with_crows.webp",
+//     },
+//     {
+//       property: "article:published_time",
+//       content: data.post.created_at,
+//     },
+//     {
+//       property: "article:modified_time",
+//       content: data.post.updated_at || data.post.created_at,
+//     },
+//     {
+//       property: "article:tag",
+//       content: Array.isArray(data.post.tags) ? data.post.tags.join(", ") : "",
+//     },
+//   ];
+// };
 
 /**
  * The main component for the route
