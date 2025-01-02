@@ -218,7 +218,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const createdDate = new Date(data.post.created_at);
   const formattedDate = createdDate.toLocaleDateString("en-US", {
     year: "numeric",
-    month: "numeric",
+    month: "long",
     day: "numeric",
   });
 
