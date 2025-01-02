@@ -71,7 +71,6 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-// TODO: use cache to avoid re-fetching posts on every page load
 export const loader = async () => {
   const supabase = createClient(
     process.env.SUPABASE_URL!,
