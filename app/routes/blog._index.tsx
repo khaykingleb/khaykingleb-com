@@ -1,6 +1,10 @@
 import { SEOHandle } from "@nasa-gcn/remix-seo";
 import { defer, MetaFunction } from "@remix-run/node";
-import { Await, useLoaderData } from "@remix-run/react";
+import {
+  Await,
+  ClientLoaderFunctionArgs,
+  useLoaderData,
+} from "@remix-run/react";
 import { createClient } from "@supabase/supabase-js";
 import React, {
   Suspense,
@@ -87,6 +91,37 @@ export const loader = async () => {
     posts: postsPromise as Promise<Tables<"posts">[]>,
   });
 };
+
+const CACHE_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
+
+export const clientLoader = async ({
+  serverLoader,
+}: ClientLoaderFunctionArgs) => {
+  const cachedData = sessionStorage.getItem("blogPosts");
+  const cachedTimestamp = sessionStorage.getItem("blogPostsTimestamp");
+
+  // Use cached data if it's valid
+  if (cachedData && cachedTimestamp) {
+    const isExpired = Date.now() - Number(cachedTimestamp) > CACHE_DURATION;
+    const parsedData = JSON.parse(cachedData);
+    if (!isExpired && parsedData.posts?.length > 0) {
+      return { posts: Promise.resolve(parsedData.posts) };
+    }
+  }
+
+  // Get fresh data from server and cache it
+  const serverData = (await serverLoader()) as {
+    posts: Promise<Tables<"posts">[]>;
+  };
+  const resolvedPosts = await serverData.posts;
+
+  sessionStorage.setItem("blogPosts", JSON.stringify({ posts: resolvedPosts }));
+  sessionStorage.setItem("blogPostsTimestamp", Date.now().toString());
+
+  return serverData;
+};
+// Tell Remix to use the client loader during hydration
+clientLoader.hydrate = true;
 
 const MAX_POSTS_PER_PAGE_DESKTOP = 4;
 const MAX_POSTS_PER_PAGE_MOBILE = 3;
