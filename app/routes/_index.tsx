@@ -12,15 +12,6 @@ import { Header } from "~/components/organisms/Header";
  */
 export const meta: MetaFunction = () => {
   return [
-    { charset: "utf-8" },
-    {
-      name: "viewport",
-      content: "width=device-width, initial-scale=1",
-    },
-    {
-      name: "author",
-      content: "Gleb Khaykin",
-    },
     {
       property: "og:title",
       content: "About",
