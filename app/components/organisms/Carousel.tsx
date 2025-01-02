@@ -10,7 +10,7 @@ import { Tables } from "~/integrations/supabase/database.types";
  */
 export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
   return (
-    <div className="mb-2 mt-2">
+    <div>
       {posts.length > 0 ? (
         <div className="carousel carousel-vertical h-full w-full">
           {posts.map((post) => (
