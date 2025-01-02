@@ -113,10 +113,10 @@ export const clientLoader = async ({
   const serverData = (await serverLoader()) as {
     posts: Promise<Tables<"posts">[]>;
   };
-  const resolvedPosts = await serverData.posts;
-
-  sessionStorage.setItem("blogPosts", JSON.stringify({ posts: resolvedPosts }));
-  sessionStorage.setItem("blogPostsTimestamp", Date.now().toString());
+  serverData.posts.then((posts) => {
+    sessionStorage.setItem("blogPosts", JSON.stringify({ posts }));
+    sessionStorage.setItem("blogPostsTimestamp", Date.now().toString());
+  });
 
   return serverData;
 };
