@@ -92,7 +92,7 @@ const TagItem = ({ name, onClick, checked, isFocused }: TagItemProps) => {
   );
 };
 
-interface TagOption {
+export interface TagOption {
   name: string;
   selected: boolean;
 }
@@ -220,7 +220,7 @@ export const TagSearchBar = ({
 
   return (
     <div
-      className="font-gill-sans relative mx-auto mt-4 w-full max-w-xs font-light"
+      className="font-gill-sans relative mx-auto mb-4 mt-4 w-full max-w-xs font-light"
       ref={TagSearchBarRef}
       onKeyDown={handleKeyDown}
       role="combobox"

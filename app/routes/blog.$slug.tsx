@@ -5,7 +5,12 @@ import {
   LoaderFunctionArgs,
   MetaFunction,
 } from "@remix-run/node";
-import { Await, useLoaderData } from "@remix-run/react";
+import {
+  Await,
+  ClientLoaderFunction,
+  ClientLoaderFunctionArgs,
+  useLoaderData,
+} from "@remix-run/react";
 import { createClient } from "@supabase/supabase-js";
 import { NotionAPI } from "notion-client";
 import React, { Suspense } from "react";
@@ -19,7 +24,6 @@ import {
 import { ExtendedRecordMap } from "vendor/react-notion-x/packages/notion-types/src/maps";
 import { NotionRenderer } from "vendor/react-notion-x/packages/react-notion-x";
 
-import { LoadingSpinner } from "~/components/atoms/LoadingSpinner";
 import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
 import { Tables } from "~/integrations/supabase/database.types";
@@ -104,30 +108,74 @@ const NotionPage = ({ recordMap }: { recordMap: ExtendedRecordMap }) => {
 export const loader: LoaderFunction = async ({
   params,
 }: LoaderFunctionArgs) => {
-  const slug = params.slug;
-  if (!slug) {
-    throw new Response("Slug is required", { status: 400 });
-  }
-
   const supabase = createClient(
     process.env.SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
   );
-  const { data: post, error } = await supabase
+  const { data, error } = await supabase
     .from("posts")
     .select("*")
-    .eq("slug", slug)
+    .eq("slug", params.slug)
     .returns<Tables<"posts">[]>()
     .single();
 
-  if (error) {
-    throw new Response("Post not found", { status: 404 });
-  }
+  if (error) throw new Response("Failed to load post", { status: 500 });
+  if (!data) throw new Response("Post not found", { status: 404 });
 
   const notion = new NotionAPI();
-  const recordMapPromise = notion.getPage(post.notion_page_id);
-  return defer({ post, recordMap: recordMapPromise });
+  const recordMapPromise = notion.getPage(data.notion_page_id);
+
+  return defer({ post: data, recordMap: recordMapPromise });
 };
+
+const CACHE_DURATION = 24 * 60 * 60 * 1000; // 1 day in milliseconds
+
+export const clientLoader: ClientLoaderFunction = async ({
+  params,
+  serverLoader,
+}: ClientLoaderFunctionArgs) => {
+  const cachedData = sessionStorage.getItem(`blogPosts-${params.slug}`);
+  const cachedTimestamp = sessionStorage.getItem(
+    `blogPostsTimestamp-${params.slug}`,
+  );
+
+  // Use cached data if it's valid
+  if (cachedData && cachedTimestamp) {
+    const isExpired = Date.now() - Number(cachedTimestamp) > CACHE_DURATION;
+    const parsedData = JSON.parse(cachedData);
+    if (!isExpired && parsedData.post && parsedData.recordMap) {
+      return {
+        post: parsedData.post,
+        recordMap: Promise.resolve(parsedData.recordMap),
+      };
+    }
+  }
+
+  // Get fresh data from server
+  const serverData = (await serverLoader()) as {
+    post: Tables<"posts">;
+    recordMap: Promise<ExtendedRecordMap>;
+  };
+
+  // Cache the data
+  Promise.resolve(serverData.recordMap).then((recordMap) => {
+    sessionStorage.setItem(
+      `blogPosts-${params.slug}`,
+      JSON.stringify({
+        post: serverData.post,
+        recordMap,
+      }),
+    );
+    sessionStorage.setItem(
+      `blogPostsTimestamp-${params.slug}`,
+      Date.now().toString(),
+    );
+  });
+
+  return serverData;
+};
+// Tell Remix to use the client loader during hydration
+clientLoader.hydrate = true;
 
 export const handle: SEOHandle = {
   /**
@@ -159,54 +207,52 @@ export const handle: SEOHandle = {
  * @param post - The post object
  * @returns The meta tags
  */
-// @ts-expect-error: Expect not assignable type (otherwise, it would be a server timeout)
-export const meta: MetaFunction = ({
-  data,
-}: {
-  data: { post: Tables<"posts"> };
-}) => {
-  const { post } = data;
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  if (!data) {
+    return [
+      { title: "Blog Post Not Found" },
+      { description: "The requested blog post could not be found." },
+    ];
+  }
 
-  const dateStr = new Date(post.created_at).toLocaleDateString("en-US", {
+  const createdDate = new Date(data.post.created_at);
+  const formattedDate = createdDate.toLocaleDateString("en-US", {
     year: "numeric",
-    month: "numeric",
+    month: "long",
     day: "numeric",
   });
-  const description = `Created at ${dateStr}`;
 
   return [
-    { charset: "utf-8" },
-    {
-      name: "author",
-      content: "Gleb Khaykin",
-    },
-    {
-      name: "viewport",
-      content: "width=device-width, initial-scale=1",
-    },
-    {
-      property: "og:image",
-      content: post.image_url || "/img/van_gogh_wheatfield_with_crows.webp",
-    },
+    { title: data.post.title },
+    { description: `Published on ${formattedDate}` },
     {
       property: "og:title",
-      content: post.title,
+      content: data.post.title,
     },
     {
       property: "og:description",
-      content: description,
+      content: `Published on ${formattedDate}`,
     },
     {
       property: "og:type",
       content: "article",
     },
     {
-      property: "article:published_time",
-      content: post.created_at,
+      property: "og:url",
+      content: `https://khaykingleb.com/blog/${data.post.slug}`,
     },
     {
-      property: "og:url",
-      content: `https://khaykingleb.com/blog/${post.slug}`,
+      property: "og:image",
+      content:
+        data.post.image_url || "/img/van_gogh_wheatfield_with_crows.webp",
+    },
+    {
+      property: "article:published_time",
+      content: data.post.created_at,
+    },
+    {
+      property: "article:tag",
+      content: Array.isArray(data.post.tags) ? data.post.tags.join(", ") : "",
     },
   ];
 };
@@ -222,9 +268,13 @@ export default function BlogPostRoute() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.webp" />
-      <main className="flex-grow px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-[750px] flex-col">
-          <Suspense fallback={<LoadingSpinner />}>
+      <main className="flex flex-grow px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex w-full max-w-[750px] flex-col">
+          <Suspense
+            fallback={
+              <div className="mb-2 mt-4 w-full flex-grow animate-pulse rounded-lg bg-gray-200" />
+            }
+          >
             <Await resolve={recordMap}>
               {(resolvedRecordMap: ExtendedRecordMap) => {
                 return <NotionPage recordMap={resolvedRecordMap} />;

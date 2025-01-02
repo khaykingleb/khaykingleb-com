@@ -10,7 +10,7 @@ import { Tables } from "~/integrations/supabase/database.types";
  */
 export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
   return (
-    <div className="mb-2 mt-2">
+    <div>
       {posts.length > 0 ? (
         <div className="carousel carousel-vertical h-full w-full">
           {posts.map((post) => (
@@ -25,10 +25,10 @@ export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
                     {post.title}
                   </h2>
                   <p className="font-gill-sans mb-1 text-sm">
-                    Created at{" "}
+                    Published on{" "}
                     {new Date(post.created_at).toLocaleDateString("en-US", {
                       year: "numeric",
-                      month: "numeric",
+                      month: "long",
                       day: "numeric",
                     })}
                   </p>
