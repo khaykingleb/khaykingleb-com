@@ -83,8 +83,8 @@ const CACHE_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
 export const clientLoader = async ({
   serverLoader,
 }: ClientLoaderFunctionArgs) => {
-  const cachedData = sessionStorage.getItem("blogPosts");
-  const cachedTimestamp = sessionStorage.getItem("blogPostsTimestamp");
+  const cachedData = localStorage.getItem("blogPosts");
+  const cachedTimestamp = localStorage.getItem("blogPostsTimestamp");
 
   // Use cached data if it's valid
   if (cachedData && cachedTimestamp) {
@@ -100,8 +100,8 @@ export const clientLoader = async ({
     posts: Promise<Tables<"posts">[]>;
   };
   serverData.posts.then((posts) => {
-    sessionStorage.setItem("blogPosts", JSON.stringify({ posts }));
-    sessionStorage.setItem("blogPostsTimestamp", Date.now().toString());
+    localStorage.setItem("blogPosts", JSON.stringify({ posts }));
+    localStorage.setItem("blogPostsTimestamp", Date.now().toString());
   });
 
   return serverData;
