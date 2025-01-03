@@ -25,7 +25,6 @@ export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
                     {post.title}
                   </h2>
                   <p className="font-gill-sans mb-1 text-sm">
-                    Published on{" "}
                     {new Date(post.created_at).toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "long",
