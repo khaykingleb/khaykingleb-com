@@ -134,8 +134,8 @@ export const clientLoader: ClientLoaderFunction = async ({
   params,
   serverLoader,
 }: ClientLoaderFunctionArgs) => {
-  const cachedData = sessionStorage.getItem(`blogPosts-${params.slug}`);
-  const cachedTimestamp = sessionStorage.getItem(
+  const cachedData = localStorage.getItem(`blogPosts-${params.slug}`);
+  const cachedTimestamp = localStorage.getItem(
     `blogPostsTimestamp-${params.slug}`,
   );
 
@@ -159,14 +159,14 @@ export const clientLoader: ClientLoaderFunction = async ({
 
   // Cache the data
   Promise.resolve(serverData.recordMap).then((recordMap) => {
-    sessionStorage.setItem(
+    localStorage.setItem(
       `blogPosts-${params.slug}`,
       JSON.stringify({
         post: serverData.post,
         recordMap,
       }),
     );
-    sessionStorage.setItem(
+    localStorage.setItem(
       `blogPostsTimestamp-${params.slug}`,
       Date.now().toString(),
     );
