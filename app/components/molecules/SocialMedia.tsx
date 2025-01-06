@@ -1,7 +1,7 @@
-import { AiFillInstagram } from "react-icons/ai";
 import { FaGithub, FaLinkedin, FaTelegram } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { ImMail4 } from "react-icons/im";
+import { RiInstagramFill } from "react-icons/ri";
 
 /**
  * Social media component
@@ -11,6 +11,9 @@ import { ImMail4 } from "react-icons/im";
 export const SocialMedia = () => {
   return (
     <div className="mt-1 flex space-x-3">
+      <a href="mailto:khaykingleb@gmail.com" aria-label="Email">
+        <ImMail4 className="h-6 w-6" />
+      </a>
       <a
         href="https://www.linkedin.com/in/khaykingleb"
         target="_blank"
@@ -49,10 +52,7 @@ export const SocialMedia = () => {
         rel="noopener noreferrer"
         aria-label="Instagram"
       >
-        <AiFillInstagram className="-mt-0.5 h-7 w-7" />
-      </a>
-      <a href="mailto:khaykingleb@gmail.com" aria-label="Email">
-        <ImMail4 className="h-6 w-6" />
+        <RiInstagramFill className="h-6 w-6" />
       </a>
     </div>
   );

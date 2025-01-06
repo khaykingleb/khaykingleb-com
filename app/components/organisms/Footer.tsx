@@ -4,11 +4,13 @@ import { SocialMedia } from "../molecules/SocialMedia";
 /**
  * Footer component
  *
+ * @param props - Component props
+ * @param props.textColor - Text color class for the footer
  * @returns Footer component
  */
-export const Footer = () => {
+export const Footer = ({ textColor }: { textColor: string }) => {
   return (
-    <footer className="footer bg-white pb-2 pt-2 text-gray-400">
+    <footer className={`pb-2 pt-2 ${textColor} relative z-10 mb-4`}>
       <div className="container mx-auto flex flex-col items-center justify-between">
         <SocialMedia />
         <Copyright />

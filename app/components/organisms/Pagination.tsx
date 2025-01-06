@@ -4,7 +4,7 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-const MAX_PAGES_PER_PAGE = 5;
+const VISIBLE_PAGE_BUTTONS = 5;
 
 /**
  * Pagination component
@@ -20,13 +20,13 @@ export const Pagination = ({
   onPageChange,
 }: PaginationProps) => {
   const startPage =
-    Math.floor(currentPage / MAX_PAGES_PER_PAGE) * MAX_PAGES_PER_PAGE;
-  const endPage = Math.min(startPage + MAX_PAGES_PER_PAGE, pagesInTotal);
+    Math.floor(currentPage / VISIBLE_PAGE_BUTTONS) * VISIBLE_PAGE_BUTTONS;
+  const endPage = Math.min(startPage + VISIBLE_PAGE_BUTTONS, pagesInTotal);
 
   return (
-    <div className="font-gill-sans join mt-4 flex justify-center space-x-0">
+    <div className="font-gill-sans join mt-4 flex justify-center">
       <button
-        className="btn join-item btn-sm"
+        className="btn join-item btn-sm h-8 w-8 bg-white hover:bg-gray-100 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-300"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 0}
       >
@@ -35,14 +35,18 @@ export const Pagination = ({
       {Array.from({ length: endPage - startPage }, (_, index) => (
         <button
           key={startPage + index}
-          className={`btn join-item btn-sm ${startPage + index === currentPage ? "btn-active" : ""}`}
+          className={`btn join-item btn-sm h-8 w-8 transition-colors ${
+            startPage + index === currentPage
+              ? "bg-gray-200 hover:bg-gray-200"
+              : "bg-white hover:bg-gray-100"
+          }`}
           onClick={() => onPageChange(startPage + index)}
         >
           {startPage + index + 1}
         </button>
       ))}
       <button
-        className="btn join-item btn-sm"
+        className="btn join-item btn-sm h-8 w-8 bg-white hover:bg-gray-100 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-300"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === pagesInTotal - 1}
       >

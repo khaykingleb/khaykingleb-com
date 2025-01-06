@@ -3,21 +3,16 @@ import { defer, MetaFunction } from "@remix-run/node";
 import {
   Await,
   ClientLoaderFunctionArgs,
+  Link,
   useLoaderData,
 } from "@remix-run/react";
 import { createClient } from "@supabase/supabase-js";
-import React, {
-  Suspense,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
+import { FaSearch, FaTimes } from "react-icons/fa";
 
 import { TagOption, TagSearchBar } from "~/components/molecules/TagSearchBar";
 import { Carousel } from "~/components/organisms/Carousel";
 import { Footer } from "~/components/organisms/Footer";
-import { Header } from "~/components/organisms/Header";
 import { Pagination } from "~/components/organisms/Pagination";
 import { Tables } from "~/integrations/supabase/database.types";
 
@@ -39,6 +34,12 @@ export const handle: SEOHandle = {
  */
 export const meta: MetaFunction = () => {
   return [
+    { title: "Blog" },
+    { description: "Blog posts by Gleb Khaykin" },
+    {
+      property: "og:title",
+      content: "Blog",
+    },
     {
       property: "og:description",
       content: "Blog posts by Gleb Khaykin",
@@ -53,7 +54,7 @@ export const meta: MetaFunction = () => {
     },
     {
       property: "og:image",
-      content: "/img/van_gogh_wheatfield_with_crows.webp",
+      content: "/img/van_gogh_wheatfield_with_crows.jpg",
     },
   ];
 };
@@ -68,49 +69,48 @@ export const loader = async () => {
     .from("posts")
     .select("*")
     .returns<Tables<"posts">[]>()
-    .then(({ data, error }) => {
+    .then(async ({ data, error }) => {
       if (error) throw new Response("Failed to load posts", { status: 500 });
-      return data;
+      return data.reverse();
     });
 
-  return defer({
-    posts: postsPromise as Promise<Tables<"posts">[]>,
-  });
+  return defer({ posts: postsPromise });
 };
 
-const CACHE_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
+const CACHE_KEY = "blogPosts";
+const CACHE_TIMESTAMP_KEY = "blogPostsTimestamp";
+const CACHE_DURATION = 60 * 60 * 1000;
 
 export const clientLoader = async ({
   serverLoader,
 }: ClientLoaderFunctionArgs) => {
-  const cachedData = localStorage.getItem("blogPosts");
-  const cachedTimestamp = localStorage.getItem("blogPostsTimestamp");
-
-  // Use cached data if it's valid
+  const cachedData = localStorage.getItem(CACHE_KEY);
+  const cachedTimestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
   if (cachedData && cachedTimestamp) {
-    const isExpired = Date.now() - Number(cachedTimestamp) > CACHE_DURATION;
-    const parsedData = JSON.parse(cachedData);
-    if (!isExpired && parsedData.posts?.length > 0) {
-      return { posts: Promise.resolve(parsedData.posts) };
+    if (Date.now() - Number(cachedTimestamp) < CACHE_DURATION) {
+      const parsedData: { posts: Tables<"posts">[] } = JSON.parse(cachedData);
+      return { posts: parsedData.posts };
     }
   }
 
-  // Get fresh data from server and cache it
   const serverData = (await serverLoader()) as {
     posts: Promise<Tables<"posts">[]>;
   };
   serverData.posts.then((posts) => {
-    localStorage.setItem("blogPosts", JSON.stringify({ posts }));
-    localStorage.setItem("blogPostsTimestamp", Date.now().toString());
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ posts }));
+    localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
   });
-
   return serverData;
 };
 // Tell Remix to use the client loader during hydration
 clientLoader.hydrate = true;
 
-const MAX_POSTS_PER_PAGE_DESKTOP = 4;
-const MAX_POSTS_PER_PAGE_MOBILE = 3;
+const CAROUSEL_ITEM_HEIGHTS = {
+  xs: 96 + 4, //
+  sm: 112 + 4, // h-28 (28 * 4px) + padding
+  md: 128 + 4, // h-32 (32 * 4px) + padding
+  lg: 160, // h-40 (40 * 4px) + padding
+} as const;
 
 const PostsContent = ({ posts }: { posts: Tables<"posts">[] }) => {
   const [tagOptions, setTagOptions] = useState(
@@ -125,21 +125,47 @@ const PostsContent = ({ posts }: { posts: Tables<"posts">[] }) => {
         .map((option: TagOption) => option.name),
     [tagOptions],
   );
+
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
   const filteredPosts = useMemo(
     () =>
-      posts.filter((post) =>
-        selectedTags.every((tag: string) => post.tags.includes(tag)),
-      ),
-    [selectedTags, posts],
+      posts.filter((post) => {
+        const matchesTags = selectedTags.every((tag: string) =>
+          post.tags.includes(tag),
+        );
+        const matchesSearch =
+          searchQuery === "" ||
+          post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          post.description.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesTags && matchesSearch;
+      }),
+    [selectedTags, posts, searchQuery],
   );
 
-  const [postsPerPage, setPostsPerPage] = useState(MAX_POSTS_PER_PAGE_DESKTOP);
+  const [postsPerPage, setPostsPerPage] = useState(4);
+
   const updatePostsPerPage = useCallback(() => {
-    if (window.matchMedia("(min-height: 800px)").matches) {
-      setPostsPerPage(MAX_POSTS_PER_PAGE_DESKTOP);
-    } else {
-      setPostsPerPage(MAX_POSTS_PER_PAGE_MOBILE);
+    const windowHeight = window.innerHeight;
+    const headerHeight = 60;
+    const paginationHeight = 40;
+    const footerHeight = 48;
+    const spacing = 20; // Increased spacing buffer
+    const availableHeight =
+      windowHeight - headerHeight - paginationHeight - footerHeight - spacing;
+
+    let itemHeight = CAROUSEL_ITEM_HEIGHTS.xs;
+    if (window.matchMedia("(min-width: 1024px)").matches) {
+      itemHeight = CAROUSEL_ITEM_HEIGHTS.lg;
+    } else if (window.matchMedia("(min-width: 768px)").matches) {
+      itemHeight = CAROUSEL_ITEM_HEIGHTS.md;
+    } else if (window.matchMedia("(min-width: 640px)").matches) {
+      itemHeight = CAROUSEL_ITEM_HEIGHTS.sm;
     }
+
+    const calculatedPosts = Math.floor(availableHeight / itemHeight);
+    setPostsPerPage(Math.max(2, calculatedPosts));
   }, []);
 
   useEffect(() => {
@@ -161,7 +187,47 @@ const PostsContent = ({ posts }: { posts: Tables<"posts">[] }) => {
 
   return (
     <div className="flex flex-grow flex-col">
-      <TagSearchBar tagOptions={tagOptions} setTagOptions={setTagOptions} />
+      <div className="mt-4 flex items-center justify-between">
+        <div className="font-gill-sans flex items-center gap-2">
+          <Link to="/" className="text-3xl font-semibold sm:text-4xl">
+            &lt;
+          </Link>
+          <h1 className="text-3xl font-semibold sm:text-4xl">Blog</h1>
+        </div>
+        <div className="relative flex items-center">
+          {searchOpen ? (
+            <div className="flex items-center">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search posts..."
+                className="font-gill-sans input input-bordered h-10 w-56 pr-8 text-base sm:w-64"
+              />
+              <button
+                onClick={() => {
+                  setSearchOpen(false);
+                  setSearchQuery("");
+                }}
+                className="absolute right-2 text-gray-500 hover:text-black"
+                aria-label="Clear search"
+              >
+                <FaTimes />
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="flex items-center text-xl sm:text-2xl"
+              aria-label="Search posts"
+            >
+              <FaSearch />
+            </button>
+          )}
+        </div>
+      </div>
+      <div className="my-4 h-px w-full bg-gray-200" />
+      {/* <TagSearchBar tagOptions={tagOptions} setTagOptions={setTagOptions} /> */}
       <div className="flex-grow">
         <Carousel
           posts={filteredPosts.slice(
@@ -181,15 +247,30 @@ const PostsContent = ({ posts }: { posts: Tables<"posts">[] }) => {
   );
 };
 
-const LoadingState = () => (
+const LoadingFallback = () => (
   <div className="flex flex-grow flex-col">
-    <TagSearchBar tagOptions={[]} setTagOptions={() => {}} />
-    <div className="flex flex-grow">
-      <div className="flex-grow animate-pulse rounded bg-gray-200"></div>
-    </div>
-    <div className="flex justify-center">
-      <Pagination currentPage={0} pagesInTotal={1} onPageChange={() => {}} />
-    </div>
+    <header className="mt-4">
+      <div className="font-gill-sans flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Link to="/" className="text-3xl font-semibold sm:text-4xl">
+            &lt;
+          </Link>
+          <h1 className="text-3xl font-semibold sm:text-4xl">Blog</h1>
+        </div>
+        <div className="relative flex items-center">
+          <button className="text-xl sm:text-2xl" aria-label="Search">
+            <FaSearch />
+          </button>
+        </div>
+      </div>
+      <div className="my-4 h-px w-full bg-gray-200" />
+    </header>
+    <main className="flex flex-grow">
+      <div className="flex-grow animate-pulse rounded-lg bg-gray-200" />
+    </main>
+    <footer className="flex justify-center">
+      <Pagination currentPage={0} pagesInTotal={5} onPageChange={() => {}} />
+    </footer>
   </div>
 );
 
@@ -202,20 +283,17 @@ export default function BlogRoute() {
   const { posts } = useLoaderData<typeof loader>();
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.webp" />
-      <main className="flex flex-grow flex-col px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto flex w-full max-w-[750px] flex-grow flex-col">
-          <Suspense fallback={<LoadingState />}>
-            <Await resolve={posts}>
-              {(resolvedPosts: Tables<"posts">[]) => (
-                <PostsContent posts={resolvedPosts} />
-              )}
-            </Await>
-          </Suspense>
-        </div>
+    <div className="mx-auto flex min-h-screen w-full max-w-[800px] flex-grow flex-col px-4 sm:px-6 lg:px-8">
+      <main className="flex flex-grow flex-col">
+        <Suspense fallback={<LoadingFallback />}>
+          <Await resolve={posts}>
+            {(resolvedPosts: Tables<"posts">[]) => (
+              <PostsContent posts={resolvedPosts} />
+            )}
+          </Await>
+        </Suspense>
+        <Footer textColor="text-gray-500" />
       </main>
-      <Footer />
     </div>
   );
 }

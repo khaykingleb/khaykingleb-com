@@ -22,9 +22,16 @@
   --notion-max-width: 100%;
 }
 
-.notion-title,
+.notion-title {
+  @apply hidden !important;
+}
+
 .notion-asset-caption {
   @apply font-gill-sans text-center;
+}
+
+.notion-table-of-contents {
+  @apply m-0 -mt-10 p-0 pt-0 !important;
 }
 
 .notion-table-of-contents,

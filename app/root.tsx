@@ -15,8 +15,8 @@ import {
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/remix";
 
+import { Background } from "~/components/molecules/Background";
 import { Footer } from "~/components/organisms/Footer";
-import { Header } from "~/components/organisms/Header";
 
 import notionStylesheetUrl from "./styles/notion.css?url";
 import tailwindStylesheetUrl from "./styles/tailwind.css?url";
@@ -67,15 +67,11 @@ export const links: LinksFunction = () => {
     },
 
     // Images
+    // TODO: move to webp
     {
       rel: "preload",
       as: "image",
-      href: "/avatar.webp",
-    },
-    {
-      rel: "preload",
-      as: "image",
-      href: "/img/van_gogh_wheatfield_with_crows.webp",
+      href: "/img/van_gogh_wheatfield_with_crows.jpg",
     },
   ];
 };
@@ -94,30 +90,34 @@ export function ErrorBoundary() {
   return (
     <html lang="en">
       <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="author" content="Gleb Khaykin" />
         <title>Oops!</title>
         <Meta />
         <Links />
       </head>
       <body className="flex min-h-screen flex-col">
-        <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.webp" />
-        <main className="font-gill-sans flex flex-grow flex-col items-center justify-center text-center">
+        <Background backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.jpg" />
+        <main className="font-gill-sans z-10 flex flex-grow flex-col items-center justify-center text-center text-white">
           {isRouteErrorResponse(error) && error.status === 404 ? (
-            <h2 className="mb-4 text-2xl font-semibold">
-              Page doesn&apos;t exist
-            </h2>
+            <h2 className="mb-4 text-4xl font-bold">Page doesn&apos;t exist</h2>
           ) : (
             <>
-              <h1 className="mb-2 text-2xl font-semibold">
-                Something went wrong!
-              </h1>
-              <h2 className="mb-4 text-lg">
-                Please try again later or contact me if the issue persists.
+              <h1 className="mb-2 text-4xl font-bold">Something went wrong!</h1>
+              <h2 className="text-2xl font-semibold">
+                Please try again later or contact me if the issue persists
               </h2>
             </>
           )}
+          <button
+            onClick={() => window.history.back()}
+            className="btn btn-ghost text-xl text-white hover:bg-white/20"
+          >
+            Go Back
+          </button>
         </main>
-        <Footer />
-        <Scripts />
+        <Footer textColor="text-white" />
       </body>
     </html>
   );

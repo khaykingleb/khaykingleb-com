@@ -10,34 +10,31 @@ import { Tables } from "~/integrations/supabase/database.types";
  */
 export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
   return (
-    <div>
+    <div className="h-full">
       {posts.length > 0 ? (
-        <div className="carousel carousel-vertical h-full w-full">
+        <div className="carousel carousel-vertical h-full w-full space-y-1">
           {posts.map((post) => (
             <Link
               to={`/blog/${post.slug}`}
               key={post.id}
-              className="carousel-item block w-full cursor-pointer transition-all duration-300 hover:bg-gray-100"
+              className="carousel-item block w-full cursor-pointer transition-all duration-300 hover:bg-gray-50"
             >
-              <div className="flex w-full items-center p-3">
-                <div className="flex-grow">
-                  <h2 className="font-gill-sans mb-1 text-base font-semibold sm:text-base">
+              <div className="flex w-full items-center px-2 py-2 sm:px-3 md:px-4">
+                <div className="flex-grow pr-2 sm:pr-3 md:pr-4">
+                  <h1 className="font-gill-sans mb-1 text-sm font-semibold sm:text-base md:text-lg lg:text-xl">
                     {post.title}
-                  </h2>
-                  <p className="font-gill-sans mb-1 text-sm">
+                  </h1>
+                  <p className="font-gill-sans mb-1 text-xs sm:text-sm md:text-base">
                     {new Date(post.created_at).toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
                     })}
                   </p>
-                  <div className="font-gill-sans">
+                  <div className="font-gill-sans flex flex-wrap gap-1 text-xs sm:text-sm">
                     {post.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="badge badge-ghost ml-[-0.2rem] mr-1 bg-blue-100 bg-opacity-50 px-1.5 py-0.5 text-xs"
-                      >
-                        {tag}
+                      <span key={tag} className="inline-block">
+                        #{tag}
                       </span>
                     ))}
                   </div>
@@ -45,7 +42,7 @@ export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
                 <img
                   src={post.image_url}
                   alt={post.title}
-                  className="h-28 w-auto"
+                  className="h-20 w-auto sm:h-24 md:h-28 lg:h-32"
                 />
               </div>
             </Link>
