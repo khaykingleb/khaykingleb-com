@@ -4,8 +4,7 @@ import { SocialMedia } from "../molecules/SocialMedia";
 /**
  * Footer component
  *
- * @param props - Component props
- * @param props.textColor - Text color class for the footer
+ * @param textColor - Text color class for the footer
  * @returns Footer component
  */
 export const Footer = ({ textColor }: { textColor: string }) => {
