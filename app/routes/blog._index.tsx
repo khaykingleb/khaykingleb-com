@@ -7,7 +7,7 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 import { createClient } from "@supabase/supabase-js";
-import { Suspense, useCallback, useEffect, useState } from "react";
+import { ReactNode, Suspense, useCallback, useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
 import { TagSearchLoop } from "~/components/molecules/TagSearchLoop";
@@ -74,7 +74,7 @@ export const loader = async () => {
       return data.reverse();
     });
 
-  return defer({ posts: postsPromise });
+  return defer({ posts: postsPromise as Promise<Tables<"posts">[]> });
 };
 
 const CACHE_KEY = "blogPosts";
@@ -106,46 +106,65 @@ export const clientLoader = async ({
 clientLoader.hydrate = true;
 
 const CAROUSEL_ITEM_HEIGHTS = {
-  xs: 96 + 4, //
-  sm: 112 + 4, // h-28 (28 * 4px) + padding
-  md: 128 + 4, // h-32 (32 * 4px) + padding
-  lg: 160, // h-40 (40 * 4px) + padding
+  xs: 100,
+  sm: 116,
+  md: 132,
+  lg: 160,
 } as const;
+
+const BlogHeader = ({ children }: { children?: ReactNode }) => (
+  <>
+    <div className="mt-4 flex items-center justify-between">
+      <div className="font-gill-sans flex items-center gap-2">
+        <Link to="/" className="text-3xl font-semibold sm:text-4xl">
+          &lt;
+        </Link>
+        <h1 className="text-3xl font-semibold sm:text-4xl">Blog</h1>
+      </div>
+      {children}
+    </div>
+    <div className="my-4 h-px w-full bg-gray-200" />
+  </>
+);
 
 const PostsContent = ({ posts }: { posts: Tables<"posts">[] }) => {
   const [displayedPosts, setDisplayedPosts] = useState(posts);
   const [postsPerPage, setPostsPerPage] = useState(4);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const updatePostsPerPage = useCallback(() => {
-    const windowHeight = window.innerHeight;
-    const headerHeight = 60;
-    const paginationHeight = 40;
-    const footerHeight = 48;
-    const spacing = 20; // Increased spacing buffer
-    const availableHeight =
-      windowHeight - headerHeight - paginationHeight - footerHeight - spacing;
+    const LAYOUT_HEIGHTS = {
+      header: 60,
+      pagination: 40,
+      footer: 48,
+      spacing: 20,
+    };
 
-    let itemHeight = CAROUSEL_ITEM_HEIGHTS.xs;
-    if (window.matchMedia("(min-width: 1024px)").matches) {
-      itemHeight = CAROUSEL_ITEM_HEIGHTS.lg;
-    } else if (window.matchMedia("(min-width: 768px)").matches) {
-      itemHeight = CAROUSEL_ITEM_HEIGHTS.md;
-    } else if (window.matchMedia("(min-width: 640px)").matches) {
-      itemHeight = CAROUSEL_ITEM_HEIGHTS.sm;
-    }
+    const totalFixedHeight = Object.values(LAYOUT_HEIGHTS).reduce(
+      (a, b) => a + b,
+      0,
+    );
+    const availableHeight = window.innerHeight - totalFixedHeight;
 
-    const calculatedPosts = Math.floor(availableHeight / itemHeight);
-    setPostsPerPage(Math.max(2, calculatedPosts));
+    const itemHeight = window.matchMedia("(min-width: 1024px)").matches
+      ? CAROUSEL_ITEM_HEIGHTS.lg
+      : window.matchMedia("(min-width: 768px)").matches
+        ? CAROUSEL_ITEM_HEIGHTS.md
+        : window.matchMedia("(min-width: 640px)").matches
+          ? CAROUSEL_ITEM_HEIGHTS.sm
+          : CAROUSEL_ITEM_HEIGHTS.xs;
+
+    setPostsPerPage(Math.max(2, Math.floor(availableHeight / itemHeight)));
   }, []);
 
+  // Update the number of posts per page when the window is resized
   useEffect(() => {
     updatePostsPerPage();
     window.addEventListener("resize", updatePostsPerPage);
     return () => window.removeEventListener("resize", updatePostsPerPage);
   }, [updatePostsPerPage]);
 
-  const [currentPage, setCurrentPage] = useState(0);
-  const pagesInTotal = Math.ceil(posts.length / postsPerPage);
+  const pagesInTotal = Math.ceil(displayedPosts.length / postsPerPage);
   const updateCurrentPage = useCallback(
     (pageIndex: number) => {
       if (pageIndex >= 0 && pageIndex < pagesInTotal) {
@@ -155,27 +174,20 @@ const PostsContent = ({ posts }: { posts: Tables<"posts">[] }) => {
     [pagesInTotal],
   );
 
+  const visiblePosts = displayedPosts.slice(
+    currentPage * postsPerPage,
+    (currentPage + 1) * postsPerPage,
+  );
+
   return (
     <div className="flex flex-grow flex-col">
-      <div className="mt-4 flex items-center justify-between">
-        <div className="font-gill-sans flex items-center gap-2">
-          <Link to="/" className="text-3xl font-semibold sm:text-4xl">
-            &lt;
-          </Link>
-          <h1 className="text-3xl font-semibold sm:text-4xl">Blog</h1>
-        </div>
+      <BlogHeader>
         <TagSearchLoop posts={posts} setDisplayedPosts={setDisplayedPosts} />
-      </div>
-      <div className="my-4 h-px w-full bg-gray-200" />
-      <Carousel
-        posts={displayedPosts.slice(
-          currentPage * postsPerPage,
-          (currentPage + 1) * postsPerPage,
-        )}
-      />
+      </BlogHeader>
+      <Carousel posts={visiblePosts} />
       <Pagination
         currentPage={currentPage}
-        pagesInTotal={Math.ceil(displayedPosts.length / postsPerPage)}
+        pagesInTotal={pagesInTotal}
         onPageChange={updateCurrentPage}
       />
     </div>
@@ -184,22 +196,13 @@ const PostsContent = ({ posts }: { posts: Tables<"posts">[] }) => {
 
 const LoadingFallback = () => (
   <div className="flex flex-grow flex-col">
-    <header className="mt-4">
-      <div className="font-gill-sans flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Link to="/" className="text-3xl font-semibold sm:text-4xl">
-            &lt;
-          </Link>
-          <h1 className="text-3xl font-semibold sm:text-4xl">Blog</h1>
-        </div>
-        <div className="relative flex items-center">
-          <button className="text-xl sm:text-2xl" aria-label="Search">
-            <FaSearch />
-          </button>
-        </div>
+    <BlogHeader>
+      <div className="relative flex items-center">
+        <button className="text-xl sm:text-2xl" aria-label="Search">
+          <FaSearch />
+        </button>
       </div>
-      <div className="my-4 h-px w-full bg-gray-200" />
-    </header>
+    </BlogHeader>
     <main className="flex flex-grow">
       <div className="flex-grow animate-pulse rounded-lg bg-gray-200" />
     </main>
@@ -220,9 +223,7 @@ export default function BlogRoute() {
       <div className="flex flex-grow flex-col">
         <Suspense fallback={<LoadingFallback />}>
           <Await resolve={posts}>
-            {(resolvedPosts: Tables<"posts">[]) => (
-              <PostsContent posts={resolvedPosts} />
-            )}
+            {(resolvedPosts) => <PostsContent posts={resolvedPosts} />}
           </Await>
         </Suspense>
         <Footer textColor="text-gray-500" />
