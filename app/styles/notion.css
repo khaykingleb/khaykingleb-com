@@ -22,10 +22,6 @@
   --notion-max-width: 100%;
 }
 
-.notion-title {
-  @apply hidden !important;
-}
-
 .notion-asset-caption {
   @apply font-gill-sans text-center;
 }
@@ -46,6 +42,7 @@
 }
 
 .notion-title {
+  @apply hidden !important;
   margin-top: -1.5rem !important;
   font-size: 1.75rem !important;
 }
