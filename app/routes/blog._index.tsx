@@ -284,7 +284,7 @@ export default function BlogRoute() {
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-[800px] flex-grow flex-col px-4 sm:px-6 lg:px-8">
-      <main className="flex flex-grow flex-col">
+      <div className="flex flex-grow flex-col">
         <Suspense fallback={<LoadingFallback />}>
           <Await resolve={posts}>
             {(resolvedPosts: Tables<"posts">[]) => (
@@ -293,7 +293,7 @@ export default function BlogRoute() {
           </Await>
         </Suspense>
         <Footer textColor="text-gray-500" />
-      </main>
+      </div>
     </div>
   );
 }
