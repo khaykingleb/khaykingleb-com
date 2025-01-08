@@ -7,10 +7,9 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 import { createClient } from "@supabase/supabase-js";
-import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
-import { FaSearch, FaTimes } from "react-icons/fa";
+import { Suspense, useCallback, useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
 
-import { TagOption, TagSearchBar } from "~/components/molecules/TagSearchBar";
 import { TagSearchLoop } from "~/components/molecules/TagSearchLoop";
 import { Carousel } from "~/components/organisms/Carousel";
 import { Footer } from "~/components/organisms/Footer";
