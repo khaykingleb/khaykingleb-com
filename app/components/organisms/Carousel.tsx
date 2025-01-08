@@ -10,7 +10,7 @@ import { Tables } from "~/integrations/supabase/database.types";
  */
 export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
   return (
-    <div className="h-full">
+    <div className="flex h-full flex-grow">
       {posts.length > 0 ? (
         <div className="carousel carousel-vertical h-full w-full space-y-1">
           {posts.map((post) => (
@@ -49,8 +49,10 @@ export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
           ))}
         </div>
       ) : (
-        <div className="pt-40 text-center">
-          <p className="font-gill-sans text-lg font-semibold">No posts found</p>
+        <div className="absolute inset-0 grid place-items-center">
+          <p className="font-gill-sans text-xl font-semibold">
+            No posts found...
+          </p>
         </div>
       )}
     </div>

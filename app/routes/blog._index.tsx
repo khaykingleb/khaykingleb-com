@@ -11,6 +11,7 @@ import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { FaSearch, FaTimes } from "react-icons/fa";
 
 import { TagOption, TagSearchBar } from "~/components/molecules/TagSearchBar";
+import { TagSearchLoop } from "~/components/molecules/TagSearchLoop";
 import { Carousel } from "~/components/organisms/Carousel";
 import { Footer } from "~/components/organisms/Footer";
 import { Pagination } from "~/components/organisms/Pagination";
@@ -113,37 +114,7 @@ const CAROUSEL_ITEM_HEIGHTS = {
 } as const;
 
 const PostsContent = ({ posts }: { posts: Tables<"posts">[] }) => {
-  const [tagOptions, setTagOptions] = useState(
-    Array.from(new Set(posts.flatMap((post) => post.tags)))
-      .sort()
-      .map((tag) => ({ name: tag, selected: false })),
-  );
-  const selectedTags = useMemo(
-    () =>
-      tagOptions
-        .filter((option: TagOption) => option.selected)
-        .map((option: TagOption) => option.name),
-    [tagOptions],
-  );
-
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const filteredPosts = useMemo(
-    () =>
-      posts.filter((post) => {
-        const matchesTags = selectedTags.every((tag: string) =>
-          post.tags.includes(tag),
-        );
-        const matchesSearch =
-          searchQuery === "" ||
-          post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          post.description.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesTags && matchesSearch;
-      }),
-    [selectedTags, posts, searchQuery],
-  );
-
+  const [displayedPosts, setDisplayedPosts] = useState(posts);
   const [postsPerPage, setPostsPerPage] = useState(4);
 
   const updatePostsPerPage = useCallback(() => {
@@ -194,55 +165,20 @@ const PostsContent = ({ posts }: { posts: Tables<"posts">[] }) => {
           </Link>
           <h1 className="text-3xl font-semibold sm:text-4xl">Blog</h1>
         </div>
-        <div className="relative flex items-center">
-          {searchOpen ? (
-            <div className="flex items-center">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search posts..."
-                className="font-gill-sans input input-bordered h-10 w-56 pr-8 text-base sm:w-64"
-              />
-              <button
-                onClick={() => {
-                  setSearchOpen(false);
-                  setSearchQuery("");
-                }}
-                className="absolute right-2 text-gray-500 hover:text-black"
-                aria-label="Clear search"
-              >
-                <FaTimes />
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={() => setSearchOpen(true)}
-              className="flex items-center text-xl sm:text-2xl"
-              aria-label="Search posts"
-            >
-              <FaSearch />
-            </button>
-          )}
-        </div>
+        <TagSearchLoop posts={posts} setDisplayedPosts={setDisplayedPosts} />
       </div>
       <div className="my-4 h-px w-full bg-gray-200" />
-      {/* <TagSearchBar tagOptions={tagOptions} setTagOptions={setTagOptions} /> */}
-      <div className="flex-grow">
-        <Carousel
-          posts={filteredPosts.slice(
-            currentPage * postsPerPage,
-            (currentPage + 1) * postsPerPage,
-          )}
-        />
-      </div>
-      <div className="flex justify-center">
-        <Pagination
-          currentPage={currentPage}
-          pagesInTotal={pagesInTotal}
-          onPageChange={updateCurrentPage}
-        />
-      </div>
+      <Carousel
+        posts={displayedPosts.slice(
+          currentPage * postsPerPage,
+          (currentPage + 1) * postsPerPage,
+        )}
+      />
+      <Pagination
+        currentPage={currentPage}
+        pagesInTotal={Math.ceil(displayedPosts.length / postsPerPage)}
+        onPageChange={updateCurrentPage}
+      />
     </div>
   );
 };
@@ -268,9 +204,7 @@ const LoadingFallback = () => (
     <main className="flex flex-grow">
       <div className="flex-grow animate-pulse rounded-lg bg-gray-200" />
     </main>
-    <footer className="flex justify-center">
-      <Pagination currentPage={0} pagesInTotal={5} onPageChange={() => {}} />
-    </footer>
+    <Pagination currentPage={0} pagesInTotal={5} onPageChange={() => {}} />
   </div>
 );
 
