@@ -60,13 +60,11 @@ export default function IndexRoute() {
       <main className="z-10 mx-8 flex w-full flex-1 flex-col text-white sm:mx-32">
         <div className="flex flex-1 flex-col justify-center">
           <div className="font-poppins mb-6 flex flex-col gap-4 font-black sm:gap-6">
-            {["Hey!", "I'm Gleb Khaykin", "I build things"].map(
-              (text, i) => (
-                <h1 key={i} className="text-4xl sm:text-6xl">
-                  {text}
-                </h1>
-              ),
-            )}
+            {["Hey!", "I'm Gleb Khaykin", "I build things"].map((text, i) => (
+              <h1 key={i} className="text-4xl sm:text-6xl">
+                {text}
+              </h1>
+            ))}
           </div>
           <div className="font-gill-sans flex flex-col gap-2 font-bold">
             <Link to="/blog" className="text-xl sm:text-2xl">
