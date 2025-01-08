@@ -2,7 +2,7 @@ import { SEOHandle } from "@nasa-gcn/remix-seo";
 import { MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 
-import { Background } from "~/components/molecules/Background";
+import { AsciiDonut } from "~/components/molecules/AsciiDonut";
 import { Footer } from "~/components/organisms/Footer";
 
 /**
@@ -55,10 +55,10 @@ export const handle: SEOHandle = {
  */
 export default function IndexRoute() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <Background backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.jpg" />
-      <main className="z-10 mx-8 flex w-full flex-1 flex-col text-white sm:mx-32">
-        <div className="flex flex-1 flex-col justify-center">
+    <div className="flex min-h-screen flex-col bg-black">
+      <main className="z-5 mx-8 flex w-full flex-1 flex-col text-white sm:mx-32">
+        <AsciiDonut />
+        <div className="z-10 flex flex-1 flex-col justify-center">
           <div className="font-poppins mb-6 flex flex-col gap-4 font-black sm:gap-6">
             {["Hey!", "I'm Gleb Khaykin", "I build things"].map((text, i) => (
               <h1 key={i} className="text-4xl sm:text-6xl">
