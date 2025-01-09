@@ -245,7 +245,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     },
     {
       property: "og:image",
-      content: data.post.image_url || "/img/van_gogh_wheatfield_with_crows.jpg",
+      content:
+        data.post.image_url || "/img/van_gogh_wheatfield_with_crows.webp",
     },
     {
       property: "article:published_time",

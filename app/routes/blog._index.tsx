@@ -54,7 +54,7 @@ export const meta: MetaFunction = () => {
     },
     {
       property: "og:image",
-      content: "/img/van_gogh_wheatfield_with_crows.jpg",
+      content: "/img/van_gogh_wheatfield_with_crows.webp",
     },
   ];
 };

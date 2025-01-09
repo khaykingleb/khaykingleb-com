@@ -72,7 +72,7 @@ export const links: LinksFunction = () => {
     {
       rel: "preload",
       as: "image",
-      href: "/img/van_gogh_wheatfield_with_crows.jpg",
+      href: "/img/van_gogh_wheatfield_with_crows.webp",
     },
   ];
 };

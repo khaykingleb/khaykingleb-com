@@ -1,7 +1,53 @@
+import { SEOHandle } from "@nasa-gcn/remix-seo";
+import { MetaFunction } from "@remix-run/node";
+
 import { Avatar } from "~/components/atoms/Avatar";
 import { SocialMedia } from "~/components/molecules/SocialMedia";
 import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
+
+export const handle: SEOHandle = {
+  /**
+   * Asynchronously retrieve sitemap.xml entries for the route
+   *
+   * @returns The sitemap.xml entries for the route
+   */
+  getSitemapEntries: async () => {
+    return [{ route: "/contact", priority: 0.7, changefreq: "monthly" }];
+  },
+};
+
+/**
+ * Generate metadata for the route
+ *
+ * @returns The meta tags for the route
+ */
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Contact" },
+    { description: "Gleb Khaykin's contact information" },
+    {
+      property: "og:title",
+      content: "Contact",
+    },
+    {
+      property: "og:description",
+      content: "Gleb Khaykin's contact information",
+    },
+    {
+      property: "og:type",
+      content: "website",
+    },
+    {
+      property: "og:url",
+      content: "https://khaykingleb.com/contact",
+    },
+    {
+      property: "og:image",
+      content: "avatar.webp",
+    },
+  ];
+};
 
 /**
  * The main component for the route
