@@ -19,6 +19,9 @@
 }
 
 .notion {
+  color: hsl(var(--bc)) !important;
+  background: hsl(var(--b1)) !important;
+
   --notion-max-width: 100%;
 }
 

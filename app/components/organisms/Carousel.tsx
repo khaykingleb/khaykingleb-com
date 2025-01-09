@@ -17,7 +17,7 @@ export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
             <Link
               to={`/blog/${post.slug}`}
               key={post.id}
-              className="carousel-item block w-full cursor-pointer transition-all duration-300 hover:bg-gray-50"
+              className="carousel-item block w-full cursor-pointer transition-all duration-300"
             >
               <div className="flex w-full items-center px-2 py-2 sm:px-3 md:px-4">
                 <div className="flex-grow pr-2 sm:pr-3 md:pr-4">

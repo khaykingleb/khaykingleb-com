@@ -24,9 +24,9 @@ export const Pagination = ({
   const endPage = Math.min(startPage + VISIBLE_PAGE_BUTTONS, pagesInTotal);
 
   return (
-    <div className="font-gill-sans join mt-4 flex justify-center">
+    <div className="join mt-4 flex justify-center">
       <button
-        className="btn join-item btn-sm h-8 w-8 bg-white hover:bg-gray-100 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-300"
+        className="btn join-item btn-sm h-8 w-8 bg-base-100 hover:bg-base-200 disabled:cursor-not-allowed disabled:bg-base-200 disabled:text-base-content/30"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 0}
       >
@@ -37,8 +37,8 @@ export const Pagination = ({
           key={startPage + index}
           className={`btn join-item btn-sm h-8 w-8 transition-colors ${
             startPage + index === currentPage
-              ? "bg-gray-200 hover:bg-gray-200"
-              : "bg-white hover:bg-gray-100"
+              ? "bg-base-300 hover:bg-base-300 dark:bg-neutral-700 dark:hover:bg-neutral-700"
+              : "bg-base-100 hover:bg-base-200"
           }`}
           onClick={() => onPageChange(startPage + index)}
         >
@@ -46,7 +46,7 @@ export const Pagination = ({
         </button>
       ))}
       <button
-        className="btn join-item btn-sm h-8 w-8 bg-white hover:bg-gray-100 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-300"
+        className="btn join-item btn-sm h-8 w-8 bg-base-100 hover:bg-base-200 disabled:cursor-not-allowed disabled:bg-base-200 disabled:text-base-content/30"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === pagesInTotal - 1}
       >

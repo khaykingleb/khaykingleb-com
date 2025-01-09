@@ -60,7 +60,7 @@ export default function IndexRoute() {
         <AsciiDonut />
         <div className="z-10 flex flex-1 flex-col justify-center">
           <div className="font-poppins mb-6 flex flex-col gap-4 font-black sm:gap-6">
-            {["Hey!", "I'm Gleb Khaykin", "I build things"].map((text, i) => (
+            {["Hey 👋", "I'm Gleb Khaykin", "I build things"].map((text, i) => (
               <h1 key={i} className="text-4xl sm:text-6xl">
                 {text}
               </h1>

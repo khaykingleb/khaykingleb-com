@@ -88,7 +88,7 @@ export const TagSearchLoop = ({
                 setSearchQuery("");
                 setSelectedTags([]);
               }}
-              className="absolute right-2 text-gray-500 hover:text-black"
+              className="absolute right-2 hover:text-base-content"
               aria-label="Clear search"
             >
               <FaTimes />
@@ -96,7 +96,7 @@ export const TagSearchLoop = ({
           </div>
           <ul
             role="listbox"
-            className="absolute left-0 right-0 top-full mt-1 max-h-52 overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg focus-within:outline-none"
+            className="absolute left-0 right-0 top-full mt-1 max-h-52 overflow-y-auto rounded-lg border border-base-300 bg-base-100 shadow-lg focus-within:outline-none"
             onKeyDown={(e) => {
               const current = document.activeElement;
               if (!current?.parentElement) return;
@@ -129,20 +129,22 @@ export const TagSearchLoop = ({
                   role="option"
                   aria-selected={selectedTags.includes(tag)}
                   onClick={() => toggleTag(tag)}
-                  className="flex w-full cursor-pointer items-center px-4 py-2.5 text-left hover:bg-gray-50"
+                  className="flex w-full cursor-pointer items-center px-4 py-2.5 text-left hover:bg-base-200 focus:bg-base-200 dark:hover:bg-gray-800 dark:focus:bg-gray-800"
                 >
                   <span
                     className={`mr-3 flex h-5 w-5 items-center justify-center rounded-full border-2 ${
                       selectedTags.includes(tag)
-                        ? "border-blue-600 bg-blue-600"
-                        : "border-gray-300"
+                        ? "border-blue-600 bg-blue-600 dark:border-blue-500 dark:bg-blue-500"
+                        : "border-base-300 dark:border-gray-600"
                     }`}
                   >
                     {selectedTags.includes(tag) && (
                       <FaCheck className="text-xs text-white" />
                     )}
                   </span>
-                  <span className="font-gill-sans text-sm">{tag}</span>
+                  <span className="font-gill-sans text-sm text-base-content">
+                    {tag}
+                  </span>
                 </button>
               </li>
             ))}
@@ -151,7 +153,7 @@ export const TagSearchLoop = ({
       ) : (
         <button
           onClick={() => setSearchOpen(true)}
-          className="flex text-xl sm:text-2xl"
+          className="flex text-xl text-base-content sm:text-2xl"
           aria-label="Search tags"
         >
           <FaSearch />

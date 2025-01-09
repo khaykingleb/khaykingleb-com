@@ -5,6 +5,7 @@ import "katex/dist/katex.min.css";
 import type { LinksFunction } from "@remix-run/node";
 import {
   isRouteErrorResponse,
+  Link,
   Links,
   Meta,
   Outlet,
@@ -15,6 +16,7 @@ import {
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/remix";
 
+import { AsciiDonut } from "~/components/molecules/AsciiDonut";
 import { Footer } from "~/components/organisms/Footer";
 
 import notionStylesheetUrl from "./styles/notion.css?url";
@@ -86,6 +88,7 @@ export const links: LinksFunction = () => {
  */
 export function ErrorBoundary() {
   const error = useRouteError();
+
   return (
     <html lang="en">
       <head>
@@ -97,36 +100,40 @@ export function ErrorBoundary() {
         <Links />
       </head>
       <body className="flex min-h-screen flex-col">
-        <main className="font-gill-sans z-10 flex flex-grow flex-col items-center justify-center text-center">
-          {/* <AsciiDonut /> */}
+        <main className="font-gill-sans flex flex-grow flex-col items-center justify-center text-center">
+          <AsciiDonut />
           {isRouteErrorResponse(error) && error.status === 404 ? (
             <>
-              <h2 className="mb-4 text-4xl font-bold">
+              <h2 className="font-poppins mb-4 text-4xl font-black">
                 Page doesn&apos;t exist
               </h2>
-              <button
-                onClick={() => (window.location.href = "/")}
-                className="btn btn-ghost text-xl hover:bg-white/20"
+              <Link
+                to="/"
+                className="btn btn-ghost z-50 text-xl font-bold hover:bg-white/20"
               >
                 Go Home
-              </button>
+              </Link>
             </>
           ) : (
             <>
-              <h1 className="mb-2 text-4xl font-bold">Something went wrong!</h1>
-              <h2 className="text-2xl font-semibold">
+              <h1 className="font-poppins mb-2 text-4xl font-black">
+                Something went wrong!
+              </h1>
+              <h2 className="text-2xl">
                 Please try again later or contact me if the issue persists
               </h2>
-              <button
-                onClick={() => window.history.back()}
-                className="btn btn-ghost text-xl hover:bg-white/20"
+              <Link
+                to=".."
+                className="btn btn-ghost text-xl font-bold hover:bg-white/20"
               >
                 Go Back
-              </button>
+              </Link>
             </>
           )}
         </main>
         <Footer />
+        <Scripts />
+        <ScrollRestoration />
       </body>
     </html>
   );

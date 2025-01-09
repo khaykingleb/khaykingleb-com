@@ -27,6 +27,7 @@ import { NotionRenderer } from "vendor/react-notion-x/packages/react-notion-x";
 
 import { Footer } from "~/components/organisms/Footer";
 import { Tables } from "~/integrations/supabase/database.types";
+import { useTheme } from "~/utils/theme";
 
 const Equation = React.lazy(() =>
   import("react-notion-x/build/third-party/equation").then((module) => ({
@@ -74,12 +75,14 @@ const Collection = React.lazy(() =>
 );
 
 const NotionPage = ({ recordMap }: { recordMap: ExtendedRecordMap }) => {
+  const { theme } = useTheme();
+
   return (
     // @ts-expect-error: NotionRenderer is a React component
     <NotionRenderer
       recordMap={recordMap}
       fullPage={true}
-      darkMode={false}
+      darkMode={theme === "dark"}
       disableHeader={true}
       components={{
         Pdf,
