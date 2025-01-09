@@ -288,7 +288,7 @@ export default function BlogPostRoute() {
           </Await>
         </Suspense>
       </main>
-      <Footer textColor="text-gray-500" />
+      <Footer />
     </div>
   );
 }

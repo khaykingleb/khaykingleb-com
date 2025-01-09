@@ -1,17 +1,16 @@
 import { Copyright } from "../atoms/Copyright";
-import { SocialMedia } from "../molecules/SocialMedia";
+import { ThemeToggle } from "../molecules/ThemeToggle";
 
 /**
  * Footer component
  *
- * @param textColor - Text color class for the footer
  * @returns Footer component
  */
-export const Footer = ({ textColor }: { textColor: string }) => {
+export const Footer = () => {
   return (
-    <footer className={`pb-2 pt-2 ${textColor} relative z-10 mb-4`}>
+    <footer className={`relative z-10 mb-4 pb-2 pt-2`}>
       <div className="container mx-auto flex flex-col items-center justify-between">
-        <SocialMedia />
+        <ThemeToggle />
         <Copyright />
       </div>
     </footer>

@@ -151,7 +151,7 @@ export const TagSearchLoop = ({
       ) : (
         <button
           onClick={() => setSearchOpen(true)}
-          className="flex items-center text-xl sm:text-2xl"
+          className="flex text-xl sm:text-2xl"
           aria-label="Search tags"
         >
           <FaSearch />

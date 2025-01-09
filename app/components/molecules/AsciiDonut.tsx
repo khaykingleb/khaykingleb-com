@@ -25,7 +25,7 @@ export function AsciiDonut() {
      */
     function renderFrame(A: number, B: number) {
       const screenWidth = 100;
-      const screenHeight = 80;
+      const screenHeight = 100;
       const K1 = (screenWidth * K2 * 3) / (8 * (R1 + R2));
 
       const cosA = Math.cos(A),
@@ -106,7 +106,7 @@ export function AsciiDonut() {
   return (
     <pre
       ref={canvasRef}
-      className="fixed left-[70%] top-1/2 -translate-x-1/2 -translate-y-1/2 bg-black font-mono text-[0.6rem] leading-[0.6rem] text-white"
+      className="font-gill-sans fixed left-[60%] top-1/2 -translate-x-1/2 -translate-y-1/2 font-mono text-[0.5rem] font-extralight leading-[0.5rem]"
       style={{ fontFamily: "Courier New" }}
     />
   );

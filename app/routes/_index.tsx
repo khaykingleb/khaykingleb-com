@@ -55,8 +55,8 @@ export const handle: SEOHandle = {
  */
 export default function IndexRoute() {
   return (
-    <div className="flex min-h-screen flex-col bg-black">
-      <main className="z-5 mx-8 flex w-full flex-1 flex-col text-white sm:mx-32">
+    <div className="flex min-h-screen flex-col">
+      <main className="mx-8 flex w-full flex-1 flex-col sm:mx-60">
         <AsciiDonut />
         <div className="z-10 flex flex-1 flex-col justify-center">
           <div className="font-poppins mb-6 flex flex-col gap-4 font-black sm:gap-6">
@@ -78,10 +78,13 @@ export default function IndexRoute() {
             >
               ↗ CV
             </Link>
+            <Link to="/contact" className="text-xl sm:text-2xl">
+              ↗ Contact
+            </Link>
           </div>
         </div>
       </main>
-      <Footer textColor="text-white" />
+      <Footer />
     </div>
   );
 }

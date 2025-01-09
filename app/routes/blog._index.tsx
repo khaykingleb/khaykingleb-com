@@ -226,7 +226,7 @@ export default function BlogRoute() {
             {(resolvedPosts) => <PostsContent posts={resolvedPosts} />}
           </Await>
         </Suspense>
-        <Footer textColor="text-gray-500" />
+        <Footer />
       </div>
     </div>
   );
