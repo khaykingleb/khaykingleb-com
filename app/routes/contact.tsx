@@ -73,14 +73,14 @@ export default function ContactRoute() {
                     engineering
                   </li>
                   <li>
-                    I studied both Computer Science and Finance at the Higher
-                    School of Economics. This dual background helps me
-                    understand both business and technical aspects of the
-                    projects
-                  </li>
-                  <li>
                     When I&apos;m not coding, you&apos;ll find me at the gym,
                     lifting weights 🏋️‍♀️
+                  </li>
+                  <li>
+                    I studied both Computer Science and Finance at the Higher
+                    School of Economics (this dual background helps me
+                    understand both business and technical aspects of the
+                    projects)
                   </li>
                 </ul>
               </div>
