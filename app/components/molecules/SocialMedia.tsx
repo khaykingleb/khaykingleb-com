@@ -30,8 +30,8 @@ export const SocialMedia = ({ size = 24 }: SocialMediaProps) => {
       icon: FaSquareXTwitter,
     },
     {
-      href: "https://t.me/khaykingleb",
-      label: "@khaykingleb",
+      href: "https://t.me/khaykingleb_blog",
+      label: "@khaykingleb_blog",
       icon: FaTelegram,
     },
     {

@@ -268,7 +268,7 @@ export default function BlogPostRoute() {
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-[800px] flex-col px-4 sm:px-6 lg:px-8">
-      <header className="font-gill-sans mt-4">
+      <header className="mt-4">
         <div className="flex items-center gap-2 text-3xl font-semibold sm:text-4xl">
           <Link to="/blog">&lt;</Link>
           <h1>{post.title}</h1>

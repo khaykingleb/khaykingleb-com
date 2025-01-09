@@ -3,16 +3,16 @@ import { defer, MetaFunction } from "@remix-run/node";
 import {
   Await,
   ClientLoaderFunctionArgs,
-  Link,
   useLoaderData,
 } from "@remix-run/react";
 import { createClient } from "@supabase/supabase-js";
-import { ReactNode, Suspense, useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
 import { TagSearchLoop } from "~/components/molecules/TagSearchLoop";
 import { Carousel } from "~/components/organisms/Carousel";
 import { Footer } from "~/components/organisms/Footer";
+import { Header } from "~/components/organisms/Header";
 import { Pagination } from "~/components/organisms/Pagination";
 import { Tables } from "~/integrations/supabase/database.types";
 
@@ -112,21 +112,6 @@ const CAROUSEL_ITEM_HEIGHTS = {
   lg: 160,
 } as const;
 
-const BlogHeader = ({ children }: { children?: ReactNode }) => (
-  <>
-    <div className="mt-4 flex items-center justify-between">
-      <div className="font-gill-sans flex items-center gap-2">
-        <Link to="/" className="text-3xl font-semibold sm:text-4xl">
-          &lt;
-        </Link>
-        <h1 className="text-3xl font-semibold sm:text-4xl">Blog</h1>
-      </div>
-      {children}
-    </div>
-    <div className="my-4 h-px w-full bg-gray-200" />
-  </>
-);
-
 const PostsContent = ({ posts }: { posts: Tables<"posts">[] }) => {
   const [displayedPosts, setDisplayedPosts] = useState(posts);
   const [postsPerPage, setPostsPerPage] = useState(4);
@@ -181,9 +166,9 @@ const PostsContent = ({ posts }: { posts: Tables<"posts">[] }) => {
 
   return (
     <div className="flex flex-grow flex-col">
-      <BlogHeader>
+      <Header headerName="Blog">
         <TagSearchLoop posts={posts} setDisplayedPosts={setDisplayedPosts} />
-      </BlogHeader>
+      </Header>
       <Carousel posts={visiblePosts} />
       <Pagination
         currentPage={currentPage}
@@ -196,13 +181,13 @@ const PostsContent = ({ posts }: { posts: Tables<"posts">[] }) => {
 
 const LoadingFallback = () => (
   <div className="flex flex-grow flex-col">
-    <BlogHeader>
+    <Header headerName="Blog">
       <div className="relative flex items-center">
         <button className="text-xl sm:text-2xl" aria-label="Search">
           <FaSearch />
         </button>
       </div>
-    </BlogHeader>
+    </Header>
     <main className="flex flex-grow">
       <div className="flex-grow animate-pulse rounded-lg bg-gray-200" />
     </main>

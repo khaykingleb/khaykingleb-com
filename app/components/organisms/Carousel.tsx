@@ -21,17 +21,17 @@ export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
             >
               <div className="flex w-full items-center px-2 py-2 sm:px-3 md:px-4">
                 <div className="flex-grow pr-2 sm:pr-3 md:pr-4">
-                  <h1 className="font-gill-sans mb-1 text-sm font-semibold sm:text-base md:text-lg lg:text-xl">
+                  <h1 className="mb-1 text-sm font-semibold sm:text-base md:text-lg lg:text-xl">
                     {post.title}
                   </h1>
-                  <p className="font-gill-sans mb-1 text-xs sm:text-sm md:text-base">
+                  <p className="mb-1 text-xs sm:text-sm md:text-base">
                     {new Date(post.created_at).toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
                     })}
                   </p>
-                  <div className="font-gill-sans flex flex-wrap gap-1 text-xs sm:text-sm">
+                  <div className="flex flex-wrap gap-1 text-xs sm:text-sm">
                     {post.tags.map((tag) => (
                       <span key={tag} className="inline-block">
                         #{tag}
@@ -50,9 +50,7 @@ export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
         </div>
       ) : (
         <div className="absolute inset-0 grid place-items-center">
-          <p className="font-gill-sans text-xl font-semibold">
-            No posts found...
-          </p>
+          <p className="text-xl font-semibold">No posts found...</p>
         </div>
       )}
     </div>

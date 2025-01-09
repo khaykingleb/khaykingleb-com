@@ -4,7 +4,9 @@ import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
 
 /**
+ * The main component for the route
  *
+ * @returns The route layout
  */
 export default function ContactRoute() {
   return (

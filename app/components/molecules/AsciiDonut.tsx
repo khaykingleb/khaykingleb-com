@@ -106,7 +106,7 @@ export function AsciiDonut() {
   return (
     <pre
       ref={canvasRef}
-      className="font-gill-sans fixed left-[60%] top-1/2 -translate-x-1/2 -translate-y-1/2 font-mono text-[0.5rem] font-extralight leading-[0.5rem]"
+      className="fixed left-[60%] top-1/2 -translate-x-1/2 -translate-y-1/2 font-mono text-[0.5rem] font-extralight leading-[0.5rem]"
       style={{ fontFamily: "Courier New" }}
     />
   );

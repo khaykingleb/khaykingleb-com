@@ -80,7 +80,7 @@ export const TagSearchLoop = ({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by tags..."
-              className="font-gill-sans input input-bordered h-10 w-56 pr-8 text-base sm:w-64"
+              className="input input-bordered h-10 w-56 pr-8 text-base sm:w-64"
             />
             <button
               onClick={() => {
@@ -142,9 +142,7 @@ export const TagSearchLoop = ({
                       <FaCheck className="text-xs text-white" />
                     )}
                   </span>
-                  <span className="font-gill-sans text-sm text-base-content">
-                    {tag}
-                  </span>
+                  <span className="text-sm text-base-content">{tag}</span>
                 </button>
               </li>
             ))}

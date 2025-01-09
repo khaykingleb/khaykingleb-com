@@ -66,10 +66,7 @@ export default function IndexRoute() {
               </h1>
             ))}
           </div>
-          <div className="font-gill-sans flex flex-col gap-2 font-bold">
-            <Link to="/blog" className="text-xl sm:text-2xl">
-              ↗ Blog
-            </Link>
+          <div className="flex flex-col gap-2 font-bold">
             <Link
               to="/Gleb_Khaykin.pdf"
               prefetch="intent"
@@ -77,6 +74,9 @@ export default function IndexRoute() {
               className="text-xl sm:text-2xl"
             >
               ↗ CV
+            </Link>
+            <Link to="/blog" className="text-xl sm:text-2xl">
+              ↗ Blog
             </Link>
             <Link to="/contact" className="text-xl sm:text-2xl">
               ↗ Contact

@@ -6,6 +6,13 @@ export default {
   content: ["./app/**/*.{ts,tsx,jsx,js}"],
   plugins: [daisyUI],
   darkMode: "class",
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ["Gill Sans", "sans-serif"],
+      },
+    },
+  },
   daisyui: {
     themes: [
       {

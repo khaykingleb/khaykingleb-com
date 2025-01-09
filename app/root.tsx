@@ -100,7 +100,7 @@ export function ErrorBoundary() {
         <Links />
       </head>
       <body className="flex min-h-screen flex-col">
-        <main className="font-gill-sans flex flex-grow flex-col items-center justify-center text-center">
+        <main className="flex flex-grow flex-col items-center justify-center text-center">
           <AsciiDonut />
           {isRouteErrorResponse(error) && error.status === 404 ? (
             <>
