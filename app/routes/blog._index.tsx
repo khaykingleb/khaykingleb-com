@@ -6,15 +6,10 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 import { createClient } from "@supabase/supabase-js";
-import React, {
-  Suspense,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
 
-import { TagOption, TagSearchBar } from "~/components/molecules/TagSearchBar";
+import { TagSearchLoop } from "~/components/molecules/TagSearchLoop";
 import { Carousel } from "~/components/organisms/Carousel";
 import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
@@ -39,6 +34,12 @@ export const handle: SEOHandle = {
  */
 export const meta: MetaFunction = () => {
   return [
+    { title: "Blog" },
+    { description: "Blog posts by Gleb Khaykin" },
+    {
+      property: "og:title",
+      content: "Blog",
+    },
     {
       property: "og:description",
       content: "Blog posts by Gleb Khaykin",
@@ -68,88 +69,87 @@ export const loader = async () => {
     .from("posts")
     .select("*")
     .returns<Tables<"posts">[]>()
-    .then(({ data, error }) => {
+    .then(async ({ data, error }) => {
       if (error) throw new Response("Failed to load posts", { status: 500 });
-      return data;
+      return data.reverse();
     });
 
-  return defer({
-    posts: postsPromise as Promise<Tables<"posts">[]>,
-  });
+  return defer({ posts: postsPromise as Promise<Tables<"posts">[]> });
 };
 
-const CACHE_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
+const CACHE_KEY = "blogPosts";
+const CACHE_TIMESTAMP_KEY = "blogPostsTimestamp";
+const CACHE_DURATION = 60 * 60 * 1000;
 
 export const clientLoader = async ({
   serverLoader,
 }: ClientLoaderFunctionArgs) => {
-  const cachedData = localStorage.getItem("blogPosts");
-  const cachedTimestamp = localStorage.getItem("blogPostsTimestamp");
-
-  // Use cached data if it's valid
+  const cachedData = localStorage.getItem(CACHE_KEY);
+  const cachedTimestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
   if (cachedData && cachedTimestamp) {
-    const isExpired = Date.now() - Number(cachedTimestamp) > CACHE_DURATION;
-    const parsedData = JSON.parse(cachedData);
-    if (!isExpired && parsedData.posts?.length > 0) {
-      return { posts: Promise.resolve(parsedData.posts) };
+    if (Date.now() - Number(cachedTimestamp) < CACHE_DURATION) {
+      const parsedData: { posts: Tables<"posts">[] } = JSON.parse(cachedData);
+      return { posts: parsedData.posts };
     }
   }
 
-  // Get fresh data from server and cache it
   const serverData = (await serverLoader()) as {
     posts: Promise<Tables<"posts">[]>;
   };
   serverData.posts.then((posts) => {
-    localStorage.setItem("blogPosts", JSON.stringify({ posts }));
-    localStorage.setItem("blogPostsTimestamp", Date.now().toString());
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ posts }));
+    localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
   });
-
   return serverData;
 };
 // Tell Remix to use the client loader during hydration
 clientLoader.hydrate = true;
 
-const MAX_POSTS_PER_PAGE_DESKTOP = 4;
-const MAX_POSTS_PER_PAGE_MOBILE = 3;
+const CAROUSEL_ITEM_HEIGHTS = {
+  xs: 100,
+  sm: 116,
+  md: 132,
+  lg: 160,
+} as const;
 
 const PostsContent = ({ posts }: { posts: Tables<"posts">[] }) => {
-  const [tagOptions, setTagOptions] = useState(
-    Array.from(new Set(posts.flatMap((post) => post.tags)))
-      .sort()
-      .map((tag) => ({ name: tag, selected: false })),
-  );
-  const selectedTags = useMemo(
-    () =>
-      tagOptions
-        .filter((option: TagOption) => option.selected)
-        .map((option: TagOption) => option.name),
-    [tagOptions],
-  );
-  const filteredPosts = useMemo(
-    () =>
-      posts.filter((post) =>
-        selectedTags.every((tag: string) => post.tags.includes(tag)),
-      ),
-    [selectedTags, posts],
-  );
+  const [displayedPosts, setDisplayedPosts] = useState(posts);
+  const [postsPerPage, setPostsPerPage] = useState(4);
+  const [currentPage, setCurrentPage] = useState(0);
 
-  const [postsPerPage, setPostsPerPage] = useState(MAX_POSTS_PER_PAGE_DESKTOP);
   const updatePostsPerPage = useCallback(() => {
-    if (window.matchMedia("(min-height: 800px)").matches) {
-      setPostsPerPage(MAX_POSTS_PER_PAGE_DESKTOP);
-    } else {
-      setPostsPerPage(MAX_POSTS_PER_PAGE_MOBILE);
-    }
+    const LAYOUT_HEIGHTS = {
+      header: 60,
+      pagination: 40,
+      footer: 48,
+      spacing: 20,
+    };
+
+    const totalFixedHeight = Object.values(LAYOUT_HEIGHTS).reduce(
+      (a, b) => a + b,
+      0,
+    );
+    const availableHeight = window.innerHeight - totalFixedHeight;
+
+    const itemHeight = window.matchMedia("(min-width: 1024px)").matches
+      ? CAROUSEL_ITEM_HEIGHTS.lg
+      : window.matchMedia("(min-width: 768px)").matches
+        ? CAROUSEL_ITEM_HEIGHTS.md
+        : window.matchMedia("(min-width: 640px)").matches
+          ? CAROUSEL_ITEM_HEIGHTS.sm
+          : CAROUSEL_ITEM_HEIGHTS.xs;
+
+    setPostsPerPage(Math.max(2, Math.floor(availableHeight / itemHeight)));
   }, []);
 
+  // Update the number of posts per page when the window is resized
   useEffect(() => {
     updatePostsPerPage();
     window.addEventListener("resize", updatePostsPerPage);
     return () => window.removeEventListener("resize", updatePostsPerPage);
   }, [updatePostsPerPage]);
 
-  const [currentPage, setCurrentPage] = useState(0);
-  const pagesInTotal = Math.ceil(posts.length / postsPerPage);
+  const pagesInTotal = Math.ceil(displayedPosts.length / postsPerPage);
   const updateCurrentPage = useCallback(
     (pageIndex: number) => {
       if (pageIndex >= 0 && pageIndex < pagesInTotal) {
@@ -159,37 +159,39 @@ const PostsContent = ({ posts }: { posts: Tables<"posts">[] }) => {
     [pagesInTotal],
   );
 
+  const visiblePosts = displayedPosts.slice(
+    currentPage * postsPerPage,
+    (currentPage + 1) * postsPerPage,
+  );
+
   return (
     <div className="flex flex-grow flex-col">
-      <TagSearchBar tagOptions={tagOptions} setTagOptions={setTagOptions} />
-      <div className="flex-grow">
-        <Carousel
-          posts={filteredPosts.slice(
-            currentPage * postsPerPage,
-            (currentPage + 1) * postsPerPage,
-          )}
-        />
-      </div>
-      <div className="flex justify-center">
-        <Pagination
-          currentPage={currentPage}
-          pagesInTotal={pagesInTotal}
-          onPageChange={updateCurrentPage}
-        />
-      </div>
+      <Header headerName="Blog">
+        <TagSearchLoop posts={posts} setDisplayedPosts={setDisplayedPosts} />
+      </Header>
+      <Carousel posts={visiblePosts} />
+      <Pagination
+        currentPage={currentPage}
+        pagesInTotal={pagesInTotal}
+        onPageChange={updateCurrentPage}
+      />
     </div>
   );
 };
 
-const LoadingState = () => (
+const LoadingFallback = () => (
   <div className="flex flex-grow flex-col">
-    <TagSearchBar tagOptions={[]} setTagOptions={() => {}} />
-    <div className="flex flex-grow">
-      <div className="flex-grow animate-pulse rounded bg-gray-200"></div>
-    </div>
-    <div className="flex justify-center">
-      <Pagination currentPage={0} pagesInTotal={1} onPageChange={() => {}} />
-    </div>
+    <Header headerName="Blog">
+      <div className="relative flex items-center">
+        <button className="text-xl sm:text-2xl" aria-label="Search">
+          <FaSearch />
+        </button>
+      </div>
+    </Header>
+    <main className="flex flex-grow">
+      <div className="flex-grow animate-pulse rounded-lg bg-gray-200" />
+    </main>
+    <Pagination currentPage={0} pagesInTotal={5} onPageChange={() => {}} />
   </div>
 );
 
@@ -202,20 +204,15 @@ export default function BlogRoute() {
   const { posts } = useLoaderData<typeof loader>();
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.webp" />
-      <main className="flex flex-grow flex-col px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto flex w-full max-w-[750px] flex-grow flex-col">
-          <Suspense fallback={<LoadingState />}>
-            <Await resolve={posts}>
-              {(resolvedPosts: Tables<"posts">[]) => (
-                <PostsContent posts={resolvedPosts} />
-              )}
-            </Await>
-          </Suspense>
-        </div>
-      </main>
-      <Footer />
+    <div className="mx-auto flex min-h-screen w-full max-w-[800px] flex-grow flex-col px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-grow flex-col">
+        <Suspense fallback={<LoadingFallback />}>
+          <Await resolve={posts}>
+            {(resolvedPosts) => <PostsContent posts={resolvedPosts} />}
+          </Await>
+        </Suspense>
+        <Footer />
+      </div>
     </div>
   );
 }

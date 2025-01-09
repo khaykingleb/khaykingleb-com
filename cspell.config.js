@@ -13,6 +13,7 @@ export default {
     "pnpm-lock.yaml",
     "supabase",
     "docker-compose.yaml",
+    "app/components/molecules/AsciiDonut.tsx",
   ],
   words: [
     "workdir",

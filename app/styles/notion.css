@@ -19,12 +19,18 @@
 }
 
 .notion {
+  color: hsl(var(--bc)) !important;
+  background: hsl(var(--b1)) !important;
+
   --notion-max-width: 100%;
 }
 
-.notion-title,
 .notion-asset-caption {
   @apply font-gill-sans text-center;
+}
+
+.notion-table-of-contents {
+  @apply m-0 -mt-10 p-0 pt-0 !important;
 }
 
 .notion-table-of-contents,
@@ -39,6 +45,8 @@
 }
 
 .notion-title {
+  @apply hidden !important;
+
   margin-top: -1.5rem !important;
   font-size: 1.75rem !important;
 }

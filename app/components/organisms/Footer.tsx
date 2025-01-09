@@ -1,5 +1,5 @@
 import { Copyright } from "../atoms/Copyright";
-import { SocialMedia } from "../molecules/SocialMedia";
+import { ThemeToggle } from "../molecules/ThemeToggle";
 
 /**
  * Footer component
@@ -8,9 +8,9 @@ import { SocialMedia } from "../molecules/SocialMedia";
  */
 export const Footer = () => {
   return (
-    <footer className="footer bg-white pb-2 pt-2 text-gray-400">
+    <footer className={`relative z-10 mb-4 pb-2 pt-2`}>
       <div className="container mx-auto flex flex-col items-center justify-between">
-        <SocialMedia />
+        <ThemeToggle />
         <Copyright />
       </div>
     </footer>

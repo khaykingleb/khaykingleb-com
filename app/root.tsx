@@ -5,6 +5,7 @@ import "katex/dist/katex.min.css";
 import type { LinksFunction } from "@remix-run/node";
 import {
   isRouteErrorResponse,
+  Link,
   Links,
   Meta,
   Outlet,
@@ -15,8 +16,8 @@ import {
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/remix";
 
+import { AsciiDonut } from "~/components/molecules/AsciiDonut";
 import { Footer } from "~/components/organisms/Footer";
-import { Header } from "~/components/organisms/Header";
 
 import notionStylesheetUrl from "./styles/notion.css?url";
 import tailwindStylesheetUrl from "./styles/tailwind.css?url";
@@ -67,11 +68,7 @@ export const links: LinksFunction = () => {
     },
 
     // Images
-    {
-      rel: "preload",
-      as: "image",
-      href: "/avatar.webp",
-    },
+    // TODO: move to webp
     {
       rel: "preload",
       as: "image",
@@ -91,33 +88,46 @@ export const links: LinksFunction = () => {
  */
 export function ErrorBoundary() {
   const error = useRouteError();
+
   return (
     <html lang="en">
       <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="author" content="Gleb Khaykin" />
         <title>Oops!</title>
         <Meta />
         <Links />
       </head>
       <body className="flex min-h-screen flex-col">
-        <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.webp" />
-        <main className="font-gill-sans flex flex-grow flex-col items-center justify-center text-center">
+        <main className="flex flex-grow flex-col items-center justify-center text-center">
+          <AsciiDonut />
           {isRouteErrorResponse(error) && error.status === 404 ? (
-            <h2 className="mb-4 text-2xl font-semibold">
-              Page doesn&apos;t exist
-            </h2>
+            <>
+              <h2 className="font-poppins mb-4 text-4xl font-black">
+                Page doesn&apos;t exist
+              </h2>
+            </>
           ) : (
             <>
-              <h1 className="mb-2 text-2xl font-semibold">
+              <h1 className="font-poppins mb-2 text-4xl font-black">
                 Something went wrong!
               </h1>
-              <h2 className="mb-4 text-lg">
-                Please try again later or contact me if the issue persists.
+              <h2 className="text-2xl font-bold">
+                Please try again later or contact me if the issue persists
               </h2>
             </>
           )}
+          <Link
+            to="/"
+            className="btn btn-ghost z-50 text-xl font-bold hover:bg-white/20"
+          >
+            Go Home
+          </Link>
         </main>
         <Footer />
         <Scripts />
+        <ScrollRestoration />
       </body>
     </html>
   );

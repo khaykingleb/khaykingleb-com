@@ -9,6 +9,7 @@ import {
   Await,
   ClientLoaderFunction,
   ClientLoaderFunctionArgs,
+  Link,
   useLoaderData,
 } from "@remix-run/react";
 import { createClient } from "@supabase/supabase-js";
@@ -25,8 +26,8 @@ import { ExtendedRecordMap } from "vendor/react-notion-x/packages/notion-types/s
 import { NotionRenderer } from "vendor/react-notion-x/packages/react-notion-x";
 
 import { Footer } from "~/components/organisms/Footer";
-import { Header } from "~/components/organisms/Header";
 import { Tables } from "~/integrations/supabase/database.types";
+import { useTheme } from "~/utils/theme";
 
 const Equation = React.lazy(() =>
   import("react-notion-x/build/third-party/equation").then((module) => ({
@@ -74,12 +75,14 @@ const Collection = React.lazy(() =>
 );
 
 const NotionPage = ({ recordMap }: { recordMap: ExtendedRecordMap }) => {
+  const { theme } = useTheme();
+
   return (
     // @ts-expect-error: NotionRenderer is a React component
     <NotionRenderer
       recordMap={recordMap}
       fullPage={true}
-      darkMode={false}
+      darkMode={theme === "dark"}
       disableHeader={true}
       components={{
         Pdf,
@@ -128,22 +131,24 @@ export const loader: LoaderFunction = async ({
   return defer({ post: data, recordMap: recordMapPromise });
 };
 
-const CACHE_DURATION = 24 * 60 * 60 * 1000; // 1 day in milliseconds
+const CACHE_KEY = "blogPosts";
+const CACHE_TIMESTAMP_KEY = "blogPostsTimestamp";
+const CACHE_DURATION = 60 * 60 * 1000;
 
 export const clientLoader: ClientLoaderFunction = async ({
   params,
   serverLoader,
 }: ClientLoaderFunctionArgs) => {
-  const cachedData = localStorage.getItem(`blogPosts-${params.slug}`);
+  const cachedData = localStorage.getItem(`${CACHE_KEY}-${params.slug}`);
   const cachedTimestamp = localStorage.getItem(
-    `blogPostsTimestamp-${params.slug}`,
+    `${CACHE_TIMESTAMP_KEY}-${params.slug}`,
   );
-
-  // Use cached data if it's valid
   if (cachedData && cachedTimestamp) {
-    const isExpired = Date.now() - Number(cachedTimestamp) > CACHE_DURATION;
-    const parsedData = JSON.parse(cachedData);
-    if (!isExpired && parsedData.post && parsedData.recordMap) {
+    if (Date.now() - Number(cachedTimestamp) < CACHE_DURATION) {
+      const parsedData: {
+        post: Tables<"posts">;
+        recordMap: Promise<ExtendedRecordMap>;
+      } = JSON.parse(cachedData);
       return {
         post: parsedData.post,
         recordMap: Promise.resolve(parsedData.recordMap),
@@ -151,23 +156,20 @@ export const clientLoader: ClientLoaderFunction = async ({
     }
   }
 
-  // Get fresh data from server
   const serverData = (await serverLoader()) as {
     post: Tables<"posts">;
     recordMap: Promise<ExtendedRecordMap>;
   };
-
-  // Cache the data
   Promise.resolve(serverData.recordMap).then((recordMap) => {
     localStorage.setItem(
-      `blogPosts-${params.slug}`,
+      `${CACHE_KEY}-${params.slug}`,
       JSON.stringify({
         post: serverData.post,
         recordMap,
       }),
     );
     localStorage.setItem(
-      `blogPostsTimestamp-${params.slug}`,
+      `${CACHE_TIMESTAMP_KEY}-${params.slug}`,
       Date.now().toString(),
     );
   });
@@ -263,25 +265,32 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
  * @returns The route layout
  */
 export default function BlogPostRoute() {
-  const { recordMap } = useLoaderData<typeof loader>();
+  const { post, recordMap } = useLoaderData<typeof loader>();
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header backgroundImageUrl="/img/van_gogh_wheatfield_with_crows.webp" />
-      <main className="flex flex-grow px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto flex w-full max-w-[750px] flex-col">
-          <Suspense
-            fallback={
-              <div className="mb-2 mt-4 w-full flex-grow animate-pulse rounded-lg bg-gray-200" />
-            }
-          >
-            <Await resolve={recordMap}>
-              {(resolvedRecordMap: ExtendedRecordMap) => {
-                return <NotionPage recordMap={resolvedRecordMap} />;
-              }}
-            </Await>
-          </Suspense>
+    <div className="mx-auto flex min-h-screen w-full max-w-[800px] flex-col px-4 sm:px-6 lg:px-8">
+      <header className="mt-4">
+        <div className="flex items-center gap-2 text-3xl font-semibold sm:text-4xl">
+          <Link to="/blog">&lt;</Link>
+          <h1>{post.title}</h1>
         </div>
+        <div className="mt-4 h-px w-full bg-gray-200" />
+      </header>
+      <main className="flex flex-grow flex-col">
+        <Suspense
+          fallback={
+            <div className="mb-2 mt-4 flex-grow animate-pulse rounded-lg bg-gray-200" />
+          }
+        >
+          <h2 className="font-gill-sans ml-4 mt-6 text-[1.75rem] font-semibold">
+            Table of Contents
+          </h2>
+          <Await resolve={recordMap}>
+            {(resolvedRecordMap: ExtendedRecordMap) => (
+              <NotionPage recordMap={resolvedRecordMap} />
+            )}
+          </Await>
+        </Suspense>
       </main>
       <Footer />
     </div>

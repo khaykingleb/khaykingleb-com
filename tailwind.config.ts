@@ -5,7 +5,26 @@ import type { Config } from "tailwindcss";
 export default {
   content: ["./app/**/*.{ts,tsx,jsx,js}"],
   plugins: [daisyUI],
+  darkMode: "class",
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ["Gill Sans", "sans-serif"],
+      },
+    },
+  },
   daisyui: {
-    darkTheme: false, // disable dark theme
+    themes: [
+      {
+        light: {
+          "base-100": "#ffffff",
+          "base-content": "#000000",
+        },
+        dark: {
+          "base-100": "#000000",
+          "base-content": "#ffffff",
+        },
+      },
+    ],
   },
 } satisfies Config;

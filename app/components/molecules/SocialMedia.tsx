@@ -1,59 +1,60 @@
-import { AiFillInstagram } from "react-icons/ai";
 import { FaGithub, FaLinkedin, FaTelegram } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { ImMail4 } from "react-icons/im";
+
+interface SocialMediaProps {
+  size?: number;
+  displayLabels?: boolean;
+}
 
 /**
  * Social media component
  *
  * @returns Social media component
  */
-export const SocialMedia = () => {
+export const SocialMedia = ({ size = 24 }: SocialMediaProps) => {
+  const links = [
+    {
+      href: "https://github.com/khaykingleb",
+      label: "khaykingleb",
+      icon: FaGithub,
+    },
+    {
+      href: "https://linkedin.com/in/khaykingleb",
+      label: "khaykingleb",
+      icon: FaLinkedin,
+    },
+    {
+      href: "https://twitter.com/khaykingleb",
+      label: "@khaykingleb",
+      icon: FaSquareXTwitter,
+    },
+    {
+      href: "https://t.me/khaykingleb_blog",
+      label: "@khaykingleb_blog",
+      icon: FaTelegram,
+    },
+    {
+      href: "mailto:khaykingleb@gmail.com",
+      label: "khaykingleb@gmail.com",
+      icon: ImMail4,
+    },
+  ];
+
   return (
-    <div className="mt-1 flex space-x-3">
-      <a
-        href="https://www.linkedin.com/in/khaykingleb"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="LinkedIn"
-      >
-        <FaLinkedin className="h-6 w-6" />
-      </a>
-      <a
-        href="https://github.com/khaykingleb"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="GitHub"
-      >
-        <FaGithub className="h-6 w-6" />
-      </a>
-      <a
-        href="https://t.me/khaykingleb_blog"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Telegram"
-      >
-        <FaTelegram className="h-6 w-6" />
-      </a>
-      <a
-        href="https://x.com/khaykingleb"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="X"
-      >
-        <FaSquareXTwitter className="h-6 w-6" />
-      </a>
-      <a
-        href="https://instagram.com/khaykingleb"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Instagram"
-      >
-        <AiFillInstagram className="-mt-0.5 h-7 w-7" />
-      </a>
-      <a href="mailto:khaykingleb@gmail.com" aria-label="Email">
-        <ImMail4 className="h-6 w-6" />
-      </a>
-    </div>
+    <>
+      {links.map((link) => (
+        <a
+          key={link.href}
+          href={link.href}
+          className="flex items-center space-x-2 hover:text-primary"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <link.icon style={{ width: size, height: size }} />
+          <span className="text-base">{link.label}</span>
+        </a>
+      ))}
+    </>
   );
 };
