@@ -107,29 +107,23 @@ export function ErrorBoundary() {
               <h2 className="font-poppins mb-4 text-4xl font-black">
                 Page doesn&apos;t exist
               </h2>
-              <Link
-                to="/"
-                className="btn btn-ghost z-50 text-xl font-bold hover:bg-white/20"
-              >
-                Go Home
-              </Link>
             </>
           ) : (
             <>
               <h1 className="font-poppins mb-2 text-4xl font-black">
                 Something went wrong!
               </h1>
-              <h2 className="text-2xl">
+              <h2 className="text-2xl font-bold">
                 Please try again later or contact me if the issue persists
               </h2>
-              <Link
-                to=".."
-                className="btn btn-ghost text-xl font-bold hover:bg-white/20"
-              >
-                Go Back
-              </Link>
             </>
           )}
+          <Link
+            to="/"
+            className="btn btn-ghost z-50 text-xl font-bold hover:bg-white/20"
+          >
+            Go Home
+          </Link>
         </main>
         <Footer />
         <Scripts />
