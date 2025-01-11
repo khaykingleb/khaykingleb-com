@@ -96,8 +96,8 @@
 .notion-code,
 .notion-code pre,
 .notion-code code {
-  color: #24292e !important;
-  background-color: #f7f6f3 !important;
+  color: hsl(var(--bc)) !important;
+  background: hsl(var(--b1)) !important;
 }
 
 .katex {
