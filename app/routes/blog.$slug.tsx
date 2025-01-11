@@ -176,7 +176,7 @@ export const clientLoader: ClientLoaderFunction = async ({
 
   return serverData;
 };
-// Tell Remix to use the client loader during hydration
+// // Tell Remix to use the client loader during hydration
 clientLoader.hydrate = true;
 
 export const handle: SEOHandle = {
@@ -268,7 +268,7 @@ export default function BlogPostRoute() {
   const { post, recordMap } = useLoaderData<typeof loader>();
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-[800px] flex-col px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto flex min-h-screen w-full max-w-[850px] flex-col px-4 sm:px-6 lg:px-8">
       <header className="mt-4">
         <div className="flex items-center gap-2 text-3xl font-semibold sm:text-4xl">
           <Link to="/blog">&lt;</Link>

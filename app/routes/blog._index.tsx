@@ -204,7 +204,7 @@ export default function BlogRoute() {
   const { posts } = useLoaderData<typeof loader>();
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-[800px] flex-grow flex-col px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto flex min-h-screen w-full max-w-[850px] flex-grow flex-col px-4 sm:px-6 lg:px-8">
       <div className="flex flex-grow flex-col">
         <Suspense fallback={<LoadingFallback />}>
           <Await resolve={posts}>

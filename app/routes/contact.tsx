@@ -56,7 +56,7 @@ export const meta: MetaFunction = () => {
  */
 export default function ContactRoute() {
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-[800px] flex-grow flex-col px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto flex min-h-screen w-full max-w-[850px] flex-grow flex-col px-4 sm:px-6 lg:px-8">
       <div className="flex flex-grow flex-col">
         <Header headerName="Contact" />
         <main className="flex flex-grow flex-col">
