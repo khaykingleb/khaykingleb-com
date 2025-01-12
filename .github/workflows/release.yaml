@@ -56,5 +56,5 @@ jobs:
       - name: Link Supabase to Project
         run: supabase link --project-ref $PROJECT_ID
 
-      - name: Run Migrations and Seeds
-        run: supabase db push --include-seed
+      - name: Run Migrations
+        run: supabase db push

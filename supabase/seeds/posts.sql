@@ -4,5 +4,5 @@ values (
     'introduction-to-digital-signal-processing',
     '5987cc697c874323920215fbaad8cbbd',  -- pragma: allowlist secret
     array['notes', 'speech'],
-    '/img/posts/introduction-to-digital-signal-processing.webp'
+    '/posts/5987cc697c874323920215fbaad8cbbd/img.webp'
 );
