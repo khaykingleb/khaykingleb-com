@@ -1,6 +1,7 @@
 import { SEOHandle } from "@nasa-gcn/remix-seo";
 import { MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
+import { GoArrowUpRight } from "react-icons/go";
 
 import { AsciiDonut } from "~/components/molecules/AsciiDonut";
 import { Footer } from "~/components/organisms/Footer";
@@ -71,15 +72,21 @@ export default function IndexRoute() {
               to="/Gleb_Khaykin.pdf"
               prefetch="intent"
               target="_blank"
-              className="text-xl sm:text-2xl"
+              className="inline-flex items-center gap-1 text-xl sm:text-2xl"
             >
-              ↗ CV
+              <GoArrowUpRight className="h-6 w-6" /> CV
             </Link>
-            <Link to="/blog" className="text-xl sm:text-2xl">
-              ↗ Blog
+            <Link
+              to="/blog"
+              className="inline-flex items-center gap-1 text-xl sm:text-2xl"
+            >
+              <GoArrowUpRight className="h-6 w-6" /> Blog
             </Link>
-            <Link to="/contact" className="text-xl sm:text-2xl">
-              ↗ Contact
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-1 text-xl sm:text-2xl"
+            >
+              <GoArrowUpRight className="h-6 w-6" /> Contact
             </Link>
           </div>
         </div>
