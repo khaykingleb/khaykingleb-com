@@ -32,5 +32,7 @@ export default {
     "changefreq",
     "doesn",
     "supabase",
+    "jsonencode",
+    "signup",
   ],
 };

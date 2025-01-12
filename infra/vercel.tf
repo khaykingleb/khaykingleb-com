@@ -15,7 +15,7 @@ resource "vercel_project" "khaykingleb_com" {
 resource "vercel_project_environment_variable" "supabase_url" {
   project_id = vercel_project.khaykingleb_com.id
   key        = "SUPABASE_URL"
-  value      = var.supabase_url
+  value      = "https://${supabase_project.this.id}.supabase.co"
   target     = ["production", "preview", "development"]
   comment    = "Supabase URL"
 }
@@ -23,7 +23,7 @@ resource "vercel_project_environment_variable" "supabase_url" {
 resource "vercel_project_environment_variable" "supabase_anon_key" {
   project_id = vercel_project.khaykingleb_com.id
   key        = "SUPABASE_ANON_KEY"
-  value      = var.supabase_anon_key
+  value      = data.supabase_apikeys.this.anon_key
   target     = ["production", "preview", "development"]
   comment    = "Supabase anon key for client-side code"
 }
@@ -31,7 +31,7 @@ resource "vercel_project_environment_variable" "supabase_anon_key" {
 resource "vercel_project_environment_variable" "supabase_service_role_key" {
   project_id = vercel_project.khaykingleb_com.id
   key        = "SUPABASE_SERVICE_ROLE_KEY"
-  value      = var.supabase_service_role_key
+  value      = data.supabase_apikeys.this.service_role_key
   target     = ["production", "preview"]
   sensitive  = true
   comment    = "Supabase service role key for server-side code"
