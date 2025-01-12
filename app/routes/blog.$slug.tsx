@@ -178,7 +178,7 @@ export const clientLoader: ClientLoaderFunction = async ({
 
   return serverData;
 };
-// // Tell Remix to use the client loader during hydration
+// Tell Remix to use the client loader during hydration
 clientLoader.hydrate = true;
 
 export const handle: SEOHandle = {
