@@ -27,6 +27,7 @@ import { NotionRenderer } from "vendor/react-notion-x/packages/react-notion-x";
 
 import { Footer } from "~/components/organisms/Footer";
 import { Tables } from "~/integrations/supabase/database.types";
+import { getPostImageUrl } from "~/utils/supabase";
 import { useTheme } from "~/utils/theme";
 
 const Equation = React.lazy(() =>
@@ -111,11 +112,11 @@ const NotionPage = ({ recordMap }: { recordMap: ExtendedRecordMap }) => {
 export const loader: LoaderFunction = async ({
   params,
 }: LoaderFunctionArgs) => {
-  const supabase = createClient(
+  const supabaseClient = createClient(
     process.env.SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
   );
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClient
     .from("posts")
     .select("*")
     .eq("slug", params.slug)
@@ -124,6 +125,7 @@ export const loader: LoaderFunction = async ({
 
   if (error) throw new Response("Failed to load post", { status: 500 });
   if (!data) throw new Response("Post not found", { status: 404 });
+  data.image_url = getPostImageUrl(supabaseClient, data.image_url);
 
   const notion = new NotionAPI();
   const recordMapPromise = notion.getPage(data.notion_page_id);
@@ -186,11 +188,11 @@ export const handle: SEOHandle = {
    * @returns The sitemap.xml entries for the route
    */
   getSitemapEntries: async () => {
-    const supabase = createClient(
+    const supabaseClient = createClient(
       process.env.SUPABASE_URL!,
       process.env.SUPABASE_SERVICE_ROLE_KEY!,
     );
-    const { data: posts } = await supabase
+    const { data: posts } = await supabaseClient
       .from("posts")
       .select("slug")
       .returns<Tables<"posts">[]>();
@@ -268,7 +270,7 @@ export default function BlogPostRoute() {
   const { post, recordMap } = useLoaderData<typeof loader>();
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-[800px] flex-col px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto flex min-h-screen w-full max-w-[850px] flex-col px-4 sm:px-6 lg:px-8">
       <header className="mt-4">
         <div className="flex items-center gap-2 text-3xl font-semibold sm:text-4xl">
           <Link to="/blog">&lt;</Link>

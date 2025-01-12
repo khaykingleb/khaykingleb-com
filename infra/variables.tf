@@ -4,20 +4,20 @@ variable "vercel_api_token" {
   sensitive   = true
 }
 
-variable "supabase_url" {
-  description = "The Supabase URL"
+variable "supabase_organization_id" {
+  description = "The ID of the Supabase organization"
   type        = string
   sensitive   = true
 }
 
-variable "supabase_service_role_key" {
-  description = "The Supabase service role key"
+variable "supabase_access_token" {
+  description = "The personal access token for the Supabase"
   type        = string
   sensitive   = true
 }
 
-variable "supabase_anon_key" {
-  description = "The Supabase anon key"
+variable "supabase_database_password" {
+  description = "The password for the Supabase database"
   type        = string
   sensitive   = true
 }

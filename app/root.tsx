@@ -68,7 +68,6 @@ export const links: LinksFunction = () => {
     },
 
     // Images
-    // TODO: move to webp
     {
       rel: "preload",
       as: "image",
@@ -126,8 +125,8 @@ export function ErrorBoundary() {
           </Link>
         </main>
         <Footer />
-        <Scripts />
         <ScrollRestoration />
+        <Scripts />
       </body>
     </html>
   );

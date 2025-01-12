@@ -15,6 +15,7 @@ import { Footer } from "~/components/organisms/Footer";
 import { Header } from "~/components/organisms/Header";
 import { Pagination } from "~/components/organisms/Pagination";
 import { Tables } from "~/integrations/supabase/database.types";
+import { getPostImageUrl } from "~/utils/supabase";
 
 export const handle: SEOHandle = {
   /**
@@ -60,18 +61,21 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async () => {
-  const supabase = createClient(
+  const supabaseClient = createClient(
     process.env.SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
   );
 
-  const postsPromise = supabase
+  const postsPromise = supabaseClient
     .from("posts")
     .select("*")
     .returns<Tables<"posts">[]>()
     .then(async ({ data, error }) => {
       if (error) throw new Response("Failed to load posts", { status: 500 });
-      return data.reverse();
+      return data.reverse().map((post) => ({
+        ...post,
+        image_url: getPostImageUrl(supabaseClient, post.image_url),
+      }));
     });
 
   return defer({ posts: postsPromise as Promise<Tables<"posts">[]> });
@@ -204,7 +208,7 @@ export default function BlogRoute() {
   const { posts } = useLoaderData<typeof loader>();
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-[800px] flex-grow flex-col px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto flex min-h-screen w-full max-w-[850px] flex-grow flex-col px-4 sm:px-6 lg:px-8">
       <div className="flex flex-grow flex-col">
         <Suspense fallback={<LoadingFallback />}>
           <Await resolve={posts}>
