@@ -69,18 +69,17 @@ export default function ContactRoute() {
               <div className="space-y-1 text-base">
                 <ul className="list-disc space-x-0 space-y-1 pl-4">
                   <li>
-                    I&apos;m a full-stack developer specializing in MLOps/DevOps
+                    Full-stack developer specializing in MLOps/DevOps
                     engineering
                   </li>
                   <li>
                     When I&apos;m not coding, you&apos;ll find me at the gym,
-                    lifting weights 🏋️‍♀️
+                    lifting weights
                   </li>
                   <li>
-                    I studied both Computer Science and Finance at the Higher
-                    School of Economics (this dual background helps me
-                    understand both business and technical aspects of the
-                    projects)
+                    Studied Computer Science and Finance at the Higher School of
+                    Economics (this dual background helps me understand both
+                    business and technical aspects of the projects)
                   </li>
                 </ul>
               </div>
