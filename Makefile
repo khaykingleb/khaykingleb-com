@@ -32,10 +32,10 @@ deps-notion: ## Install dependencies for react-notion-x
 	@cd ${VENDOR_DIR} && yarn install --frozen-lockfile
 .PHONY: deps-notion
 
-deps: deps-notion ## Install repo dependencies
-	@echo "Installing dependencies."
+deps-dev: deps-notion ## Install development dependencies
+	@echo "Installing development dependencies."
 	@pnpm install
-.PHONY: deps
+.PHONY: deps-dev
 
 deps-prod: deps-notion ## Install production dependencies
 	@echo "Installing production dependencies."
@@ -47,7 +47,7 @@ pre-commit: ## Install pre-commit hooks
 	@pre-commit install -t pre-commit -t commit-msg
 .PHONY: pre-commit
 
-init: prerequisites env deps pre-commit ## Initialize local environment for development
+init: prerequisites env deps-dev pre-commit ## Initialize local environment for development
 .PHONY: init
 
 ##=============================================================================
@@ -136,25 +136,25 @@ ngrok-prod: ## Run ngrok for production server
 ##@ Security
 ##==============================================================================
 
-create-secrets-baseline: ## Create secrets baseline file
+detect-secrets-create-baseline: ## Create secrets baseline file
 	@detect-secrets scan > .secrets.baseline
-.PHONY: create-secrets-baseline
+.PHONY: detect-secrets-create-baseline
 
-audit-secrets-baseline: ## Check updated .secrets.baseline file
+detect-secrets-audit-baseline: ## Check updated .secrets.baseline file
 	@detect-secrets audit .secrets.baseline
-.PHONY: audit-secrets-baseline
+.PHONY: detect-secrets-audit-baseline
 
-detect-secrets: ## Scan for secrets
+detect-secrets-scan: ## Scan for secrets
 	@detect-secrets scan --baseline .secrets.baseline
-.PHONY: detect-secrets
+.PHONY: detect-secrets-scan
 
 ##=============================================================================
 ##@ Miscellaneous
 ##=============================================================================
 
-update-pre-commit-hooks: ## Update pre-commit hooks
+pre-commit-update-hooks: ## Update pre-commit hooks
 	@pre-commit autoupdate
-.PHONY: update-pre-commit-hooks
+.PHONY: pre-commit-update-hooks
 
 clean: ## Clean project
 	@echo "Cleaning project."
