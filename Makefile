@@ -12,29 +12,11 @@ endif
 ##@ Repo Initialization
 ##=============================================================================
 
-PLUGINS := \
-	direnv https://github.com/asdf-community/asdf-direnv.git \
-	pre-commit https://github.com/jonathanmorley/asdf-pre-commit.git \
-	nodejs https://github.com/asdf-vm/asdf-nodejs.git \
-	pnpm https://github.com/jonathanmorley/asdf-pnpm.git \
-	yarn https://github.com/twuni/asdf-yarn.git \
-	supabase-cli https://github.com/gavinying/asdf-supabase-cli.git \
-	terraform https://github.com/asdf-community/asdf-hashicorp.git
-
 prerequisites: ## Install prerequisite tools
-	@echo "Checking and installing required plugins."
-	@echo "${PLUGINS}" | tr ' ' '\n' | paste - - | while read -r plugin url; do \
-		if asdf plugin-list | grep -q $$plugin; then \
-			echo "Plugin '$$plugin' is already installed."; \
-		else \
-			echo "Adding plugin '$$plugin'."; \
-			asdf plugin-add $$plugin $$url; \
-		fi; \
-	done
-	@echo  "Installing specified versions."
-	asdf install
-	@echo  "Currently installed versions:"
-	asdf current
+	@echo  "Installing specified runtime versions."
+	@asdf install
+	@echo  "Currently installed runtime versions:"
+	@asdf current
 .PHONY: prerequisites
 
 env: ## Create .env file if it doesn't exist
