@@ -10,12 +10,12 @@ export function AsciiDonut() {
   const canvasRef = useRef<HTMLPreElement>(null);
 
   useEffect(() => {
-    const theta_spacing = 0.07;
-    const phi_spacing = 0.02;
+    const theta_spacing = 0.07; // The spacing between the theta angles
+    const phi_spacing = 0.02; // The spacing between the phi angles
 
-    const R1 = 1;
-    const R2 = 2;
-    const K2 = 5;
+    const R1 = 1; // Radius of the torus
+    const R2 = 2; // Radius of the tube
+    const K2 = 5; // Number of twists
 
     /**
      * Render a single frame of the ASCII art donut
@@ -24,8 +24,8 @@ export function AsciiDonut() {
      * @returns The ASCII art string for the frame
      */
     function renderFrame(A: number, B: number) {
-      const screenWidth = 100;
-      const screenHeight = 100;
+      const screenWidth = 900;
+      const screenHeight = 900;
       const K1 = (screenWidth * K2 * 3) / (8 * (R1 + R2));
 
       const cosA = Math.cos(A),
@@ -94,6 +94,7 @@ export function AsciiDonut() {
     const animate = () => {
       if (canvasRef.current) {
         canvasRef.current.textContent = renderFrame(A_val, B_val);
+        // The speed of the torus rotation
         A_val += 0.005;
         B_val += 0.003;
         requestAnimationFrame(animate);
@@ -106,8 +107,7 @@ export function AsciiDonut() {
   return (
     <pre
       ref={canvasRef}
-      className="fixed left-[60%] top-1/2 -translate-x-1/2 -translate-y-1/2 font-mono text-[0.5rem] font-extralight leading-[0.5rem]"
-      style={{ fontFamily: "Courier New" }}
+      className="fixed left-[70%] top-[50%] -translate-x-[50%] -translate-y-[50%] text-[0.125rem] font-extrabold leading-[0.0625rem] 2xl:left-[50%]"
     />
   );
 }

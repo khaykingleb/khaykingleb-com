@@ -57,10 +57,10 @@ export const handle: SEOHandle = {
 export default function IndexRoute() {
   return (
     <div className="flex min-h-screen flex-col">
-      <main className="mx-8 flex w-full flex-1 flex-col sm:mx-60">
+      <main className="3xl:mx-96 mx-8 flex w-full flex-1 flex-col sm:mx-60 2xl:mx-80">
         <AsciiDonut />
         <div className="z-10 flex flex-1 flex-col justify-center">
-          <div className="font-poppins mb-6 flex flex-col gap-4 font-black sm:gap-6">
+          <div className="font-poppins mb-6 flex flex-col gap-4 font-black">
             {["Hey", "I'm Gleb Khaykin", "I build things"].map((text, i) => (
               <h1 key={i} className="text-4xl sm:text-6xl">
                 {text}
