@@ -12,29 +12,11 @@ endif
 ##@ Repo Initialization
 ##=============================================================================
 
-PLUGINS := \
-	direnv https://github.com/asdf-community/asdf-direnv.git \
-	pre-commit https://github.com/jonathanmorley/asdf-pre-commit.git \
-	nodejs https://github.com/asdf-vm/asdf-nodejs.git \
-	pnpm https://github.com/jonathanmorley/asdf-pnpm.git \
-	yarn https://github.com/twuni/asdf-yarn.git \
-	supabase-cli https://github.com/gavinying/asdf-supabase-cli.git \
-	terraform https://github.com/asdf-community/asdf-hashicorp.git
-
 prerequisites: ## Install prerequisite tools
-	@echo "Checking and installing required plugins."
-	@echo "${PLUGINS}" | tr ' ' '\n' | paste - - | while read -r plugin url; do \
-		if asdf plugin-list | grep -q $$plugin; then \
-			echo "Plugin '$$plugin' is already installed."; \
-		else \
-			echo "Adding plugin '$$plugin'."; \
-			asdf plugin-add $$plugin $$url; \
-		fi; \
-	done
-	@echo  "Installing specified versions."
-	asdf install
-	@echo  "Currently installed versions:"
-	asdf current
+	@echo  "Installing specified runtime versions."
+	@asdf install
+	@echo  "Currently installed runtime versions:"
+	@asdf current
 .PHONY: prerequisites
 
 env: ## Create .env file if it doesn't exist
@@ -50,10 +32,10 @@ deps-notion: ## Install dependencies for react-notion-x
 	@cd ${VENDOR_DIR} && yarn install --frozen-lockfile
 .PHONY: deps-notion
 
-deps: deps-notion ## Install repo dependencies
-	@echo "Installing dependencies."
+deps-dev: deps-notion ## Install development dependencies
+	@echo "Installing development dependencies."
 	@pnpm install
-.PHONY: deps
+.PHONY: deps-dev
 
 deps-prod: deps-notion ## Install production dependencies
 	@echo "Installing production dependencies."
@@ -65,7 +47,7 @@ pre-commit: ## Install pre-commit hooks
 	@pre-commit install -t pre-commit -t commit-msg
 .PHONY: pre-commit
 
-init: prerequisites env deps pre-commit ## Initialize local environment for development
+init: prerequisites env deps-dev pre-commit ## Initialize local environment for development
 .PHONY: init
 
 ##=============================================================================
@@ -154,25 +136,25 @@ ngrok-prod: ## Run ngrok for production server
 ##@ Security
 ##==============================================================================
 
-create-secrets-baseline: ## Create secrets baseline file
+detect-secrets-create-baseline: ## Create secrets baseline file
 	@detect-secrets scan > .secrets.baseline
-.PHONY: create-secrets-baseline
+.PHONY: detect-secrets-create-baseline
 
-audit-secrets-baseline: ## Check updated .secrets.baseline file
+detect-secrets-audit-baseline: ## Check updated .secrets.baseline file
 	@detect-secrets audit .secrets.baseline
-.PHONY: audit-secrets-baseline
+.PHONY: detect-secrets-audit-baseline
 
-detect-secrets: ## Scan for secrets
+detect-secrets-scan: ## Scan for secrets
 	@detect-secrets scan --baseline .secrets.baseline
-.PHONY: detect-secrets
+.PHONY: detect-secrets-scan
 
 ##=============================================================================
 ##@ Miscellaneous
 ##=============================================================================
 
-update-pre-commit-hooks: ## Update pre-commit hooks
+pre-commit-update-hooks: ## Update pre-commit hooks
 	@pre-commit autoupdate
-.PHONY: update-pre-commit-hooks
+.PHONY: pre-commit-update-hooks
 
 clean: ## Clean project
 	@echo "Cleaning project."

@@ -1,7 +1,8 @@
 direnv 2.35.0
-pre-commit 3.7.0
+pre-commit 4.1.0
 nodejs 21.7.3
 pnpm 9.9.0
 yarn 1.22.22
-supabase-cli 2.2.1
-terraform 1.5.4
+python 3.10.16
+supabase-cli 2.9.1
+terraform 1.5.7
