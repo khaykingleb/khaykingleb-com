@@ -58,6 +58,10 @@ const Code = React.lazy(() =>
       import("prismjs/components/prism-rust"),
       // @ts-expect-error: Expect missing type declarations for prism components
       import("prismjs/components/prism-bash"),
+      // @ts-expect-error: Expect missing type declarations for prism components
+      import("prismjs/components/prism-hcl"),
+      // @ts-expect-error: Expect missing type declarations for prism components
+      import("prismjs/components/prism-yaml"),
     ]);
     return {
       default: module.Code as React.ComponentType<{
