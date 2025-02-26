@@ -7,7 +7,6 @@ import { generateRobotsTxt } from "@nasa-gcn/remix-seo";
  */
 export function loader() {
   return generateRobotsTxt([
-    { type: "allow", value: "/blog" },
     { type: "sitemap", value: "https://khaykingleb.com/sitemap.xml" },
   ]);
 }
