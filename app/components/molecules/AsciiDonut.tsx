@@ -107,7 +107,7 @@ export function AsciiDonut() {
   return (
     <pre
       ref={canvasRef}
-      className="fixed left-[70%] top-[50%] -translate-x-[50%] -translate-y-[50%] text-[0.125rem] font-extralight leading-[0.0625rem] 2xl:left-[50%]"
+      className="fixed left-[70%] top-[50%] -translate-x-[50%] -translate-y-[50%] text-[0.125rem] font-extralight leading-[0.0625rem]"
     />
   );
 }
