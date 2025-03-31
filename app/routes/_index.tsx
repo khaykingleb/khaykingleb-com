@@ -1,7 +1,6 @@
 import { SEOHandle } from "@nasa-gcn/remix-seo";
 import { MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
-import { track } from "@vercel/analytics";
 import { GoArrowUpRight } from "react-icons/go";
 
 import { AsciiDonut } from "~/components/molecules/AsciiDonut";
@@ -74,9 +73,6 @@ export default function IndexRoute() {
               prefetch="intent"
               target="_blank"
               className="inline-flex items-center gap-1 text-xl sm:text-2xl"
-              onClick={() => {
-                track("CV", { location: "home_page" });
-              }}
             >
               <GoArrowUpRight className="h-6 w-6" /> CV
             </Link>
