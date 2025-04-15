@@ -2,8 +2,6 @@
 
 This is the repository for my [personal website](https://khaykingleb.com).
 
-## Tech Stack
-
 ## Prerequisites
 The only prerequisite tool for this project is [asdf](https://asdf-vm.com/) — make sure you have it installed.
 
