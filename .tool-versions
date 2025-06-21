@@ -4,5 +4,5 @@ nodejs 21.7.3
 pnpm 10.8.1
 yarn 1.22.22
 python 3.10.16
-supabase-cli 2.12.1
+supabase-cli 2.26.9
 terraform 1.5.7
