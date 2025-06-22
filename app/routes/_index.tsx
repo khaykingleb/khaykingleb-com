@@ -16,15 +16,15 @@ const GoArrowUpRight = GoArrowUpRightOriginal as ElementType;
  */
 export const meta: MetaFunction = () => {
   return [
-    { title: "About" },
-    { description: "Gleb Khaykin's personal website" },
+    { title: "Gleb Khaykin" },
+    { description: "Personal website and blog" },
     {
       property: "og:title",
-      content: "About",
+      content: "Gleb Khaykin",
     },
     {
       property: "og:description",
-      content: "Gleb Khaykin's personal website",
+      content: "Personal website and blog",
     },
     {
       property: "og:type",

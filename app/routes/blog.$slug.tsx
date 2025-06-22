@@ -255,6 +255,10 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
         data.post.image_url || "/img/van_gogh_wheatfield_with_crows.webp",
     },
     {
+      property: "article:author",
+      content: "Gleb Khaykin",
+    },
+    {
       property: "article:published_time",
       content: data.post.created_at,
     },

@@ -44,14 +44,16 @@ export const handle: SEOHandle = {
 export const meta: MetaFunction = () => {
   return [
     { title: "Blog" },
-    { description: "Blog posts by Gleb Khaykin" },
+    {
+      description: "Articles on software, technology, and personal projects",
+    },
     {
       property: "og:title",
       content: "Blog",
     },
     {
       property: "og:description",
-      content: "Blog posts by Gleb Khaykin",
+      content: "Articles on software, technology, and personal projects",
     },
     {
       property: "og:type",
