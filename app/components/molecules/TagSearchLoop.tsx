@@ -103,7 +103,7 @@ export const TagSearchLoop = ({
                 setSearchQuery("");
                 setSelectedTags([]);
               }}
-              className="absolute right-2 transition-all active:scale-95 md:hover:scale-105 md:hover:text-base-content"
+              className="absolute right-2 transition-all md:hover:scale-105 md:hover:text-base-content"
               aria-label="Clear search"
             >
               <FaTimes />
@@ -166,7 +166,7 @@ export const TagSearchLoop = ({
       ) : (
         <button
           onClick={() => setSearchOpen(true)}
-          className="flex text-lg transition-all active:scale-95 sm:text-xl md:hover:scale-105"
+          className="flex text-lg transition-all sm:text-xl md:hover:scale-105"
           aria-label="Search tags"
         >
           <FaSearch />
