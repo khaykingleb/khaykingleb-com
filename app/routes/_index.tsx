@@ -1,10 +1,13 @@
 import { SEOHandle } from "@nasa-gcn/remix-seo";
 import { MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
-import { GoArrowUpRight } from "react-icons/go";
+import type { ElementType } from "react";
+import { GoArrowUpRight as GoArrowUpRightOriginal } from "react-icons/go";
 
 import { AsciiDonut } from "~/components/molecules/AsciiDonut";
 import { Footer } from "~/components/organisms/Footer";
+
+const GoArrowUpRight = GoArrowUpRightOriginal as ElementType;
 
 /**
  * Generate metadata for the route
@@ -56,36 +59,30 @@ export const handle: SEOHandle = {
  */
 export default function IndexRoute() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col overflow-x-hidden">
       <main className="3xl:mx-96 mx-8 flex w-full flex-1 flex-col sm:mx-60 2xl:mx-80">
         <AsciiDonut />
         <div className="z-10 flex flex-1 flex-col justify-center">
           <div className="font-poppins mb-6 flex flex-col gap-4 font-black">
-            {["Hey", "I'm Gleb Khaykin", "I build things"].map((text, i) => (
+            {["Hey!", "I'm Gleb Khaykin", "I build things"].map((text, i) => (
               <h1 key={i} className="text-4xl sm:text-6xl">
                 {text}
               </h1>
             ))}
           </div>
-          <div className="flex flex-col gap-2 font-bold">
+          <div className="flex flex-col gap-2 text-xl font-bold sm:text-2xl">
             <Link
               to="/Gleb_Khaykin.pdf"
               prefetch="intent"
               target="_blank"
-              className="inline-flex items-center gap-1 text-xl sm:text-2xl"
+              className="inline-flex items-center gap-1"
             >
               <GoArrowUpRight className="h-6 w-6" /> CV
             </Link>
-            <Link
-              to="/blog"
-              className="inline-flex items-center gap-1 text-xl sm:text-2xl"
-            >
+            <Link to="/blog" className="inline-flex items-center gap-1">
               <GoArrowUpRight className="h-6 w-6" /> Blog
             </Link>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-1 text-xl sm:text-2xl"
-            >
+            <Link to="/contact" className="inline-flex items-center gap-1">
               <GoArrowUpRight className="h-6 w-6" /> Contact
             </Link>
           </div>

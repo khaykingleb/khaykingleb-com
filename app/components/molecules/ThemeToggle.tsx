@@ -1,6 +1,13 @@
-import { MdDarkMode, MdLightMode } from "react-icons/md";
+import type { ElementType } from "react";
+import {
+  MdDarkMode as MdDarkModeOriginal,
+  MdLightMode as MdLightModeOriginal,
+} from "react-icons/md";
 
 import { useTheme } from "~/utils/theme";
+
+const MdDarkMode = MdDarkModeOriginal as ElementType;
+const MdLightMode = MdLightModeOriginal as ElementType;
 
 /**
  * Theme toggle component
@@ -14,7 +21,7 @@ export function ThemeToggle({ className }: { className?: string }) {
   return (
     <button
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      className={`z-50 rounded-full text-2xl transition-opacity hover:opacity-80 ${
+      className={`z-50 rounded-full text-2xl transition-opacity hover:scale-110 hover:opacity-80 ${
         className
       }`}
       aria-label="Toggle theme"

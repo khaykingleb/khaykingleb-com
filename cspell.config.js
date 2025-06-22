@@ -34,5 +34,6 @@ export default {
     "supabase",
     "jsonencode",
     "signup",
+    "architecting",
   ],
 };

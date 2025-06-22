@@ -9,7 +9,6 @@ import {
   Await,
   ClientLoaderFunction,
   ClientLoaderFunctionArgs,
-  Link,
   useLoaderData,
 } from "@remix-run/react";
 import { createClient } from "@supabase/supabase-js";
@@ -26,6 +25,7 @@ import { ExtendedRecordMap } from "vendor/react-notion-x/packages/notion-types/s
 import { NotionRenderer } from "vendor/react-notion-x/packages/react-notion-x";
 
 import { Footer } from "~/components/organisms/Footer";
+import { Header } from "~/components/organisms/Header";
 import { Tables } from "~/integrations/supabase/database.types";
 import { getPostImageUrl } from "~/utils/supabase";
 import { useTheme } from "~/utils/theme";
@@ -274,21 +274,15 @@ export default function BlogPostRoute() {
   const { post, recordMap } = useLoaderData<typeof loader>();
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-[850px] flex-col px-4 sm:px-6 lg:px-8">
-      <header className="mt-4">
-        <div className="flex items-center gap-2 text-3xl font-semibold sm:text-4xl">
-          <Link to="/blog">&lt;</Link>
-          <h1>{post.title}</h1>
-        </div>
-        <div className="mt-4 h-px w-full bg-gray-200" />
-      </header>
+    <div className="mx-auto flex min-h-screen w-full max-w-[800px] flex-col px-4 sm:px-6 lg:px-8">
+      <Header headerName={post.title} backLink="/blog" />
       <main className="flex flex-grow flex-col">
         <Suspense
           fallback={
-            <div className="mb-2 mt-4 flex-grow animate-pulse rounded-lg bg-gray-200" />
+            <div className="flex-grow animate-pulse rounded-lg bg-gray-200" />
           }
         >
-          <h2 className="font-gill-sans ml-4 mt-6 text-[1.75rem] font-semibold">
+          <h2 className="font-gill-sans ml-4 text-[1.75rem] font-semibold">
             Table of Contents
           </h2>
           <Await resolve={recordMap}>

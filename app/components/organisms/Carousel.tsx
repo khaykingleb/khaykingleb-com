@@ -19,7 +19,7 @@ export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
               key={post.id}
               className="carousel-item block w-full cursor-pointer transition-all duration-300"
             >
-              <div className="flex w-full items-center px-2 py-2 sm:px-3 md:px-4">
+              <div className="flex w-full items-center">
                 <div className="flex-grow pr-2 sm:pr-3 md:pr-4">
                   <h1 className="mb-1 text-sm font-semibold sm:text-base md:text-lg lg:text-xl">
                     {post.title}

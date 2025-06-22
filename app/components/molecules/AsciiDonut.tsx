@@ -24,8 +24,8 @@ export function AsciiDonut() {
      * @returns The ASCII art string for the frame
      */
     function renderFrame(A: number, B: number) {
-      const screenWidth = 900;
-      const screenHeight = 900;
+      const screenWidth = 450;
+      const screenHeight = 450;
       const K1 = (screenWidth * K2 * 3) / (8 * (R1 + R2));
 
       const cosA = Math.cos(A),
@@ -95,8 +95,8 @@ export function AsciiDonut() {
       if (canvasRef.current) {
         canvasRef.current.textContent = renderFrame(A_val, B_val);
         // The speed of the torus rotation
-        A_val += 0.005;
-        B_val += 0.003;
+        A_val += 0.0025;
+        B_val += 0.0015;
         requestAnimationFrame(animate);
       }
     };
@@ -107,7 +107,7 @@ export function AsciiDonut() {
   return (
     <pre
       ref={canvasRef}
-      className="fixed left-[70%] top-[50%] -translate-x-[50%] -translate-y-[50%] text-[0.125rem] font-extralight leading-[0.0625rem]"
+      className="fixed left-[65%] top-[50%] -translate-x-[50%] -translate-y-[60%] text-[0.125rem] font-extralight leading-[0.0625rem]"
     />
   );
 }

@@ -14,10 +14,14 @@ import {
   useRouteError,
 } from "@remix-run/react";
 import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/remix";
+import { SpeedInsights as SpeedInsightsOriginal } from "@vercel/speed-insights/remix";
+import type { ElementType } from "react";
+import { FaHome as FaHomeOriginal } from "react-icons/fa";
 
-import { AsciiDonut } from "~/components/molecules/AsciiDonut";
 import { Footer } from "~/components/organisms/Footer";
+
+const FaHome = FaHomeOriginal as ElementType;
+const SpeedInsights = SpeedInsightsOriginal as ElementType;
 
 import notionStylesheetUrl from "./styles/notion.css?url";
 import tailwindStylesheetUrl from "./styles/tailwind.css?url";
@@ -99,11 +103,10 @@ export function ErrorBoundary() {
         <Links />
       </head>
       <body className="flex min-h-screen flex-col">
-        <main className="flex flex-grow flex-col items-center justify-center text-center">
-          <AsciiDonut />
+        <main className="flex flex-grow flex-col items-center justify-center px-4 text-center">
           {isRouteErrorResponse(error) && error.status === 404 ? (
             <>
-              <h2 className="font-poppins mb-4 text-4xl font-black">
+              <h2 className="font-poppins text-4xl font-black">
                 Page doesn&apos;t exist
               </h2>
             </>
@@ -112,16 +115,17 @@ export function ErrorBoundary() {
               <h1 className="font-poppins mb-2 text-4xl font-black">
                 Something went wrong!
               </h1>
-              <h2 className="text-2xl font-bold">
-                Please try again later or contact me if the issue persists
+              <h2 className="text-base">
+                If the issue continues, please try again later or reach out to
+                me
               </h2>
             </>
           )}
           <Link
             to="/"
-            className="btn btn-ghost z-50 text-xl font-bold hover:bg-white/20"
+            className="btn btn-ghost z-50 mt-2 flex items-center gap-x-2 text-xl font-bold transition-all hover:scale-110 hover:bg-white/10"
           >
-            Go Home
+            <FaHome /> Go Home
           </Link>
         </main>
         <Footer />

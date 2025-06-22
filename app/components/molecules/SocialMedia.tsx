@@ -1,3 +1,4 @@
+import type { ElementType } from "react";
 import { FaGithub, FaLinkedin, FaTelegram } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { ImMail4 } from "react-icons/im";
@@ -12,30 +13,38 @@ interface SocialMediaProps {
  *
  * @returns Social media component
  */
-export const SocialMedia = ({ size = 24 }: SocialMediaProps) => {
+export const SocialMedia = ({
+  size = 24,
+  displayLabels = false,
+}: SocialMediaProps) => {
   const links = [
     {
       href: "https://github.com/khaykingleb",
+      platform: "GitHub",
       label: "khaykingleb",
       icon: FaGithub,
     },
     {
       href: "https://linkedin.com/in/khaykingleb",
+      platform: "LinkedIn",
       label: "khaykingleb",
       icon: FaLinkedin,
     },
     {
       href: "https://twitter.com/khaykingleb",
+      platform: "X / Twitter",
       label: "@khaykingleb",
       icon: FaSquareXTwitter,
     },
     {
       href: "https://t.me/khaykingleb_blog",
+      platform: "Telegram",
       label: "@khaykingleb_blog",
       icon: FaTelegram,
     },
     {
       href: "mailto:khaykingleb@gmail.com",
+      platform: "Email",
       label: "khaykingleb@gmail.com",
       icon: ImMail4,
     },
@@ -43,18 +52,29 @@ export const SocialMedia = ({ size = 24 }: SocialMediaProps) => {
 
   return (
     <>
-      {links.map((link) => (
-        <a
-          key={link.href}
-          href={link.href}
-          className="flex items-center space-x-2 hover:text-primary"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <link.icon style={{ width: size, height: size }} />
-          <span className="text-base">{link.label}</span>
-        </a>
-      ))}
+      {links.map((link) => {
+        const Icon = link.icon as ElementType;
+        return (
+          <a
+            key={link.href}
+            href={link.href}
+            className="flex items-center space-x-2 transition-all hover:scale-105 hover:text-primary active:scale-95"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Icon
+              style={{ width: size, height: size }}
+              className="flex-shrink-0"
+            />
+            {displayLabels && (
+              <div>
+                <div className="font-semibold">{link.platform}</div>
+                <div className="text-sm text-gray-500">{link.label}</div>
+              </div>
+            )}
+          </a>
+        );
+      })}
     </>
   );
 };
