@@ -9,7 +9,7 @@ import { ThemeToggle } from "../molecules/ThemeToggle";
 export const Footer = () => {
   return (
     <footer className={`relative z-10 mb-4 pb-2 pt-2`}>
-      <div className="container mx-auto flex flex-col items-center justify-between">
+      <div className="container mx-auto mt-4 flex flex-col items-center justify-between">
         <ThemeToggle />
         <Copyright />
       </div>

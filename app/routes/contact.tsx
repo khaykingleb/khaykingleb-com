@@ -65,7 +65,7 @@ export default function ContactRoute() {
               <div className="flex justify-center md:hidden">
                 <Avatar />
               </div>
-              <h2 className="text-xl font-semibold sm:text-2xl">About</h2>
+              <h2 className="mb-1 text-xl font-semibold sm:text-2xl">About</h2>
               <div className="space-y-1 text-base">
                 <ul className="list-disc space-x-0 space-y-1 pl-4">
                   <li>
@@ -121,7 +121,7 @@ export default function ContactRoute() {
                   </li>
                 </ul>
               </div>
-              <h2 className="mb-2 mt-4 text-xl font-semibold sm:text-2xl">
+              <h2 className="mb-1 mt-4 text-xl font-semibold sm:text-2xl">
                 Links
               </h2>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
