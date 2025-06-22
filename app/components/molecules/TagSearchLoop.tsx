@@ -1,7 +1,22 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { FaCheck, FaSearch, FaTimes } from "react-icons/fa";
+import {
+  type ElementType,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import {
+  FaCheck as FaCheckOriginal,
+  FaSearch as FaSearchOriginal,
+  FaTimes as FaTimesOriginal,
+} from "react-icons/fa";
 
 import { Tables } from "~/integrations/supabase/database.types";
+
+const FaCheck = FaCheckOriginal as ElementType;
+const FaSearch = FaSearchOriginal as ElementType;
+const FaTimes = FaTimesOriginal as ElementType;
 
 interface TagSearchLoopProps {
   posts: Tables<"posts">[];
@@ -80,7 +95,7 @@ export const TagSearchLoop = ({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by tags..."
-              className="input input-bordered h-10 w-56 pr-8 text-base sm:w-64"
+              className="input input-bordered h-10 w-56 pr-8 sm:w-64"
             />
             <button
               onClick={() => {
@@ -88,7 +103,7 @@ export const TagSearchLoop = ({
                 setSearchQuery("");
                 setSelectedTags([]);
               }}
-              className="absolute right-2 hover:text-base-content"
+              className="absolute right-2 transition-all hover:scale-110 hover:text-base-content"
               aria-label="Clear search"
             >
               <FaTimes />
@@ -129,7 +144,7 @@ export const TagSearchLoop = ({
                   role="option"
                   aria-selected={selectedTags.includes(tag)}
                   onClick={() => toggleTag(tag)}
-                  className="flex w-full cursor-pointer items-center px-4 py-2.5 text-left hover:bg-base-200 focus:bg-base-200 dark:hover:bg-gray-800 dark:focus:bg-gray-800"
+                  className="flex w-full cursor-pointer items-center px-4 py-2.5 text-left hover:bg-base-200 focus:outline-none focus-visible:bg-base-200 dark:hover:bg-gray-800 dark:focus-visible:bg-gray-800"
                 >
                   <span
                     className={`mr-3 flex h-5 w-5 items-center justify-center rounded-full border-2 ${
@@ -151,7 +166,7 @@ export const TagSearchLoop = ({
       ) : (
         <button
           onClick={() => setSearchOpen(true)}
-          className="flex text-xl text-base-content sm:text-2xl"
+          className="flex text-lg transition-all hover:scale-110 sm:text-xl"
           aria-label="Search tags"
         >
           <FaSearch />
