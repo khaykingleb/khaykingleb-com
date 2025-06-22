@@ -6,8 +6,14 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 import { createClient } from "@supabase/supabase-js";
-import { Suspense, useCallback, useEffect, useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import {
+  type ElementType,
+  Suspense,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
+import { FaSearch as FaSearchOriginal } from "react-icons/fa";
 
 import { TagSearchLoop } from "~/components/molecules/TagSearchLoop";
 import { Carousel } from "~/components/organisms/Carousel";
@@ -16,6 +22,8 @@ import { Header } from "~/components/organisms/Header";
 import { Pagination } from "~/components/organisms/Pagination";
 import { Tables } from "~/integrations/supabase/database.types";
 import { getPostImageUrl } from "~/utils/supabase";
+
+const FaSearch = FaSearchOriginal as ElementType;
 
 export const handle: SEOHandle = {
   /**
@@ -187,7 +195,7 @@ const LoadingFallback = () => (
   <div className="flex flex-grow flex-col">
     <Header headerName="Blog">
       <div className="relative flex items-center">
-        <button className="text-xl sm:text-2xl" aria-label="Search">
+        <button aria-label="Search">
           <FaSearch />
         </button>
       </div>
@@ -208,7 +216,7 @@ export default function BlogRoute() {
   const { posts } = useLoaderData<typeof loader>();
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-[850px] flex-grow flex-col px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto flex min-h-screen w-full max-w-[800px] flex-grow flex-col px-4 sm:px-6 lg:px-8">
       <div className="flex flex-grow flex-col">
         <Suspense fallback={<LoadingFallback />}>
           <Await resolve={posts}>

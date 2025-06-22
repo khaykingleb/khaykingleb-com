@@ -56,35 +56,75 @@ export const meta: MetaFunction = () => {
  */
 export default function ContactRoute() {
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-[850px] flex-grow flex-col px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto flex min-h-screen w-full max-w-[800px] flex-grow flex-col px-4 sm:px-6 lg:px-8">
       <div className="flex flex-grow flex-col">
         <Header headerName="Contact" />
         <main className="flex flex-grow flex-col">
-          <div className="mb-6 flex flex-col md:flex-row md:items-start">
-            <div className="flex flex-col md:items-start">
-              <div className="mb-6 flex justify-center md:hidden">
+          <div className="flex flex-col md:flex-row md:items-start md:justify-between">
+            <div className="flex flex-col md:mr-2 md:items-start">
+              <div className="flex justify-center md:hidden">
                 <Avatar />
               </div>
-              <h2 className="mb-1 text-2xl font-bold">About</h2>
+              <h2 className="text-xl font-semibold sm:text-2xl">About</h2>
               <div className="space-y-1 text-base">
                 <ul className="list-disc space-x-0 space-y-1 pl-4">
                   <li>
-                    Full-stack developer specializing in MLOps/DevOps
-                    engineering
+                    I&apos;m a full-stack developer with a focus on MLOps/DevOps
+                    engineering — love building applications and architecting
+                    systems
                   </li>
                   <li>
-                    When I&apos;m not coding, you&apos;ll find me at the gym,
-                    lifting weights
+                    Studied{" "}
+                    <a
+                      href="https://cs.hse.ru/en/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 hover:underline"
+                    >
+                      Computer Science
+                    </a>{" "}
+                    and{" "}
+                    <a
+                      href="https://economics.hse.ru/en/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 hover:underline"
+                    >
+                      Economics
+                    </a>{" "}
+                    at the{" "}
+                    <a
+                      href="https://www.hse.ru/en/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 hover:underline"
+                    >
+                      National Research University &quot;Higher School of
+                      Economics&quot;
+                    </a>{" "}
+                    — this dual background equips me with a comprehensive
+                    understanding of both the business and technical aspects of
+                    projects
                   </li>
                   <li>
-                    Studied Computer Science and Finance at the Higher School of
-                    Economics (this dual background helps me understand both
-                    business and technical aspects of the projects)
+                    Passed{" "}
+                    <a
+                      href="https://www.cfainstitute.org/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 hover:underline"
+                    >
+                      CFA Level 1
+                    </a>{" "}
+                    in my third year of undergrad — I was very interested in
+                    finance and might complete the remaining levels someday
                   </li>
                 </ul>
               </div>
-              <h2 className="mb-2 mt-6 text-2xl font-bold">Links</h2>
-              <div className="flex flex-col space-y-4">
+              <h2 className="mb-2 mt-4 text-xl font-semibold sm:text-2xl">
+                Links
+              </h2>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <SocialMedia size={24} displayLabels={true} />
               </div>
             </div>
