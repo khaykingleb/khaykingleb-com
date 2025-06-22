@@ -1,6 +1,6 @@
 direnv 2.35.0
 pre-commit 4.1.0
-nodejs 21.7.3
+nodejs 24.2.0
 pnpm 10.8.1
 yarn 1.22.22
 python 3.10.16
