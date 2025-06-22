@@ -123,7 +123,7 @@ export function ErrorBoundary() {
           )}
           <Link
             to="/"
-            className="btn btn-ghost z-50 mt-2 flex items-center gap-x-2 text-xl font-bold transition-all hover:scale-110 hover:bg-white/10"
+            className="btn btn-ghost z-50 mt-2 flex items-center gap-x-2 text-xl font-bold transition-all active:scale-95 md:hover:scale-105 md:hover:bg-white/10"
           >
             <FaHome /> Go Home
           </Link>

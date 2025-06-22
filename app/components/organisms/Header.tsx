@@ -15,7 +15,7 @@ export const Header = ({
       <div className="flex items-center gap-2">
         <Link
           to={backLink}
-          className="text-3xl font-semibold transition-all hover:scale-110 sm:text-4xl"
+          className="text-3xl font-semibold transition-all active:scale-95 sm:text-4xl md:hover:scale-105"
         >
           &lt;
         </Link>

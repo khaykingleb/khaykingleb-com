@@ -58,7 +58,7 @@ export const SocialMedia = ({
           <a
             key={link.href}
             href={link.href}
-            className="flex items-center space-x-2 transition-all hover:scale-105 hover:text-primary active:scale-95"
+            className="flex items-center space-x-2 transition-all active:scale-95 md:hover:scale-105 md:hover:text-primary"
             target="_blank"
             rel="noopener noreferrer"
           >
