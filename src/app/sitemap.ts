@@ -9,6 +9,9 @@ import type { MetadataRoute } from "next";
 //   return [] as Array<{ slug: string; updatedAt?: string | Date }>;
 // }
 
+/**
+ *
+ */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://khaykingleb.com";
   const staticRoutes: MetadataRoute.Sitemap = [

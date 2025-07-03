@@ -10,7 +10,9 @@ interface SocialMediaProps {
 /**
  * Social media component
  *
- * @returns Social media component
+ * @param size - The size of the icons.
+ * @param displayLabels - Whether to display labels.
+ * @returns The SocialMedia component.
  */
 export const SocialMedia = ({
   size = 24,
@@ -51,28 +53,26 @@ export const SocialMedia = ({
 
   return (
     <>
-      {links.map((link) => {
-        return (
-          <a
-            key={link.href}
-            href={link.href}
-            className="flex items-center space-x-2 transition-all hover:opacity-80"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <link.icon
-              style={{ width: size, height: size }}
-              className="flex-shrink-0 transition-all md:hover:scale-105"
-            />
-            {displayLabels && (
-              <div>
-                <div className="font-semibold">{link.platform}</div>
-                <div className="text-sm text-gray-500">{link.label}</div>
-              </div>
-            )}
-          </a>
-        );
-      })}
+      {links.map((link) => (
+        <a
+          key={link.href}
+          href={link.href}
+          className="flex items-center space-x-2 transition-all hover:opacity-80"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <link.icon
+            style={{ width: size, height: size }}
+            className="flex-shrink-0 transition-all md:hover:scale-105"
+          />
+          {displayLabels && (
+            <div>
+              <div className="font-semibold">{link.platform}</div>
+              <div className="text-sm text-gray-500">{link.label}</div>
+            </div>
+          )}
+        </a>
+      ))}
     </>
   );
 };

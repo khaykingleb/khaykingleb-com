@@ -5,6 +5,13 @@ import { useEffect } from "react";
 import { FaHome } from "react-icons/fa";
 import { IoMdRefresh } from "react-icons/io";
 
+/**
+ * GlobalError component to display error information and provide user actions.
+ *
+ * @param error - The error object containing error details.
+ * @param reset - The function to reset the error state.
+ * @returns The rendered GlobalError component.
+ */
 export default function GlobalError({
   error,
   reset,
@@ -17,7 +24,7 @@ export default function GlobalError({
   }, [error]);
 
   return (
-    <html>
+    <html lang="en">
       <body>
         <div className="flex min-h-screen flex-col">
           <main className="flex flex-grow flex-col items-center justify-center px-4 text-center">
@@ -29,7 +36,7 @@ export default function GlobalError({
             </h2>
             <div className="font-gill-sans mt-4 flex gap-4">
               <button
-                onClick={() => reset()}
+                onClick={reset}
                 className="flex items-center gap-x-1 bg-transparent text-xl font-bold transition-all md:hover:scale-105 md:hover:opacity-80"
               >
                 <IoMdRefresh />

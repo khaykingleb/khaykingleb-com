@@ -7,9 +7,9 @@ import { useState } from "react";
 import { Tables } from "@/integrations/supabase/database.types";
 
 /**
- * Carousel component to display a list of posts
+ * Carousel component to display a list of posts.
  *
- * @param posts - Array of post items to display
+ * @param posts - Array of post items to display.
  * @returns Carousel component
  */
 export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {

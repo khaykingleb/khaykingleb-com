@@ -5,6 +5,7 @@ import "@/app/styles/global.css";
 import "@/app/styles/notion.css";
 
 import type { Metadata, Viewport } from "next";
+import React from "react";
 
 import { gillSans, poppins } from "@/app/fonts";
 import { Providers } from "@/app/providers";
@@ -36,6 +37,12 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
 };
 
+/**
+ * Root layout component to define the HTML structure and apply global styles.
+ *
+ * @param children - The child components to be rendered within the layout.
+ * @returns The RootLayout component.
+ */
 export default function RootLayout({
   children,
 }: {

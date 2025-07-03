@@ -4,6 +4,9 @@ import { Pagination } from "@/app/blog/components/pagination";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 
+/**
+ *
+ */
 export default function Loading() {
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-[800px] flex-grow flex-col px-4 sm:px-6 lg:px-8">

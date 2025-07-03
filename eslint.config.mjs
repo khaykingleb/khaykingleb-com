@@ -1,32 +1,41 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
+import js from "@eslint/js";
 import simpleImportSortPlugin from "eslint-plugin-simple-import-sort";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import tsdocPlugin from "eslint-plugin-tsdoc";
 
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
+  baseDirectory: import.meta.dirname,
+  recommendedConfig: js.configs.recommended,
 });
 
 const eslintConfig = [
   ...compat.extends(
     "next/core-web-vitals",
     "next/typescript",
+    "prettier",
     "eslint:recommended",
     "plugin:import/recommended",
     "plugin:import/typescript",
+    "plugin:react/recommended",
     "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
   ),
-
   {
     plugins: {
       "simple-import-sort": simpleImportSortPlugin,
+      "tsdoc": tsdocPlugin,
     },
     rules: {
       "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error",
+      "react/react-in-jsx-scope": "off",
+      "tsdoc/syntax": "warn",
+    },
+  },
+  {
+    files: ["app/**/*.{ts,tsx}"],
+    rules: {
+      "tsdoc/syntax": "warn",
     },
   },
 ];

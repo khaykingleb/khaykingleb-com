@@ -22,6 +22,12 @@ const LAYOUT_HEIGHTS = {
   spacing: 20,
 } as const;
 
+/**
+ * Component to display blog posts with pagination and search functionality.
+ *
+ * @param posts - Array of post items to display.
+ * @returns The rendered component.
+ */
 export default function PostsContent({ posts }: { posts: Tables<"posts">[] }) {
   const [displayedPosts, setDisplayedPosts] = useState(posts);
   const [postsPerPage, setPostsPerPage] = useState(4);

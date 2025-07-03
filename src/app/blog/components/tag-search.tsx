@@ -8,6 +8,7 @@ export const TagSearch = ({
   setDisplayedPosts,
 }: {
   posts: Tables<"posts">[];
+  // eslint-disable-next-line no-unused-vars
   setDisplayedPosts: (filteredPosts: Tables<"posts">[]) => void;
 }) => {
   const [searchOpen, setSearchOpen] = useState(false);

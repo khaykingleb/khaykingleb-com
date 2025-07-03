@@ -4,6 +4,9 @@ import { FiChevronRight } from "react-icons/fi";
 import { AsciiDonut } from "@/components/ascii-donut";
 import { Footer } from "@/components/footer";
 
+/**
+ *
+ */
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden">

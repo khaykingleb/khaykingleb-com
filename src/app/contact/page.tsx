@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ *
+ */
 export default function ContactPage() {
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-[800px] flex-grow flex-col px-4 sm:px-6 lg:px-8">

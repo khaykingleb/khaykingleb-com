@@ -7,14 +7,17 @@ import { NotionRenderer } from "react-notion-x";
 const Code = dynamic(() =>
   import("react-notion-x/build/third-party/code").then((m) => m.Code),
 );
+
 const Collection = dynamic(() =>
   import("react-notion-x/build/third-party/collection").then(
     (m) => m.Collection,
   ),
 );
+
 const Equation = dynamic(() =>
   import("react-notion-x/build/third-party/equation").then((m) => m.Equation),
 );
+
 const Pdf = dynamic(
   () => import("react-notion-x/build/third-party/pdf").then((m) => m.Pdf),
   {
@@ -22,6 +25,11 @@ const Pdf = dynamic(
   },
 );
 
+/**
+ * Renders the Notion content using the NotionRenderer component.
+ *
+ * @param recordMap - The record map containing the Notion data.
+ */
 export default function NotionRendererClient({
   recordMap,
 }: {

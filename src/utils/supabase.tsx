@@ -2,6 +2,11 @@ import { createClient } from "@supabase/supabase-js";
 import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 
+/**
+ * Fetches all posts from the database, ordered by creation date.
+ *
+ * @returns A promise that resolves to an array of posts with image URLs.
+ */
 async function fetchPosts() {
   const supabaseClient = createClient(
     process.env.SUPABASE_URL!,
@@ -30,6 +35,12 @@ export const getPosts = unstable_cache(fetchPosts, ["posts"], {
   tags: ["posts"],
 });
 
+/**
+ * Fetches a single post by its slug.
+ *
+ * @param slug - The slug of the post to fetch.
+ * @returns A promise that resolves to the post data.
+ */
 async function fetchPostBySlug(slug: string) {
   const supabaseClient = createClient(
     process.env.SUPABASE_URL!,
@@ -56,10 +67,10 @@ export const getPostBySlug = unstable_cache(fetchPostBySlug, ["post"], {
 });
 
 /**
- * Get a public URL for an image stored in Supabase Storage
+ * Get a public URL for an image stored in Supabase Storage.
  *
- * @param path - Path to the image in storage
- * @returns Public URL for the image
+ * @param path - Path to the image in storage.
+ * @returns Public URL for the image.
  */
 async function fetchPostImageUrl(path: string) {
   const supabaseClient = createClient(

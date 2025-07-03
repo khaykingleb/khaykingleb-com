@@ -7,6 +7,12 @@ import { getPostBySlug } from "@/utils/supabase";
 
 // TODO: METADATA TAGS
 
+/**
+ * Render the blog post page.
+ *
+ * @param slug - The slug of the blog post to render.
+ * @returns The rendered blog post page.
+ */
 export default async function BlogPostPage({
   params,
 }: {

@@ -2,6 +2,9 @@
 
 import { FaArrowLeft } from "react-icons/fa";
 
+/**
+ *
+ */
 export default function NotFound() {
   return (
     <div className="flex min-h-screen flex-col">

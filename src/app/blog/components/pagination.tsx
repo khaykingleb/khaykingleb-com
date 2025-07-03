@@ -1,9 +1,17 @@
 "use client";
 
+import React from "react";
+
 const NUM_VISIBLE = 5;
 
 /**
  * Reusable button for pagination controls.
+ *
+ * @param children - The content to be displayed inside the button.
+ * @param onClick - The function to call when the button is clicked.
+ * @param disabled - Whether the button is disabled.
+ * @param isActive - Whether the button is active.
+ * @returns The PageButton component.
  */
 const PageButton = ({
   children,
@@ -36,6 +44,7 @@ export const Pagination = ({
 }: {
   currentPage: number;
   pagesInTotal: number;
+  // eslint-disable-next-line no-unused-vars
   onPageChange?: (page: number) => void;
 }) => {
   const startPage = Math.floor(currentPage / NUM_VISIBLE) * NUM_VISIBLE;
