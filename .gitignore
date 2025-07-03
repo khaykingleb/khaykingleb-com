@@ -1,6 +1,19 @@
 # Node
-node_modules
+/node_modules
+
+# Next.js
+/.next/
+/out/
+
+# Production
 /build
+
+# Vercel
+.vercel
+
+# Typescript
+*.tsbuildinfo
+next-env.d.ts
 
 # Terraform
 terraform.tfstate

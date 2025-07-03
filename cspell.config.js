@@ -11,9 +11,9 @@ export default {
     "node_modules",
     "package.json",
     "pnpm-lock.yaml",
+    "pnpm-workspace.yaml",
     "supabase",
-    "docker-compose.yaml",
-    "app/components/molecules/AsciiDonut.tsx",
+    "src/components/ascii-donut.tsx",
   ],
   words: [
     "workdir",
@@ -24,7 +24,6 @@ export default {
     "Khaykin",
     "khaykingleb",
     "daisyui",
-    "wheatfield",
     "conventionalcommits",
     "vercel",
     "katex",
@@ -35,5 +34,7 @@ export default {
     "jsonencode",
     "signup",
     "architecting",
+    "PGRST",
+    "prefersdark",
   ],
 };
