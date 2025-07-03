@@ -20,12 +20,18 @@ export function ThemeToggle() {
 
   return resolvedTheme === "dark" ? (
     <MdLightMode
-      className="h-6 w-6 md:hover:scale-110 md:hover:opacity-80"
+      className={`
+        h-6 w-6
+        md:hover:scale-110 md:hover:opacity-80
+      `}
       onClick={handleThemeToggle}
     />
   ) : (
     <MdDarkMode
-      className="h-6 w-6 md:hover:scale-110 md:hover:opacity-80"
+      className={`
+        h-6 w-6
+        md:hover:scale-110 md:hover:opacity-80
+      `}
       onClick={handleThemeToggle}
     />
   );
@@ -58,7 +64,11 @@ const Copyright = ({ startYear = 2024 }: { startYear?: number }) => {
 export const Footer = () => {
   return (
     <footer className="relative z-10 mb-4 pt-2 pb-2">
-      <div className="container mx-auto mt-4 flex flex-col items-center justify-between">
+      <div
+        className={`
+          container mx-auto mt-4 flex flex-col items-center justify-between
+        `}
+      >
         <ThemeToggle />
         <Copyright />
       </div>

@@ -51,7 +51,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${poppins.className} ${gillSans.className}`}
+      className={`
+        ${poppins.className}
+        ${gillSans.className}
+      `}
       suppressHydrationWarning
     >
       <body>

@@ -57,13 +57,19 @@ export const SocialMedia = ({
         <a
           key={link.href}
           href={link.href}
-          className="flex items-center space-x-2 transition-all hover:opacity-80"
+          className={`
+            flex items-center space-x-2 transition-all
+            hover:opacity-80
+          `}
           target="_blank"
           rel="noopener noreferrer"
         >
           <link.icon
             style={{ width: size, height: size }}
-            className="flex-shrink-0 transition-all md:hover:scale-105"
+            className={`
+              flex-shrink-0 transition-all
+              md:hover:scale-105
+            `}
           />
           {displayLabels && (
             <div>

@@ -3,6 +3,7 @@ import js from "@eslint/js";
 import simpleImportSortPlugin from "eslint-plugin-simple-import-sort";
 import tsdocPlugin from "eslint-plugin-tsdoc";
 import jsdocPlugin from "eslint-plugin-jsdoc";
+// import betterTailwindcssPlugin from "eslint-plugin-better-tailwindcss";
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
@@ -20,12 +21,20 @@ const eslintConfig = [
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
+    "plugin:better-tailwindcss/recommended",
   ),
   {
     plugins: {
       "simple-import-sort": simpleImportSortPlugin,
       "tsdoc": tsdocPlugin,
       "jsdoc": jsdocPlugin,
+      // "better-tailwindcss": betterTailwindcssPlugin,
+    },
+    settings: {
+      "better-tailwindcss": {
+        entryPoint: "src/app/styles/global.css",
+        tailwindConfig: "tailwind.config.js",
+      },
     },
     rules: {
       "simple-import-sort/imports": "error",

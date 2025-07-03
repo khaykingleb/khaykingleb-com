@@ -23,11 +23,22 @@ export const Header = ({
       <div className="flex items-center gap-2">
         <Link
           href={backLink}
-          className="text-3xl font-semibold transition-all sm:text-4xl md:hover:scale-105 md:hover:opacity-80"
+          className={`
+            text-3xl font-semibold transition-all
+            sm:text-4xl
+            md:hover:scale-105 md:hover:opacity-80
+          `}
         >
           &lt;
         </Link>
-        <h1 className="text-3xl font-semibold sm:text-4xl">{headerName}</h1>
+        <h1
+          className={`
+            text-3xl font-semibold
+            sm:text-4xl
+          `}
+        >
+          {headerName}
+        </h1>
       </div>
       {children}
     </div>

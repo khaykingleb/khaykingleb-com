@@ -12,40 +12,99 @@ import { Footer } from "@/components/footer";
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden">
-      <main className="3xl:mx-96 mx-8 flex w-full flex-1 flex-col sm:mx-60 2xl:mx-80">
+      <main
+        className={`
+          mx-8 flex w-full flex-1 flex-col
+          sm:mx-60
+          2xl:mx-80
+        `}
+      >
         <AsciiDonut />
         <div className="z-10 flex flex-1 flex-col justify-center">
-          <div className="font-poppins mb-6 flex flex-col gap-4 font-black">
-            <h1 className="text-4xl sm:text-6xl">Hey!</h1>
-            <h1 className="text-4xl sm:text-6xl">
+          <div className="mb-6 flex flex-col gap-4 font-poppins font-black">
+            <h1
+              className={`
+                text-4xl
+                sm:text-6xl
+              `}
+            >
+              Hey!
+            </h1>
+            <h1
+              className={`
+                text-4xl
+                sm:text-6xl
+              `}
+            >
               I&apos;m{" "}
-              <span className="decoration-6 underline-offset-4 transition-colors md:hover:underline">
+              <span
+                className={`
+                  decoration-6 underline-offset-4 transition-colors
+                  md:hover:underline
+                `}
+              >
                 Gleb&nbsp;Khaykin
               </span>
             </h1>
-            <h1 className="text-4xl sm:text-6xl">I build things</h1>
+            <h1
+              className={`
+                text-4xl
+                sm:text-6xl
+              `}
+            >
+              I build things
+            </h1>
           </div>
-          <div className="flex flex-col gap-2 text-xl font-bold sm:text-3xl">
+          <div
+            className={`
+              flex flex-col gap-2 text-xl font-bold
+              sm:text-3xl
+            `}
+          >
             <Link
               href="/blog"
-              className="inline-flex items-center transition-all hover:opacity-80"
+              className={`
+                inline-flex items-center transition-all
+                hover:opacity-80
+              `}
             >
-              <FiChevronRight className="h-6 w-6 transition-all hover:scale-110" />{" "}
+              <FiChevronRight
+                className={`
+                  h-6 w-6 transition-all
+                  hover:scale-110
+                `}
+              />{" "}
               Blog
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center transition-all hover:opacity-80"
+              className={`
+                inline-flex items-center transition-all
+                hover:opacity-80
+              `}
             >
-              <FiChevronRight className="h-6 w-6 transition-all hover:scale-110" />{" "}
+              <FiChevronRight
+                className={`
+                  h-6 w-6 transition-all
+                  hover:scale-110
+                `}
+              />{" "}
               Contact
             </Link>
             <Link
               href="/Gleb_Khaykin.pdf"
               target="_blank"
-              className="inline-flex items-center transition-all hover:opacity-80"
+              className={`
+                inline-flex items-center transition-all
+                hover:opacity-80
+              `}
             >
-              <FiChevronRight className="h-6 w-6 transition-all hover:scale-110" />{" "}
+              <FiChevronRight
+                className={`
+                  h-6 w-6 transition-all
+                  hover:scale-110
+                `}
+              />{" "}
               CV
             </Link>
           </div>

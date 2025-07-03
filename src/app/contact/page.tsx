@@ -24,16 +24,44 @@ export const metadata: Metadata = {
  */
 export default function ContactPage() {
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-[800px] flex-grow flex-col px-4 sm:px-6 lg:px-8">
+    <div
+      className={`
+        mx-auto flex min-h-screen w-full max-w-[800px] flex-grow flex-col px-4
+        sm:px-6
+        lg:px-8
+      `}
+    >
       <div className="flex flex-grow flex-col">
         <Header headerName="Contact" />
         <main className="flex flex-grow flex-col">
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between">
-            <div className="mx-auto mt-1 md:order-last md:flex-shrink-0">
+          <div
+            className={`
+              flex flex-col
+              md:flex-row md:items-start md:justify-between
+            `}
+          >
+            <div
+              className={`
+                mx-auto mt-1
+                md:order-last md:flex-shrink-0
+              `}
+            >
               <Avatar />
             </div>
-            <div className="flex flex-col md:mr-2 md:flex-1 md:items-start">
-              <h2 className="mb-1 text-xl font-semibold sm:text-2xl">About</h2>
+            <div
+              className={`
+                flex flex-col
+                md:mr-2 md:flex-1 md:items-start
+              `}
+            >
+              <h2
+                className={`
+                  mb-1 text-xl font-semibold
+                  sm:text-2xl
+                `}
+              >
+                About
+              </h2>
               <div className="space-y-1 text-base text-pretty">
                 <ul className="list-disc space-y-1 space-x-0 pl-4">
                   <li>
@@ -59,7 +87,10 @@ export default function ContactPage() {
                       href="https://cs.hse.ru/en/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-500 transition-all hover:underline hover:opacity-80"
+                      className={`
+                        text-blue-500 transition-all
+                        hover:underline hover:opacity-80
+                      `}
                     >
                       Computer Science
                     </a>{" "}
@@ -68,7 +99,10 @@ export default function ContactPage() {
                       href="https://economics.hse.ru/en/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-500 transition-all hover:underline hover:opacity-80"
+                      className={`
+                        text-blue-500 transition-all
+                        hover:underline hover:opacity-80
+                      `}
                     >
                       Economics
                     </a>{" "}
@@ -77,7 +111,10 @@ export default function ContactPage() {
                       href="https://www.hse.ru/en/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-500 transition-all hover:underline hover:opacity-80"
+                      className={`
+                        text-blue-500 transition-all
+                        hover:underline hover:opacity-80
+                      `}
                     >
                       National Research University &quot;Higher School of
                       Economics&quot;
@@ -92,7 +129,10 @@ export default function ContactPage() {
                       href="https://www.cfainstitute.org/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-500 transition-all hover:underline hover:opacity-80"
+                      className={`
+                        text-blue-500 transition-all
+                        hover:underline hover:opacity-80
+                      `}
                     >
                       CFA Level 1
                     </a>{" "}
@@ -101,10 +141,20 @@ export default function ContactPage() {
                   </li>
                 </ul>
               </div>
-              <h2 className="mt-4 mb-1 text-xl font-semibold sm:text-2xl">
+              <h2
+                className={`
+                  mt-4 mb-1 text-xl font-semibold
+                  sm:text-2xl
+                `}
+              >
                 Links
               </h2>
-              <div className="grid grid-cols-2 gap-2 md:gap-x-0 md:gap-y-2">
+              <div
+                className={`
+                  grid grid-cols-2 gap-2
+                  md:gap-x-0 md:gap-y-2
+                `}
+              >
                 <SocialMedia size={24} displayLabels={true} />
               </div>
             </div>

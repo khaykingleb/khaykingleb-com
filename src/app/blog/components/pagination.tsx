@@ -25,11 +25,22 @@ const PageButton = ({
   isActive?: boolean;
 }) => (
   <button
-    className={`btn join-item btn-sm h-8 w-8 transition-colors ${
-      isActive
-        ? "bg-base-300 hover:bg-base-300 dark:bg-neutral-700 dark:hover:bg-neutral-700"
-        : "bg-base-100 hover:bg-base-200"
-    } ${disabled ? "cursor-not-allowed" : ""}`}
+    className={`
+      btn join-item h-8 w-8 transition-colors btn-sm
+      ${
+        isActive
+          ? `
+            bg-base-300
+            hover:bg-base-300
+            dark:bg-neutral-700 dark:hover:bg-neutral-700
+          `
+          : `
+            bg-base-100
+            hover:bg-base-200
+          `
+      }
+      ${disabled ? "cursor-not-allowed" : ""}
+    `}
     onClick={onClick}
     disabled={disabled}
   >
@@ -63,7 +74,7 @@ export const Pagination = ({
   );
 
   return (
-    <div className="join mt-4 mb-[-10] flex justify-center">
+    <div className="mt-4 mb-[-10] join flex justify-center">
       {/* Previous page button */}
       <PageButton
         onClick={() => onPageChange?.(currentPage - 1)}

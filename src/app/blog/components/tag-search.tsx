@@ -82,7 +82,7 @@ export const TagSearch = ({
   }, []);
 
   return (
-    <div className="relative z-50" ref={searchRef}>
+    <div className="relative z-50">
       {searchOpen ? (
         <div className="flex flex-col">
           <div className="relative flex items-center">
@@ -91,7 +91,11 @@ export const TagSearch = ({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by tags..."
-              className="input input-bordered h-10 w-56 pr-8 sm:w-64"
+              className={`
+                input h-10 w-56 pr-8
+                focus:outline-none
+                sm:w-64
+              `}
             />
             <button
               onClick={() => {
@@ -99,7 +103,10 @@ export const TagSearch = ({
                 setSearchQuery("");
                 setSelectedTags([]);
               }}
-              className="md:hover:text-base-content absolute right-2 transition-all md:hover:scale-105"
+              className={`
+                absolute right-2 transition-all
+                md:hover:scale-105 md:hover:text-base-content
+              `}
               aria-label="Clear search"
             >
               <FaTimes />
@@ -107,7 +114,11 @@ export const TagSearch = ({
           </div>
           <ul
             role="listbox"
-            className="border-base-300 bg-base-100 absolute top-full right-0 left-0 mt-1 max-h-52 overflow-y-auto rounded-lg border shadow-lg focus-within:outline-none"
+            className={`
+              absolute top-full right-0 left-0 mt-1 max-h-52 overflow-y-auto
+              rounded-lg border border-base-300 bg-base-100 shadow-lg
+              focus-within:outline-none
+            `}
             onKeyDown={(e) => {
               const current = document.activeElement;
               if (!current?.parentElement) return;
@@ -140,20 +151,37 @@ export const TagSearch = ({
                   role="option"
                   aria-selected={selectedTags.includes(tag)}
                   onClick={() => toggleTag(tag)}
-                  className="hover:bg-base-200 focus-visible:bg-base-200 flex w-full cursor-pointer items-center px-4 py-2.5 text-left focus:outline-none dark:hover:bg-gray-800 dark:focus-visible:bg-gray-800"
+                  className={`
+                    flex w-full cursor-pointer items-center px-4 py-2.5
+                    text-left
+                    hover:bg-base-200
+                    focus:outline-none
+                    focus-visible:bg-base-200
+                    dark:hover:bg-gray-800 dark:focus-visible:bg-gray-800
+                  `}
                 >
                   <span
-                    className={`mr-3 flex h-5 w-5 items-center justify-center rounded-full border-2 ${
-                      selectedTags.includes(tag)
-                        ? "border-blue-600 bg-blue-600 dark:border-blue-500 dark:bg-blue-500"
-                        : "border-base-300 dark:border-gray-600"
-                    }`}
+                    className={`
+                      mr-3 flex h-5 w-5 items-center justify-center rounded-full
+                      border-2
+                      ${
+                        selectedTags.includes(tag)
+                          ? `
+                            border-blue-600 bg-blue-600
+                            dark:border-blue-500 dark:bg-blue-500
+                          `
+                          : `
+                            border-base-300
+                            dark:border-gray-600
+                          `
+                      }
+                    `}
                   >
                     {selectedTags.includes(tag) && (
                       <FaCheck className="text-xs text-white" />
                     )}
                   </span>
-                  <span className="text-base-content text-sm">{tag}</span>
+                  <span className="text-sm text-base-content">{tag}</span>
                 </button>
               </li>
             ))}
@@ -162,7 +190,11 @@ export const TagSearch = ({
       ) : (
         <button
           onClick={() => setSearchOpen(true)}
-          className="flex text-lg transition-all sm:text-xl md:hover:scale-105"
+          className={`
+            flex text-lg transition-all
+            sm:text-xl
+            md:hover:scale-105
+          `}
           aria-label="Search tags"
         >
           <FaSearch />
