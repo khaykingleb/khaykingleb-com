@@ -37,6 +37,14 @@ const PageButton = ({
   </button>
 );
 
+/**
+ * Pagination component for navigating through pages of content.
+ *
+ * @param currentPage - The current page number.
+ * @param pagesInTotal - The total number of pages.
+ * @param onPageChange - The function to call when the page changes.
+ * @returns The Pagination component.
+ */
 export const Pagination = ({
   currentPage,
   pagesInTotal,

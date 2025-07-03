@@ -17,7 +17,9 @@ export const metadata: Metadata = {
 };
 
 /**
+ * Blog page component.
  *
+ * @returns The blog page component.
  */
 export default async function BlogPage() {
   const posts = await getPosts();

@@ -10,7 +10,9 @@ import type { MetadataRoute } from "next";
 // }
 
 /**
+ * Sitemap component.
  *
+ * @returns The sitemap component.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://khaykingleb.com";

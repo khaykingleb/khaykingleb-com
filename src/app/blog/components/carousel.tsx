@@ -10,7 +10,7 @@ import { Tables } from "@/integrations/supabase/database.types";
  * Carousel component to display a list of posts.
  *
  * @param posts - Array of post items to display.
- * @returns Carousel component
+ * @returns The Carousel component.
  */
 export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
   const [isLoading, setIsLoading] = useState(true);

@@ -5,7 +5,9 @@ import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 
 /**
+ * Blog loading component.
  *
+ * @returns The blog loading component.
  */
 export default function Loading() {
   return (

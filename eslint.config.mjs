@@ -2,6 +2,7 @@ import { FlatCompat } from "@eslint/eslintrc";
 import js from "@eslint/js";
 import simpleImportSortPlugin from "eslint-plugin-simple-import-sort";
 import tsdocPlugin from "eslint-plugin-tsdoc";
+import jsdocPlugin from "eslint-plugin-jsdoc";
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
@@ -24,18 +25,32 @@ const eslintConfig = [
     plugins: {
       "simple-import-sort": simpleImportSortPlugin,
       "tsdoc": tsdocPlugin,
+      "jsdoc": jsdocPlugin,
     },
     rules: {
       "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error",
       "react/react-in-jsx-scope": "off",
       "tsdoc/syntax": "warn",
-    },
-  },
-  {
-    files: ["app/**/*.{ts,tsx}"],
-    rules: {
-      "tsdoc/syntax": "warn",
+      "jsdoc/require-jsdoc": [
+        "warn",
+        {
+          require: {
+            FunctionDeclaration: true,
+            MethodDefinition: true,
+            ClassDeclaration: true,
+            ArrowFunctionExpression: true,
+            FunctionExpression: true,
+          },
+        },
+      ],
+      "jsdoc/require-param": [
+        "warn",
+        {
+          checkDestructured: false,
+        },
+      ],
+      "jsdoc/require-returns": "warn",
     },
   },
 ];

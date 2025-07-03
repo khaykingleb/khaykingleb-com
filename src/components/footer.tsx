@@ -11,6 +11,9 @@ import { MdDarkMode, MdLightMode } from "react-icons/md";
 export function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
 
+  /**
+   * Handle the theme toggle.
+   */
   const handleThemeToggle = () => {
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };

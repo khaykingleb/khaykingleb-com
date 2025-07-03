@@ -18,7 +18,9 @@ export const metadata: Metadata = {
 };
 
 /**
+ * Contact page component.
  *
+ * @returns The contact page component.
  */
 export default function ContactPage() {
   return (

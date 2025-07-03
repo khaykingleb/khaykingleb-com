@@ -3,6 +3,13 @@ import { FaCheck, FaSearch, FaTimes } from "react-icons/fa";
 
 import { Tables } from "@/integrations/supabase/database.types";
 
+/**
+ * TagSearch component for filtering posts by tags.
+ *
+ * @param posts - The list of posts to filter.
+ * @param setDisplayedPosts - The function to update the displayed posts.
+ * @returns The rendered TagSearch component.
+ */
 export const TagSearch = ({
   posts,
   setDisplayedPosts,
@@ -49,6 +56,11 @@ export const TagSearch = ({
 
   // Handle click outside to close dropdown
   useEffect(() => {
+    /**
+     * Handle click outside to close the search dropdown.
+     *
+     * @param event - The mouse event.
+     */
     const handleClickOutside = (event: MouseEvent) => {
       if (
         searchRef.current &&

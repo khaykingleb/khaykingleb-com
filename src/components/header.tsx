@@ -1,6 +1,14 @@
 import Link from "next/link";
 import { ReactNode } from "react";
 
+/**
+ * Header component for displaying a page header with an optional back link and children.
+ *
+ * @param headerName - The name of the header to display.
+ * @param children - Optional children elements to render within the header.
+ * @param backLink - Optional URL for the back link. Defaults to "/".
+ * @returns The Header component.
+ */
 export const Header = ({
   headerName,
   children,

@@ -5,7 +5,9 @@ import { AsciiDonut } from "@/components/ascii-donut";
 import { Footer } from "@/components/footer";
 
 /**
+ * Home page component.
  *
+ * @returns The Home page component.
  */
 export default function Home() {
   return (

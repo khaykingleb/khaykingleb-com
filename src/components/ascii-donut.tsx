@@ -93,6 +93,9 @@ export function AsciiDonut() {
     let A_val = 0;
     let B_val = 0;
 
+    /**
+     *
+     */
     const animate = () => {
       if (canvasRef.current) {
         canvasRef.current.textContent = renderFrame(A_val, B_val);

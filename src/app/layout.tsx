@@ -41,7 +41,7 @@ export const metadata: Metadata = {
  * Root layout component to define the HTML structure and apply global styles.
  *
  * @param children - The child components to be rendered within the layout.
- * @returns The RootLayout component.
+ * @returns The root layout component.
  */
 export default function RootLayout({
   children,

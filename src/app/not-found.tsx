@@ -3,7 +3,9 @@
 import { FaArrowLeft } from "react-icons/fa";
 
 /**
+ * Not found page component.
  *
+ * @returns The not found page component.
  */
 export default function NotFound() {
   return (

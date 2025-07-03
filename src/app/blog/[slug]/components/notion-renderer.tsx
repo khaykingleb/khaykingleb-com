@@ -29,6 +29,7 @@ const Pdf = dynamic(
  * Renders the Notion content using the NotionRenderer component.
  *
  * @param recordMap - The record map containing the Notion data.
+ * @returns The rendered Notion content.
  */
 export default function NotionRendererClient({
   recordMap,
