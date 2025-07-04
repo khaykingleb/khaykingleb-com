@@ -87,30 +87,36 @@ supabase-start: ## Start supabase containers
 	@supabase start
 .PHONY: supabase-start
 
+supabase-stop: ## Stop supabase containers
+	@printf "\nStopping supabase:\n"
+	@supabase stop
+.PHONY: supabase-stop
+
 supabase-status: ## Check supabase status
 	@printf "\nChecking supabase status:\n"
 	@supabase status
 .PHONY: supabase-status
 
-supabase-reset: ## Reset supabase database (runs migrations and seeds)
+supabase-reset: ## Reset supabase database (wipe database and re-apply all migrations and seeds)
 	@printf "\nResetting supabase database:\n"
 	@supabase db reset
 .PHONY: supabase-reset
 
-supabase-migration-%: ## Create supabase migration
-	@printf "\nCreating custom migration: supabase/migrations/some_timestamp_$*:\n"
+supabase-create-migration-%: ## Create supabase migration
+	@printf "\nCreating supabase migration: supabase/migrations/some_timestamp_$*:\n"
+	@supabase migration new $*
+.PHONY: supabase-create-migration-%
+
+supabase-db-diff-%: ## Create supabase migration by comparing local database with remote database
+	@printf "\nCreating supabase migration by comparing schemas:\n"
+	@printf "Creating custom migration: supabase/migrations/some_timestamp_$*:\n"
 	@supabase db diff --use-migra -f $*
-.PHONY: supabase-migration-%
+.PHONY: supabase-db-diff-%
 
 supabase-generate-types: ## Generate supabase types
 	@printf "\nGenerating supabase types:\n"
 	@supabase gen types typescript --local > app/integrations/supabase/database.types.ts
 .PHONY: supabase-generate-types
-
-supabase-stop: ## Stop supabase containers
-	@printf "\nStopping supabase:\n"
-	@supabase stop
-.PHONY: supabase-stop
 
 #==============================================================================
 ##@ Ngrok

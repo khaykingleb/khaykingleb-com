@@ -9,8 +9,8 @@ import { notFound } from "next/navigation";
  */
 async function fetchPosts() {
   const supabaseClient = createClient(
-    process.env.SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
   );
 
   const { data, error } = await supabaseClient
@@ -18,7 +18,7 @@ async function fetchPosts() {
     .select("*")
     .order("created_at", { ascending: false });
   if (error) {
-    throw new Error("Failed to load posts");
+    throw error;
   }
 
   const postsWithUrls = await Promise.all(
@@ -43,8 +43,8 @@ export const getPosts = unstable_cache(fetchPosts, ["posts"], {
  */
 async function fetchPostBySlug(slug: string) {
   const supabaseClient = createClient(
-    process.env.SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
   );
 
   const { data, error } = await supabaseClient
@@ -74,8 +74,8 @@ export const getPostBySlug = unstable_cache(fetchPostBySlug, ["post"], {
  */
 async function fetchPostImageUrl(path: string) {
   const supabaseClient = createClient(
-    process.env.SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
   );
   const { data } = supabaseClient.storage.from("posts").getPublicUrl(path);
   return data.publicUrl;
