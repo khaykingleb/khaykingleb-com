@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import NotionPage from "@/app/blog/[slug]/components/notion-page";
@@ -5,7 +6,45 @@ import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { getPostBySlug } from "@/utils/supabase";
 
-// TODO: METADATA TAGS
+/**
+ * Generate metadata for the blog post.
+ *
+ * @param params - An object containing the slug of the blog post.
+ * @returns A promise that resolves to the metadata of the blog post.
+ */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
+
+  const published = new Date(post.created_at).toISOString();
+  const formattedDate = new Date(post.created_at).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  return {
+    title: post.title,
+    description: `Published on ${formattedDate}`,
+    authors: [{ name: "Gleb Khaykin" }],
+    openGraph: {
+      type: "article",
+      url: `https://khaykingleb.com/blog/${post.slug}`,
+      title: post.title,
+      description: `Published on ${formattedDate}`,
+      images: [post.image_url],
+    },
+    other: {
+      "article:author": "Gleb Khaykin",
+      "article:published_time": published,
+      "article:tag": Array.isArray(post.tags) ? post.tags.join(", ") : "",
+    },
+  };
+}
 
 /**
  * Render the blog post page.
