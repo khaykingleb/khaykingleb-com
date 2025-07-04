@@ -20,7 +20,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await getPostBySlug(slug);
 
-  const published = new Date(post.created_at).toISOString();
+  const publishedTime = new Date(post.created_at).toISOString();
   const formattedDate = new Date(post.created_at).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -29,18 +29,18 @@ export async function generateMetadata({
 
   return {
     title: post.title,
-    description: `Published on ${formattedDate}`,
+    description: post.description ?? `Published on ${formattedDate}`,
     authors: [{ name: "Gleb Khaykin" }],
     openGraph: {
       type: "article",
       url: `https://khaykingleb.com/blog/${post.slug}`,
       title: post.title,
-      description: `Published on ${formattedDate}`,
+      description: post.description ?? `Published on ${formattedDate}`,
       images: [post.image_url],
     },
     other: {
       "article:author": "Gleb Khaykin",
-      "article:published_time": published,
+      "article:published_time": publishedTime,
       "article:tag": Array.isArray(post.tags) ? post.tags.join(", ") : "",
     },
   };
