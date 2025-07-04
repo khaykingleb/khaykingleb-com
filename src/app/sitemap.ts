@@ -1,18 +1,11 @@
 import type { MetadataRoute } from "next";
 
-// TODO: Add blog posts and other pages
-
-// // TODO: Replace this with your real data source once the blog is wired up
-// async function getBlogPosts() {
-//   // Example: Fetch posts from Supabase, file system, or CMS
-//   // return [{ slug: "my-post", updatedAt: "2024-01-01" }];
-//   return [] as Array<{ slug: string; updatedAt?: string | Date }>;
-// }
+import { getPosts } from "@/utils/supabase";
 
 /**
- * Sitemap component.
+ * Generates a sitemap for the website.
  *
- * @returns The sitemap component.
+ * @returns A promise that resolves to the sitemap of the website.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://khaykingleb.com";
@@ -23,12 +16,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 1,
     },
-    // {
-    //   url: `${baseUrl}/blog`,
-    //   lastModified: new Date(),
-    //   changeFrequency: "weekly",
-    //   priority: 0.9,
-    // },
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
     {
       url: `${baseUrl}/contact`,
       lastModified: new Date(),
@@ -37,15 +30,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  //   const posts = await getBlogPosts();
-  //   const postRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
-  //     url: `${baseUrl}/blog/${post.slug}`,
-  //     lastModified: post.updatedAt ?? new Date(),
-  //     changeFrequency: "weekly",
-  //     priority: 0.9,
-  //   }));
+  const posts = await getPosts();
+  const postRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.updated_at ?? post.created_at),
+    changeFrequency: "weekly",
+    priority: 0.7,
+  }));
 
-  return Promise.resolve(staticRoutes);
-
-  //   return [...staticRoutes, ...postRoutes];
+  return [...staticRoutes, ...postRoutes];
 }
