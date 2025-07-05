@@ -90,7 +90,7 @@ export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
                   }}
                   className={`
                     mr-4
-                    ${isLoading ? `animate-pulse bg-gray-200` : ""}
+                    ${isLoading ? `animate-pulse bg-gray-100` : ""}
                   `}
                 />
               </div>

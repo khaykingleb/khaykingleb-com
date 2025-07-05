@@ -2,9 +2,9 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { Carousel } from "@/app/blog/components/carousel";
-import { Pagination } from "@/app/blog/components/pagination";
-import { TagSearch } from "@/app/blog/components/tag-search";
+import { Carousel } from "@/app/blog/(list)/components/carousel";
+import { Pagination } from "@/app/blog/(list)/components/pagination";
+import { TagSearch } from "@/app/blog/(list)/components/tag-search";
 import { Header } from "@/components/header";
 import { Tables } from "@/integrations/supabase/database.types";
 
@@ -28,7 +28,7 @@ const LAYOUT_HEIGHTS = {
  * @param posts - Array of post items to display.
  * @returns The rendered component.
  */
-export default function PostsContent({ posts }: { posts: Tables<"posts">[] }) {
+export default function Posts({ posts }: { posts: Tables<"posts">[] }) {
   const [displayedPosts, setDisplayedPosts] = useState(posts);
   const [postsPerPage, setPostsPerPage] = useState(4);
   const [currentPage, setCurrentPage] = useState(0);
