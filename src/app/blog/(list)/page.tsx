@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import PostsContent from "@/app/blog/components/posts";
+import Posts from "@/app/blog/(list)/components/posts";
 import { Footer } from "@/components/footer";
 import { getPosts } from "@/utils/supabase";
 
@@ -33,7 +33,7 @@ export default async function BlogPage() {
       `}
     >
       <div className="flex flex-grow flex-col">
-        <PostsContent posts={posts} />
+        <Posts posts={posts} />
         <Footer />
       </div>
     </div>

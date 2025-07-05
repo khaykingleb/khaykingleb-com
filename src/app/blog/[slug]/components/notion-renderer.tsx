@@ -5,7 +5,21 @@ import type { ExtendedRecordMap } from "notion-types";
 import { NotionRenderer } from "react-notion-x";
 
 const Code = dynamic(() =>
-  import("react-notion-x/build/third-party/code").then((m) => m.Code),
+  import("react-notion-x/build/third-party/code").then(async (m) => {
+    await Promise.all([
+      // @ts-expect-error: language files don't ship with types
+      import("prismjs/components/prism-python"),
+      // @ts-expect-error: language files don't ship with types
+      import("prismjs/components/prism-rust"),
+      // @ts-expect-error: language files don't ship with types
+      import("prismjs/components/prism-bash"),
+      // @ts-expect-error: language files don't ship with types
+      import("prismjs/components/prism-hcl"),
+      // @ts-expect-error: language files don't ship with types
+      import("prismjs/components/prism-yaml"),
+    ]);
+    return m.Code;
+  }),
 );
 
 const Collection = dynamic(() =>
