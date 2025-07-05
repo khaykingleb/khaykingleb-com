@@ -12,6 +12,7 @@ export default {
     "package.json",
     "pnpm-lock.yaml",
     "pnpm-workspace.yaml",
+    "terraform",
     "supabase",
     "src/components/ascii-donut.tsx",
   ],

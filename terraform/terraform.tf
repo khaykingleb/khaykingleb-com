@@ -1,8 +1,12 @@
 terraform {
   required_providers {
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 5.6.0"
+    }
     vercel = {
       source  = "vercel/vercel"
-      version = "~> 2.8.0"
+      version = "~> 3.7.0"
     }
     supabase = {
       source  = "supabase/supabase"
@@ -10,5 +14,5 @@ terraform {
     }
   }
 
-  required_version = "~> 1.5.4"
+  required_version = ">= 1.12.0"
 }

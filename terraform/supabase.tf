@@ -1,5 +1,5 @@
-resource "supabase_project" "this" {
-  name            = "supabase-db"
+resource "supabase_project" "khaykingleb_com" {
+  name            = "khaykingleb-com"
   organization_id = var.supabase_organization_id
 
   region            = "eu-west-2"
@@ -14,12 +14,12 @@ resource "supabase_project" "this" {
   }
 }
 
-resource "supabase_settings" "this" {
-  project_ref = supabase_project.this.id
+resource "supabase_settings" "khaykingleb_com" {
+  project_ref = supabase_project.khaykingleb_com.id
 
   api = jsonencode({
     db_extra_search_path = "public, extensions"
-    db_schema            = "public,graphql_public"
+    db_schema            = "public"
     max_rows             = 1000
   })
 
@@ -29,6 +29,6 @@ resource "supabase_settings" "this" {
   })
 }
 
-data "supabase_apikeys" "this" {
-  project_ref = supabase_project.this.id
+data "supabase_apikeys" "khaykingleb_com" {
+  project_ref = supabase_project.khaykingleb_com.id
 }

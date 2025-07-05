@@ -1,10 +1,12 @@
 resource "vercel_project" "khaykingleb_com" {
-  name      = "khaykingleb-com"
-  framework = "remix"
+  name         = "khaykingleb-com"
+  framework    = "nextjs"
+  node_version = "22.x"
 
   install_command = "make deps-prod"
   build_command   = "make build"
-  dev_command     = "make run-dev"
+  dev_command     = "make dev"
+
 
   git_repository = {
     type = "github"
@@ -15,36 +17,27 @@ resource "vercel_project" "khaykingleb_com" {
 resource "vercel_project_environment_variable" "supabase_url" {
   project_id = vercel_project.khaykingleb_com.id
   key        = "SUPABASE_URL"
-  value      = "https://${supabase_project.this.id}.supabase.co"
+  value      = "https://${supabase_project.khaykingleb_com.id}.supabase.co"
   target     = ["production", "preview", "development"]
-  comment    = "Supabase URL"
+  comment    = "Environment variable for the Supabase project URL"
 }
 
 resource "vercel_project_environment_variable" "supabase_anon_key" {
   project_id = vercel_project.khaykingleb_com.id
   key        = "SUPABASE_ANON_KEY"
-  value      = data.supabase_apikeys.this.anon_key
+  value      = data.supabase_apikeys.khaykingleb_com.anon_key
   target     = ["production", "preview", "development"]
-  comment    = "Supabase anon key for client-side code"
-}
-
-resource "vercel_project_environment_variable" "supabase_service_role_key" {
-  project_id = vercel_project.khaykingleb_com.id
-  key        = "SUPABASE_SERVICE_ROLE_KEY"
-  value      = data.supabase_apikeys.this.service_role_key
-  target     = ["production", "preview"]
-  sensitive  = true
-  comment    = "Supabase service role key for server-side code"
+  comment    = "Environment variable for the Supabase anonymous key used in client-side code"
 }
 
 resource "vercel_project_domain" "khaykingleb_com" {
   project_id = vercel_project.khaykingleb_com.id
-  domain     = "khaykingleb.com"
+  domain     = cloudflare_dns_record.khaykingleb_com.name
 }
 
 resource "vercel_project_domain" "www_khaykingleb_com" {
   project_id = vercel_project.khaykingleb_com.id
-  domain     = "www.khaykingleb.com"
+  domain     = cloudflare_dns_record.www_khaykingleb_com.name
 
   redirect             = vercel_project_domain.khaykingleb_com.domain
   redirect_status_code = 308
