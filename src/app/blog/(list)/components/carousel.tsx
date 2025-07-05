@@ -14,6 +14,7 @@ import { Tables } from "@/integrations/supabase/database.types";
  */
 export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
   const [isLoading, setIsLoading] = useState(true);
+
   return (
     <div className="flex h-full flex-grow">
       {posts.length > 0 ? (
@@ -25,7 +26,7 @@ export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
               className={`
                 mb-1 carousel-item block w-full cursor-pointer rounded p-2
                 transition-all duration-300
-                md:mb-4 md:hover:bg-base-200
+                md:hover:bg-base-200
               `}
             >
               <div className="flex w-full items-center">
@@ -72,27 +73,32 @@ export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
                     ))}
                   </div>
                 </div>
-                <Image
-                  src={post.image_url}
-                  alt={post.title}
-                  width={200}
-                  height={200}
-                  sizes="(max-width: 640px) 128px,
-                  (max-width: 768px) 160px,
-                  200px,
-                  "
-                  loading="lazy"
-                  priority={false}
-                  onLoad={(e) => {
-                    if (e.currentTarget.complete) {
-                      setIsLoading(false);
-                    }
-                  }}
+                <div
                   className={`
-                    mr-4
-                    ${isLoading ? `animate-pulse bg-gray-100` : ""}
+                    relative mr-4 h-20 w-32 flex-shrink-0 overflow-hidden
+                    rounded
+                    sm:h-24 sm:w-40
+                    md:h-28 md:w-48
+                    lg:h-32 lg:w-56
+                    ${isLoading ? "animate-pulse bg-gray-200" : ""}
                   `}
-                />
+                >
+                  <Image
+                    src={post.image_url}
+                    alt={post.title}
+                    fill
+                    className={`
+                      object-contain object-center transition-opacity
+                      duration-500
+                      ${isLoading ? "opacity-0" : "opacity-100"}
+                    `}
+                    onLoad={(e) => {
+                      if (e.currentTarget.complete) {
+                        setIsLoading(false);
+                      }
+                    }}
+                  />
+                </div>
               </div>
             </Link>
           ))}
