@@ -18,6 +18,7 @@ async function fetchPosts() {
     .select("*")
     .order("created_at", { ascending: false });
   if (error) {
+    console.error(error);
     throw error;
   }
 
@@ -53,10 +54,11 @@ async function fetchPostBySlug(slug: string) {
     .eq("slug", slug)
     .single();
   if (error) {
+    console.error(error);
     if (error.code === "PGRST116") {
       throw notFound();
     }
-    throw new Error("Failed to load post");
+    throw error;
   }
 
   return data;
