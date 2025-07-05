@@ -18,7 +18,6 @@ export const Avatar = () => {
         ease-in-out
         sm:h-64 sm:w-64
         md:hover:scale-105
-        ${isLoading ? `animate-pulse` : ""}
       `}
     >
       <Image
@@ -28,13 +27,16 @@ export const Avatar = () => {
         width={300}
         quality={80}
         loading="lazy"
-        className="h-full w-full object-cover"
+        priority={false}
         onLoad={(e) => {
-          // make sure the browser has fully decoded the image
           if (e.currentTarget.complete) {
             setIsLoading(false);
           }
         }}
+        className={`
+          h-full w-full object-cover
+          ${isLoading ? `animate-pulse bg-gray-200` : ""}
+        `}
       />
     </div>
   );
