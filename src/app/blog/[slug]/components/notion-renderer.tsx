@@ -5,7 +5,16 @@ import type { ExtendedRecordMap } from "notion-types";
 import { NotionRenderer } from "react-notion-x";
 
 const Code = dynamic(() =>
-  import("react-notion-x/build/third-party/code").then((m) => m.Code),
+  import("react-notion-x/build/third-party/code").then(async (m) => {
+    await Promise.all([
+      import("prismjs/components/prism-python"),
+      import("prismjs/components/prism-rust"),
+      import("prismjs/components/prism-bash"),
+      import("prismjs/components/prism-hcl"),
+      import("prismjs/components/prism-yaml"),
+    ]);
+    return m.Code;
+  }),
 );
 
 const Collection = dynamic(() =>
