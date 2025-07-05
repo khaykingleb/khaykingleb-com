@@ -79,3 +79,12 @@
 .notion-list li {
   @apply !p-[3px];
 }
+
+/* Dark mode colors */
+.notion-table-of-contents a {
+  @apply dark:text-[hsl(var(--p))];
+}
+
+.notion-asset-caption {
+  @apply text-[hsl(var(--bc))] opacity-70;
+}
