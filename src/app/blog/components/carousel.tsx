@@ -75,9 +75,12 @@ export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
                 <Image
                   src={post.image_url}
                   alt={post.title}
-                  width={100}
-                  height={100}
-                  quality={90}
+                  width={200}
+                  height={200}
+                  sizes="(max-width: 640px) 128px,
+                  (max-width: 768px) 160px,
+                  200px,
+                  "
                   loading="lazy"
                   priority={false}
                   onLoad={(e) => {
@@ -86,11 +89,8 @@ export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
                     }
                   }}
                   className={`
-                    mr-4 w-auto
-                    sm:h-24
-                    md:h-28
-                    lg:h-32
-                    ${isLoading ? `animate-pulse` : ""}
+                    mr-4
+                    ${isLoading ? `animate-pulse bg-gray-200` : ""}
                   `}
                 />
               </div>
