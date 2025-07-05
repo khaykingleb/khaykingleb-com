@@ -1,6 +1,5 @@
 .DEFAULT_GOAL = help
 SHELL := /bin/bash
-VENDOR_DIR := vendor/
 
 # Load environment variables from .env
 ifneq (,$(wildcard ./.env))
@@ -50,7 +49,8 @@ init: prerequisites env deps-dev pre-commit ## Initialize local environment for 
 
 build-react-notion-x:
 	@printf "\nBuilding react-notion-x:\n"
-	@cd ${VENDOR_DIR}/react-notion-x && pnpm install && pnpm build
+	@pnpm --dir vendor/react-notion-x install
+	@pnpm --dir vendor/react-notion-x build
 .PHONY: build-react-notion-x
 
 dev: build-react-notion-x ## Run development server
