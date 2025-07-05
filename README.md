@@ -37,7 +37,7 @@ To start the development server:
 ```bash
 make supabase-start \
     && make deps-dev \
-    && make run-dev
+    && make dev
 ```
 
 To run the production build locally:
@@ -46,5 +46,5 @@ To run the production build locally:
 make supabase-start \
     && make deps-prod \
     && make build \
-    && make run-prod
+    && make start
 ```

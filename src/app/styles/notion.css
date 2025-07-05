@@ -1,0 +1,81 @@
+/**
+ * This file contains site-specific style overrides for Notion elements from
+ * react-notion-x.
+ *
+ * See https://github.com/NotionX/react-notion-x/blob/master/packages/react-notion-x/src/styles.css
+
+ * react-notion-x's goal is to match styling as close as possible to Notion,
+ * whereas I'm trying to make it look another way.
+ */
+
+@reference "./global.css";
+
+.notion {
+  @apply !bg-[hsl(var(--b1))] !text-[hsl(var(--bc))];
+}
+
+.notion-page {
+  @apply !pl-0;
+}
+
+.notion-code,
+.notion-code pre,
+.notion-code code {
+  @apply !bg-[hsl(var(--b1))] !text-[hsl(var(--bc))];
+}
+
+.katex {
+  @apply flex items-center justify-center text-sm sm:text-base;
+}
+
+.notion-title {
+  @apply !hidden;
+}
+
+/* .notion-table-of-contents {
+  @apply !m-0 !p-0 !pt-0 !mb-4 !pl-[0px];
+} */
+
+.notion-table-of-contents,
+.notion-h1,
+.notion-h2,
+.notion-h3,
+.notion-list,
+.notion-text {
+  @apply font-gill-sans !w-full;
+}
+
+.notion-asset-caption {
+  @apply font-gill-sans text-center;
+}
+
+.notion-h1 {
+  @apply !mt-3 !text-2xl sm:!text-3xl;
+}
+
+.notion-h2 {
+  @apply !mt-2 !text-xl sm:!text-2xl;
+}
+
+.notion-h3 {
+  @apply !mt-1 !text-base sm:!text-lg;
+}
+
+.notion-table-of-contents,
+.notion-list,
+.notion-text {
+  @apply !mt-0 !text-sm sm:!text-base;
+}
+
+.notion-list {
+  @apply !pl-5;
+}
+
+.notion-text {
+  @apply !pl-2;
+}
+
+/* Responsible for all the spacing between list items */
+.notion-list li {
+  @apply !p-[3px];
+}

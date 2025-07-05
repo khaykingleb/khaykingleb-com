@@ -1,6 +1,5 @@
 .DEFAULT_GOAL = help
 SHELL := /bin/bash
-VENDOR_DIR := vendor/react-notion-x
 
 # Load environment variables from .env
 ifneq (,$(wildcard ./.env))
@@ -13,9 +12,9 @@ endif
 ##=============================================================================
 
 prerequisites: ## Install prerequisite tools
-	@echo  "Installing specified runtime versions."
+	@printf "\nInstalling specified runtime versions:\n"
 	@asdf install
-	@echo  "Currently installed runtime versions:"
+	@printf "\nCurrently installed runtime versions:\n"
 	@asdf current
 .PHONY: prerequisites
 
@@ -26,24 +25,18 @@ env: ## Create .env file if it doesn't exist
 	fi
 .PHONY: env
 
-deps-notion: ## Install dependencies for react-notion-x
-	@echo "Installing dependencies for react-notion-x."
-	@git submodule update --init --recursive
-	@cd ${VENDOR_DIR} && yarn install --frozen-lockfile
-.PHONY: deps-notion
-
-deps-dev: deps-notion ## Install development dependencies
-	@echo "Installing development dependencies."
+deps-dev: ## Install development dependencies
+	@printf "\nInstalling development dependencies:\n"
 	@pnpm install
 .PHONY: deps-dev
 
-deps-prod: deps-notion ## Install production dependencies
-	@echo "Installing production dependencies."
+deps-prod: ## Install production dependencies
+	@printf "\nInstalling production dependencies:\n"
 	@pnpm install --frozen-lockfile
 .PHONY: deps-prod
 
 pre-commit: ## Install pre-commit hooks
-	@echo "Installing pre-commit hooks."
+	@printf "\nInstalling pre-commit hooks:\n"
 	@pre-commit install -t pre-commit -t commit-msg
 .PHONY: pre-commit
 
@@ -54,34 +47,35 @@ init: prerequisites env deps-dev pre-commit ## Initialize local environment for 
 ##@ Scripts
 ##=============================================================================
 
-build-notion: ## Build react-notion-x
-	@echo "Building react-notion-x."
-	@cd ${VENDOR_DIR} && yarn build
-.PHONY: build-notion
+build-react-notion-x:
+	@printf "\nBuilding react-notion-x:\n"
+	@pnpm --dir vendor/react-notion-x install
+	@pnpm --dir vendor/react-notion-x build
+.PHONY: build-react-notion-x
 
-build: build-notion ## Build project
-	@echo "Building project."
-	@pnpm run build
+dev: build-react-notion-x ## Run development server
+	@printf "\nRunning development server:\n"
+	@pnpm dev
+.PHONY: dev
+
+build: build-react-notion-x ## Build application for production
+	@printf "\nBuilding application for production:\n"
+	@pnpm build
 .PHONY: build
 
-run-dev: ## Run development server
-	@echo "Running development server."
-	@pnpm run dev
-.PHONY: run-dev
+start: build ## Start production server
+	@printf "\nStarting production server:\n"
+	@pnpm start
+.PHONY: start
 
-run-prod: build ## Run production server
-	@echo "Starting server."
-	@pnpm run start
-.PHONY: run-prod
-
-lint: ## Lint project
-	@echo "Linting project."
-	@pnpm run lint && pnpm run stylelint && pnpm run typecheck
+lint: ## Run linting
+	@printf "\nRunning linting:\n"
+	@pnpm lint
 .PHONY: lint
 
-format: ## Format project
-	@echo "Formatting project."
-	@pnpm run format
+format: ## Run formatting
+	@printf "\nRunning formatting:\n"
+	@pnpm format
 .PHONY: format
 
 ##=============================================================================
@@ -89,46 +83,52 @@ format: ## Format project
 ##=============================================================================
 
 supabase-start: ## Start supabase containers
-	@echo "Starting supabase."
+	@printf "\nStarting supabase:\n"
 	@supabase start
 .PHONY: supabase-start
 
+supabase-stop: ## Stop supabase containers
+	@printf "\nStopping supabase:\n"
+	@supabase stop
+.PHONY: supabase-stop
+
 supabase-status: ## Check supabase status
-	@echo "Checking supabase status."
+	@printf "\nChecking supabase status:\n"
 	@supabase status
 .PHONY: supabase-status
 
-supabase-reset: ## Reset supabase database (runs migrations and seeds)
-	@echo "Resetting supabase database."
+supabase-reset: ## Reset supabase database (wipe database and re-apply all migrations and seeds)
+	@printf "\nResetting supabase database:\n"
 	@supabase db reset
 .PHONY: supabase-reset
 
-supabase-migration-%: ## Create supabase migration
-	@echo "Creating custom migration: supabase/migrations/some_timestamp_$*.sql"
+supabase-create-migration-%: ## Create supabase migration
+	@printf "\nCreating supabase migration: supabase/migrations/some_timestamp_$*:\n"
+	@supabase migration new $*
+.PHONY: supabase-create-migration-%
+
+supabase-db-diff-%: ## Create supabase migration by comparing local database with remote database
+	@printf "\nCreating supabase migration by comparing schemas:\n"
+	@printf "Creating custom migration: supabase/migrations/some_timestamp_$*:\n"
 	@supabase db diff --use-migra -f $*
-.PHONY: supabase-migration-%
+.PHONY: supabase-db-diff-%
 
 supabase-generate-types: ## Generate supabase types
-	@echo "Generating supabase types."
+	@printf "\nGenerating supabase types:\n"
 	@supabase gen types typescript --local > app/integrations/supabase/database.types.ts
 .PHONY: supabase-generate-types
-
-supabase-stop: ## Stop supabase containers
-	@echo "Stopping supabase."
-	@supabase stop
-.PHONY: supabase-stop
 
 #==============================================================================
 ##@ Ngrok
 ##==============================================================================
 
 ngrok-dev: ## Run ngrok for development server
-	@echo "Running ngrok."
+	@printf "\nRunning ngrok:\n"
 	@ngrok http 5173
 .PHONY: ngrok-dev
 
 ngrok-prod: ## Run ngrok for production server
-	@echo "Running ngrok."
+	@printf "\nRunning ngrok:\n"
 	@ngrok http 55203
 .PHONY: ngrok-prod
 
@@ -157,10 +157,11 @@ pre-commit-update-hooks: ## Update pre-commit hooks
 .PHONY: pre-commit-update-hooks
 
 clean: ## Clean project
-	@echo "Cleaning project."
-	@rm -rf node_modules build
-	@find ${VENDOR_DIR} -type d -name 'build' -exec rm -rf {} +
+	@printf "\nCleaning project:\n"
+	@rm -rf node_modules .next
 	@find ${VENDOR_DIR} -type d -name 'node_modules' -exec rm -rf {} +
+	@find ${VENDOR_DIR} -type d -name 'build' -exec rm -rf {} +
+	@find ${VENDOR_DIR} -type d -name '.turbo' -exec rm -rf {} +
 .PHONY: clean
 
 ##=============================================================================

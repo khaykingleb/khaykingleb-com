@@ -15,25 +15,21 @@ jobs:
         uses: actions/checkout@v4.1.4
         with:
           fetch-depth: 0
+          submodules: recursive
 
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 21.7.3
+          node-version: 22.17.0
 
       - name: Setup pnmp
         uses: pnpm/action-setup@v4.0.0
         with:
-          version: 10.8.1
+          version: 10.12.4
           run_install: false
 
-      - name: Setup Yarn
-        run: |
-          npm install -g yarn@1.22.22
-          yarn --version
-
       - name: Install dependencies
-        run: make deps-notion && make deps-dev && make build-notion
+        run: make deps-dev && make build-react-notion-x
 
       - name: Check all files with pre-commit
         uses: pre-commit/action@v3.0.1
