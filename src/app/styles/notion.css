@@ -71,8 +71,12 @@
   @apply !pl-5;
 }
 
-.notion-text {
+:is(ul, ol) > .notion-text {
   @apply !pl-2;
+}
+
+.notion-text {
+  @apply !pl-0;
 }
 
 /* Responsible for all the spacing between list items */
