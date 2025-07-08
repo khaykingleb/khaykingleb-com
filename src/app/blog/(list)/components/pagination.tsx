@@ -74,7 +74,7 @@ export const Pagination = ({
   );
 
   return (
-    <div className="mt-4 mb-[-10] join flex justify-center">
+    <div className="mt-2 -mb-2 join flex justify-center">
       {/* Previous page button */}
       <PageButton
         onClick={() => onPageChange?.(currentPage - 1)}
