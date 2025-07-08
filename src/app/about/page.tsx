@@ -1,28 +1,28 @@
 import { Metadata } from "next";
 
-import { Avatar } from "@/app/contact/components/avatar";
-import { SocialMedia } from "@/app/contact/components/social-media";
+import { Avatar } from "@/app/about/components/avatar";
+import { SocialMedia } from "@/app/about/components/social-media";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description: "Connect with me",
+  title: "About",
+  description: "Learn more about me",
   openGraph: {
-    title: "Contact",
-    description: "Connect with me",
+    title: "About",
+    description: "Learn more about me",
     type: "website",
-    url: "https://khaykingleb.com/contact",
+    url: "https://khaykingleb.com/about",
     images: ["/avatar.webp"],
   },
 };
 
 /**
- * Contact page component.
+ * About page component.
  *
- * @returns The contact page component.
+ * @returns The about page component.
  */
-export default function ContactPage() {
+export default function AboutPage() {
   return (
     <div
       className={`
@@ -32,7 +32,7 @@ export default function ContactPage() {
       `}
     >
       <div className="flex flex-grow flex-col">
-        <Header headerName="Contact" />
+        <Header headerName="About" />
         <main className="flex flex-grow flex-col">
           <div
             className={`
@@ -42,7 +42,7 @@ export default function ContactPage() {
           >
             <div
               className={`
-                mx-auto mt-1
+                mx-auto mt-2
                 md:order-last md:flex-shrink-0
               `}
             >
@@ -54,19 +54,12 @@ export default function ContactPage() {
                 md:mr-2 md:flex-1 md:items-start
               `}
             >
-              <h2
-                className={`
-                  mb-1 text-xl font-semibold
-                  sm:text-2xl
-                `}
-              >
-                About
-              </h2>
-              <div className="space-y-1 text-base text-pretty">
+              <div className="mt-2 space-y-1 text-base text-pretty">
                 <ul className="list-disc space-y-1 space-x-0 pl-4">
                   <li>
-                    I&apos;m a full-stack developer — though mostly specializing
-                    in MLOps/DevOps — who loves building and designing systems
+                    I&apos;m a full-stack developer specializing in MLOps and
+                    DevOps who loves designing and building robust, scalable
+                    systems from scratch
                   </li>
                   {/* <li>
                     Currently working as an MLOps Engineer at{" "}
@@ -136,14 +129,14 @@ export default function ContactPage() {
                     >
                       CFA Level 1
                     </a>{" "}
-                    in my third year of undergrad; still keen on finance, so may
-                    complete the remaining levels someday for fun
+                    in my third year of undergrad; still keen on finance, so I
+                    may complete the remaining levels someday
                   </li>
                 </ul>
               </div>
               <h2
                 className={`
-                  mt-4 mb-1 text-xl font-semibold
+                  mt-4 mb-2 text-xl font-semibold
                   sm:text-2xl
                 `}
               >
@@ -158,9 +151,6 @@ export default function ContactPage() {
                 <SocialMedia size={24} displayLabels={true} />
               </div>
             </div>
-            {/* <div className="hidden flex-shrink-0 md:block">
-              <Avatar />
-            </div> */}
           </div>
         </main>
         <Footer />

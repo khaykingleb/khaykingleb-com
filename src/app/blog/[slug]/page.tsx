@@ -72,7 +72,11 @@ export default async function BlogPostPage({
       <main className="flex flex-grow flex-col">
         <Suspense
           fallback={
-            <div className="flex-grow animate-pulse rounded-lg bg-gray-200" />
+            <div
+              className={`
+                mt-2 -mb-2 flex-grow animate-pulse rounded-lg bg-gray-200
+              `}
+            />
           }
         >
           <h2

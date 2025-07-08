@@ -26,7 +26,7 @@ export const Header = ({
           className={`
             text-3xl font-semibold transition-all
             sm:text-4xl
-            md:hover:scale-105 md:hover:opacity-80
+            md:hover:scale-105
           `}
         >
           &lt;

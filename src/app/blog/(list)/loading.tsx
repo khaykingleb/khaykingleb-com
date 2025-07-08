@@ -33,7 +33,7 @@ export default function Loading() {
             </button>
           </div>
         </Header>
-        <main className="flex flex-grow">
+        <main className="mt-2 mb-2 flex flex-grow">
           <div className="flex-grow animate-pulse rounded-lg bg-gray-200" />
         </main>
         <Pagination currentPage={0} pagesInTotal={5} />

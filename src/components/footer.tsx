@@ -22,7 +22,7 @@ export function ThemeToggle() {
     <MdLightMode
       className={`
         h-6 w-6
-        md:hover:scale-110 md:hover:opacity-80
+        md:hover:scale-110
       `}
       onClick={handleThemeToggle}
     />
@@ -30,7 +30,7 @@ export function ThemeToggle() {
     <MdDarkMode
       className={`
         h-6 w-6
-        md:hover:scale-110 md:hover:opacity-80
+        md:hover:scale-110
       `}
       onClick={handleThemeToggle}
     />

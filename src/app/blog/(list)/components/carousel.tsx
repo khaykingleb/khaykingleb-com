@@ -16,91 +16,85 @@ export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <div className="flex h-full flex-grow">
+    <div className="-mt-1 flex h-full flex-grow">
       {posts.length > 0 ? (
         <div className="carousel h-full w-full carousel-vertical">
           {posts.map((post) => (
-            <Link
-              key={post.id}
-              href={`/blog/${post.slug}`}
-              className={`
-                mb-1 carousel-item block w-full cursor-pointer rounded p-2
-                transition-all duration-300
-                md:hover:bg-base-200
-              `}
-            >
-              <div className="flex w-full items-center">
-                <div
-                  className={`
-                    flex-grow pr-2
-                    sm:pr-3
-                    md:pr-4
-                  `}
-                >
-                  <h1
-                    className={`
-                      mb-1 text-sm font-semibold
-                      sm:text-base
-                      md:text-lg
-                      lg:text-xl
-                    `}
-                  >
-                    {post.title}
-                  </h1>
-                  <p
-                    className={`
-                      mb-1 text-xs
-                      sm:text-sm
-                      md:text-base
-                    `}
-                  >
-                    {new Date(post.created_at).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </p>
+            <div key={post.id} className="carousel-item w-full">
+              <Link
+                href={`/blog/${post.slug}`}
+                className={`
+                  block w-full cursor-pointer rounded p-3 transition-colors
+                  duration-300
+                  md:hover:bg-base-200
+                `}
+              >
+                <div className="flex w-full items-center">
+                  <div className={`flex-grow`}>
+                    <h1
+                      className={`
+                        mb-1 text-sm font-semibold
+                        sm:text-base
+                        md:text-lg
+                        lg:text-xl
+                      `}
+                    >
+                      {post.title}
+                    </h1>
+                    <p
+                      className={`
+                        mb-1 text-xs
+                        sm:text-sm
+                        md:text-base
+                      `}
+                    >
+                      {new Date(post.created_at).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </p>
+                    <div
+                      className={`
+                        flex flex-wrap gap-1 text-xs
+                        sm:text-sm
+                      `}
+                    >
+                      {post.tags.map((tag) => (
+                        <span key={tag} className="inline-block">
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                   <div
                     className={`
-                      flex flex-wrap gap-1 text-xs
-                      sm:text-sm
+                      relative h-20 w-32 flex-shrink-0 overflow-hidden rounded
+                      sm:h-24 sm:w-40
+                      md:h-28 md:w-48
+                      lg:h-32 lg:w-56
+                      ${isLoading ? "animate-pulse bg-gray-200" : ""}
                     `}
                   >
-                    {post.tags.map((tag) => (
-                      <span key={tag} className="inline-block">
-                        #{tag}
-                      </span>
-                    ))}
+                    <Image
+                      src={post.image_url}
+                      alt={post.title}
+                      fill
+                      className={`
+                        object-contain object-center transition-opacity
+                        duration-500
+                        ${isLoading ? "opacity-0" : "opacity-100"}
+                      `}
+                      onLoad={(e) => {
+                        if (e.currentTarget.complete) {
+                          setIsLoading(false);
+                        }
+                      }}
+                    />
                   </div>
                 </div>
-                <div
-                  className={`
-                    relative mr-4 h-20 w-32 flex-shrink-0 overflow-hidden
-                    rounded
-                    sm:h-24 sm:w-40
-                    md:h-28 md:w-48
-                    lg:h-32 lg:w-56
-                    ${isLoading ? "animate-pulse bg-gray-200" : ""}
-                  `}
-                >
-                  <Image
-                    src={post.image_url}
-                    alt={post.title}
-                    fill
-                    className={`
-                      object-contain object-center transition-opacity
-                      duration-500
-                      ${isLoading ? "opacity-0" : "opacity-100"}
-                    `}
-                    onLoad={(e) => {
-                      if (e.currentTarget.complete) {
-                        setIsLoading(false);
-                      }
-                    }}
-                  />
-                </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
           ))}
         </div>
       ) : (
