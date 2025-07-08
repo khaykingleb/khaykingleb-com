@@ -67,6 +67,12 @@
   @apply !mt-0 !text-sm sm:!text-base;
 }
 
+@media (max-width: 767px) {
+  .notion-table-of-contents {
+    @apply !pl-1 !-mt-2;
+  }
+}
+
 .notion-list {
   @apply !pl-5;
 }
@@ -75,8 +81,10 @@
   @apply !pl-2;
 }
 
-.notion-text {
-  @apply !pl-0;
+@media (min-width: 768px) {
+  .notion-text {
+    @apply !pl-0;
+  }
 }
 
 /* Responsible for all the spacing between list items */
