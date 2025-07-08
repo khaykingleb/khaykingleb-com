@@ -82,7 +82,7 @@ export const TagSearch = ({
   }, []);
 
   return (
-    <div className="relative z-50">
+    <div ref={searchRef} className="relative z-50">
       {searchOpen ? (
         <div className="flex flex-col">
           <div className="relative flex items-center">
@@ -92,17 +92,14 @@ export const TagSearch = ({
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by tags..."
               className={`
-                input h-10 w-56 pr-8
-                focus:outline-none
+                input h-10 w-56 rounded-lg border-base-300 pr-8
+                focus:border-base-300 focus:shadow-none focus:outline-none
                 sm:w-64
               `}
+              spellCheck="false"
             />
             <button
-              onClick={() => {
-                setSearchOpen(false);
-                setSearchQuery("");
-                setSelectedTags([]);
-              }}
+              onClick={() => setSearchOpen(false)}
               className={`
                 absolute right-2 transition-all
                 md:hover:scale-105 md:hover:text-base-content
@@ -112,80 +109,80 @@ export const TagSearch = ({
               <FaTimes />
             </button>
           </div>
-          <ul
-            role="listbox"
-            className={`
-              absolute top-full right-0 left-0 mt-1 max-h-52 overflow-y-auto
-              rounded-lg border border-base-300 bg-base-100 shadow-lg
-              focus-within:outline-none
-            `}
-            onKeyDown={(e) => {
-              const current = document.activeElement;
-              if (!current?.parentElement) return;
+          {filteredTags.length > 0 && (
+            <ul
+              role="listbox"
+              className={`
+                absolute top-full right-0 left-0 mt-1 max-h-52 overflow-y-auto
+                rounded-lg border border-base-300 bg-base-100 shadow-lg
+                focus-within:outline-none
+              `}
+              onKeyDown={(e) => {
+                const current = document.activeElement;
+                if (!current?.parentElement) return;
 
-              if (e.key === "ArrowDown") {
-                e.preventDefault();
-                const currentLi = current.closest("li");
-                const nextLi = currentLi?.nextElementSibling;
-                const nextButton = nextLi?.querySelector("button");
-                if (nextButton instanceof HTMLElement) {
-                  nextButton.focus();
-                  nextButton.scrollIntoView({ block: "nearest" });
+                if (e.key === "ArrowDown") {
+                  e.preventDefault();
+                  const currentLi = current.closest("li");
+                  const nextLi = currentLi?.nextElementSibling;
+                  const nextButton = nextLi?.querySelector("button");
+                  if (nextButton instanceof HTMLElement) {
+                    nextButton.focus();
+                    nextButton.scrollIntoView({ block: "nearest" });
+                  }
+                } else if (e.key === "ArrowUp") {
+                  e.preventDefault();
+                  const currentLi = current.closest("li");
+                  const prevLi = currentLi?.previousElementSibling;
+                  const prevButton = prevLi?.querySelector("button");
+                  if (prevButton instanceof HTMLElement) {
+                    prevButton.focus();
+                    prevButton.scrollIntoView({ block: "nearest" });
+                  }
                 }
-              } else if (e.key === "ArrowUp") {
-                e.preventDefault();
-                const currentLi = current.closest("li");
-                const prevLi = currentLi?.previousElementSibling;
-                const prevButton = prevLi?.querySelector("button");
-                if (prevButton instanceof HTMLElement) {
-                  prevButton.focus();
-                  prevButton.scrollIntoView({ block: "nearest" });
-                }
-              }
-            }}
-          >
-            {filteredTags.map((tag) => (
-              <li key={tag}>
-                <button
-                  type="button"
-                  role="option"
-                  aria-selected={selectedTags.includes(tag)}
-                  onClick={() => toggleTag(tag)}
-                  className={`
-                    flex w-full cursor-pointer items-center px-4 py-2.5
-                    text-left
-                    hover:bg-base-200
-                    focus:outline-none
-                    focus-visible:bg-base-200
-                    dark:hover:bg-gray-800 dark:focus-visible:bg-gray-800
-                  `}
-                >
-                  <span
+              }}
+            >
+              {filteredTags.map((tag) => (
+                <li key={tag}>
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={selectedTags.includes(tag)}
+                    onClick={() => toggleTag(tag)}
                     className={`
-                      mr-3 flex h-5 w-5 items-center justify-center rounded-full
-                      border-2
-                      ${
-                        selectedTags.includes(tag)
-                          ? `
-                            border-blue-600 bg-blue-600
-                            dark:border-blue-500 dark:bg-blue-500
-                          `
-                          : `
-                            border-base-300
-                            dark:border-gray-600
-                          `
-                      }
+                      flex w-full cursor-pointer items-center px-4 py-2.5
+                      text-left
+                      hover:bg-base-200
+                      focus:outline-none
+                      focus-visible:bg-base-200
+                      dark:hover:bg-gray-800 dark:focus-visible:bg-gray-800
                     `}
                   >
-                    {selectedTags.includes(tag) && (
-                      <FaCheck className="text-xs text-white" />
-                    )}
-                  </span>
-                  <span className="text-sm text-base-content">{tag}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
+                    <span
+                      className={`
+                        mr-2 flex h-5 w-5 items-center justify-center
+                        rounded-full border-2 transition-transform duration-200
+                        md:hover:scale-105 md:hover:border-blue-400
+                        ${
+                          selectedTags.includes(tag)
+                            ? `border-blue-400 bg-blue-400`
+                            : `
+                              border-base-300
+                              dark:border-gray-600
+                            `
+                        }
+                      `}
+                    >
+                      {selectedTags.includes(tag) && (
+                        <FaCheck className="text-xs text-white" />
+                      )}
+                    </span>
+                    <span className="text-sm text-base-content">{tag}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       ) : (
         <button
