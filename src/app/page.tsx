@@ -77,7 +77,7 @@ export default function Home() {
               Blog
             </Link>
             <Link
-              href="/contact"
+              href="/about"
               className={`
                 inline-flex items-center transition-all
                 hover:opacity-80
@@ -89,7 +89,7 @@ export default function Home() {
                   hover:scale-110
                 `}
               />{" "}
-              Contact
+              About
             </Link>
             <Link
               href="/Gleb_Khaykin.pdf"
