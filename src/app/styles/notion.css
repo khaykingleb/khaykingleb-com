@@ -86,7 +86,7 @@
 
 /* Dark mode colors */
 .notion-table-of-contents a {
-  @apply dark:text-[hsl(var(--p))];
+  @apply dark:text-[hsl(var(--bc))] dark:opacity-70;
 }
 
 .notion-asset-caption {
