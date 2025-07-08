@@ -66,6 +66,8 @@ export const Pagination = ({
   // eslint-disable-next-line no-unused-vars
   onPageChange?: (page: number) => void;
 }) => {
+  if (pagesInTotal < 1) return null;
+
   const startPage = Math.floor(currentPage / NUM_VISIBLE) * NUM_VISIBLE;
   const endPage = Math.min(startPage + NUM_VISIBLE, pagesInTotal);
   const pages = Array.from(
