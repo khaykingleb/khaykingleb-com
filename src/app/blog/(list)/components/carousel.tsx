@@ -16,7 +16,7 @@ export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <div className="flex h-full flex-grow">
+    <div className="-mt-1 flex h-full flex-grow">
       {posts.length > 0 ? (
         <div className="carousel h-full w-full carousel-vertical">
           {posts.map((post) => (
