@@ -57,9 +57,8 @@ export default function AboutPage() {
               <div className="mt-2 space-y-1 text-base text-pretty">
                 <ul className="list-disc space-y-1 space-x-0 pl-4">
                   <li>
-                    I&apos;m a full-stack developer specializing in MLOps and
-                    DevOps who loves designing and building robust, scalable
-                    systems from scratch
+                    Full-stack developer focused on MLOps/DevOps engineering,
+                    passionate about building scalable systems and apps
                   </li>
                   {/* <li>
                     Currently working as an MLOps Engineer at{" "}
