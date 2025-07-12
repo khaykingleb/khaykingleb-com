@@ -94,7 +94,7 @@ export function AsciiDonut() {
     let B_val = 0;
 
     /**
-     *
+     * Animate the torus rotation
      */
     const animate = () => {
       if (canvasRef.current) {
