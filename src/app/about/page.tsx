@@ -60,19 +60,22 @@ export default function AboutPage() {
                     Full-stack developer focused on MLOps/DevOps engineering,
                     passionate about building scalable systems and apps
                   </li>
-                  {/* <li>
-                    Currently working as an MLOps Engineer at{" "}
+                  <li>
+                    Currently working on the Model Shaping team at{" "}
                     <a
                       href="https://www.together.ai"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-500 transition-all hover:underline hover:opacity-80"
+                      className={`
+                        text-blue-500 transition-all
+                        hover:underline hover:opacity-80
+                      `}
                     >
-                      Together.ai
-                    </a>{" "}
-                    in Amsterdam, building an AI acceleration cloud that lets
-                    train, fine-tune, and serve OSS models at scale
-                  </li> */}
+                      Together AI
+                    </a>
+                    , building infrastructure and tooling for fine-tuning,
+                    evaluation, and continual improvement of open-source LLMs
+                  </li>
                   <li>
                     Studied{" "}
                     <a
