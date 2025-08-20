@@ -1,5 +1,6 @@
 .DEFAULT_GOAL = help
 SHELL := /bin/bash
+VENDOR_DIR := vendor/react-notion-x
 
 # Load environment variables from .env
 ifneq (,$(wildcard ./.env))
@@ -157,11 +158,12 @@ pre-commit-update-hooks: ## Update pre-commit hooks
 .PHONY: pre-commit-update-hooks
 
 clean: ## Clean project
-	@printf "\nCleaning project:\n"
+	@printf "Cleaning project...\n"
 	@rm -rf node_modules .next
 	@find ${VENDOR_DIR} -type d -name 'node_modules' -exec rm -rf {} +
 	@find ${VENDOR_DIR} -type d -name 'build' -exec rm -rf {} +
 	@find ${VENDOR_DIR} -type d -name '.turbo' -exec rm -rf {} +
+	@printf "Done!\n"
 .PHONY: clean
 
 ##=============================================================================
