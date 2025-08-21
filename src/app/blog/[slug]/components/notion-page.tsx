@@ -11,7 +11,31 @@ import NotionRendererClient from "@/app/blog/[slug]/components/notion-renderer";
  * @returns The record map of the Notion page.
  */
 async function fetchNotionPage(page_id: string): Promise<ExtendedRecordMap> {
-  const notion = new NotionAPI();
+  const notion = new NotionAPI({
+    // Hotfix: https://github.com/NotionX/react-notion-x/issues/659
+    // Thanks Notion for breaking changes :)
+    kyOptions: {
+      hooks: {
+        beforeRequest: [
+          (request, options) => {
+            const url = request.url.toString();
+
+            if (url.includes("/api/v3/syncRecordValues")) {
+              return new Request(
+                url.replace(
+                  "/api/v3/syncRecordValues",
+                  "/api/v3/syncRecordValuesMain",
+                ),
+                options,
+              );
+            }
+
+            return request;
+          },
+        ],
+      },
+    },
+  });
   const recordMap = await notion.getPage(page_id);
   return recordMap;
 }
