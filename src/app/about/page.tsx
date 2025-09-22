@@ -99,7 +99,7 @@ export default function AboutPage() {
                         hover:underline hover:opacity-80
                       `}
                     >
-                      Economics
+                      Finance
                     </a>{" "}
                     at{" "}
                     <a
@@ -131,8 +131,9 @@ export default function AboutPage() {
                     >
                       CFA Level 1
                     </a>{" "}
-                    in my third year of undergrad; still keen on finance, so I
-                    may complete the remaining levels someday
+                    in my third year of undergrad; still keen on investing and
+                    portfolio management, so I may complete the remaining levels
+                    someday
                   </li>
                 </ul>
               </div>
