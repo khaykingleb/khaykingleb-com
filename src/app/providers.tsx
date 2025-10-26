@@ -13,7 +13,12 @@ import React from "react";
  */
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider attribute="data-theme" defaultTheme="system">
+    <ThemeProvider
+      attribute="data-theme"
+      enableSystem={true}
+      defaultTheme="system"
+      themes={["light", "dark"]}
+    >
       {children}
       <Analytics />
       <SpeedInsights />
