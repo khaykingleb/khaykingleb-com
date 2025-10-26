@@ -50,6 +50,7 @@ init: prerequisites env deps-dev pre-commit ## Initialize local environment for 
 
 build-react-notion-x:
 	@printf "\nBuilding react-notion-x:\n"
+	@git submodule update --init --recursive
 	@pnpm --dir vendor/react-notion-x install
 	@pnpm --dir vendor/react-notion-x build
 .PHONY: build-react-notion-x

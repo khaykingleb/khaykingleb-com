@@ -21,7 +21,7 @@ export function ThemeToggle() {
   return resolvedTheme === "dark" ? (
     <MdLightMode
       className={`
-        h-6 w-6
+        h-6 w-6 cursor-pointer
         md:hover:scale-110
       `}
       onClick={handleThemeToggle}
@@ -29,7 +29,7 @@ export function ThemeToggle() {
   ) : (
     <MdDarkMode
       className={`
-        h-6 w-6
+        h-6 w-6 cursor-pointer
         md:hover:scale-110
       `}
       onClick={handleThemeToggle}
