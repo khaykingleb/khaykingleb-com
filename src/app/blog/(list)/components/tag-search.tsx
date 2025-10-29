@@ -155,7 +155,6 @@ export const TagSearch = ({
                       hover:bg-base-200
                       focus:outline-none
                       focus-visible:bg-base-200
-                      dark:hover:bg-gray-800 dark:focus-visible:bg-gray-800
                     `}
                   >
                     <span

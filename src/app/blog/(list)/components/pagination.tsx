@@ -32,7 +32,6 @@ const PageButton = ({
           ? `
             bg-base-300
             hover:bg-base-300
-            dark:bg-neutral-700 dark:hover:bg-neutral-700
           `
           : `
             bg-base-100
