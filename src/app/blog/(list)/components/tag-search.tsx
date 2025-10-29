@@ -101,7 +101,7 @@ export const TagSearch = ({
             <button
               onClick={() => setSearchOpen(false)}
               className={`
-                absolute right-2 transition-all
+                absolute right-2 cursor-pointer transition-all
                 md:hover:scale-105 md:hover:text-base-content
               `}
               aria-label="Clear search"
@@ -188,7 +188,7 @@ export const TagSearch = ({
         <button
           onClick={() => setSearchOpen(true)}
           className={`
-            flex text-lg transition-all
+            flex cursor-pointer text-lg transition-all
             sm:text-xl
             md:hover:scale-105
           `}

@@ -39,7 +39,7 @@ const PageButton = ({
             hover:bg-base-200
           `
       }
-      ${disabled ? "cursor-not-allowed" : ""}
+      ${disabled ? "cursor-not-allowed" : "cursor-pointer"}
     `}
     onClick={onClick}
     disabled={disabled}
