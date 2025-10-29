@@ -43,8 +43,8 @@ export default function GlobalError({
               <button
                 onClick={reset}
                 className={`
-                  flex items-center gap-x-1 bg-transparent text-xl font-bold
-                  transition-all
+                  flex cursor-pointer items-center gap-x-1 bg-transparent
+                  text-xl font-bold transition-all
                   md:hover:scale-105 md:hover:opacity-80
                 `}
               >
