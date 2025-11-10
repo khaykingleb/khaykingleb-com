@@ -10,18 +10,24 @@
 
 @reference "./global.css";
 
+/* Dark mode colors */
 .notion {
   @apply !bg-[hsl(var(--b1))] !text-[hsl(var(--bc))];
 }
 
-.notion-page {
-  @apply !pl-0;
+[data-theme="dark"] .notion-table-of-contents-item {
+  color: hsl(var(--bc));
+  opacity: 0.7;
 }
 
 .notion-code,
 .notion-code pre,
 .notion-code code {
   @apply !bg-[hsl(var(--b1))] !text-[hsl(var(--bc))];
+}
+
+.notion-page {
+  @apply !pl-0;
 }
 
 .katex {
