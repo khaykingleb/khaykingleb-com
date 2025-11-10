@@ -64,7 +64,7 @@ export default function Home() {
             <Link
               href="/blog"
               className={`
-                inline-flex items-center transition-all
+                inline-flex items-center tracking-tight transition-all
                 hover:opacity-80
               `}
             >
@@ -79,7 +79,7 @@ export default function Home() {
             <Link
               href="/about"
               className={`
-                inline-flex items-center transition-all
+                inline-flex items-center tracking-tight transition-all
                 hover:opacity-80
               `}
             >
@@ -95,7 +95,7 @@ export default function Home() {
               href="/Gleb_Khaykin.pdf"
               target="_blank"
               className={`
-                inline-flex items-center transition-all
+                inline-flex items-center tracking-tight transition-all
                 hover:opacity-80
               `}
             >

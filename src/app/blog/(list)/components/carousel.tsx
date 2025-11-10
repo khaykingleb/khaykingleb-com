@@ -33,7 +33,7 @@ export const Carousel = ({ posts }: { posts: Tables<"posts">[] }) => {
                   <div className={`flex-grow`}>
                     <h1
                       className={`
-                        mb-1 text-sm font-semibold
+                        mb-1 text-sm font-semibold tracking-tight
                         sm:text-base
                         md:text-lg
                         lg:text-xl
