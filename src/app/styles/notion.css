@@ -32,10 +32,6 @@
   @apply !hidden;
 }
 
-/* .notion-table-of-contents {
-  @apply !m-0 !p-0 !pt-0 !mb-4 !pl-[0px];
-} */
-
 .notion-table-of-contents,
 .notion-h1,
 .notion-h2,
@@ -50,15 +46,15 @@
 }
 
 .notion-h1 {
-  @apply !mt-3 !text-2xl sm:!text-3xl;
+  @apply !mt-3 !text-2xl sm:!text-3xl !tracking-tight;
 }
 
 .notion-h2 {
-  @apply !mt-2 !text-xl sm:!text-2xl;
+  @apply !mt-2 !text-xl sm:!text-2xl !tracking-tight;
 }
 
 .notion-h3 {
-  @apply !mt-1 !text-base sm:!text-lg;
+  @apply !mt-1 !text-base sm:!text-lg !tracking-tight;
 }
 
 .notion-table-of-contents,
