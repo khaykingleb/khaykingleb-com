@@ -33,7 +33,7 @@ export const Header = ({
         </Link>
         <h1
           className={`
-            text-3xl font-semibold
+            text-3xl font-semibold tracking-tight
             sm:text-4xl
           `}
         >
