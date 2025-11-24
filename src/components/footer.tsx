@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { MdAutoMode, MdDarkMode, MdLightMode } from "react-icons/md";
 
 /**
  * Component to toggle between light and dark themes.
@@ -9,32 +9,42 @@ import { MdDarkMode, MdLightMode } from "react-icons/md";
  * @returns The ThemeToggle component.
  */
 export function ThemeToggle() {
-  const { setTheme, resolvedTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
 
   /**
    * Handle the theme toggle.
    */
   const handleThemeToggle = () => {
-    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+    if (theme === "system") {
+      setTheme("light");
+    } else if (theme === "light") {
+      setTheme("dark");
+    } else {
+      setTheme("system");
+    }
   };
 
-  return resolvedTheme === "dark" ? (
-    <MdLightMode
-      className={`
-        h-6 w-6 cursor-pointer
-        md:hover:scale-110
-      `}
-      onClick={handleThemeToggle}
-    />
-  ) : (
-    <MdDarkMode
-      className={`
-        h-6 w-6 cursor-pointer
-        md:hover:scale-110
-      `}
-      onClick={handleThemeToggle}
-    />
-  );
+  /**
+   * Get the appropriate icon based on current theme
+   */
+  const getThemeIcon = () => {
+    const iconClass = `
+      h-6 w-6 cursor-pointer transition-transform
+      md:hover:scale-110
+    `;
+
+    switch (theme) {
+      case "light":
+        return (
+          <MdLightMode className={iconClass} onClick={handleThemeToggle} />
+        );
+      case "dark":
+        return <MdDarkMode className={iconClass} onClick={handleThemeToggle} />;
+      case "system":
+        return <MdAutoMode className={iconClass} onClick={handleThemeToggle} />;
+    }
+  };
+  return getThemeIcon();
 }
 
 /**
