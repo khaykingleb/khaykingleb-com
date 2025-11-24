@@ -14,3 +14,8 @@ output "supabase_service_role_key" {
   description = "The service role key of the Supabase project"
   sensitive   = true
 }
+
+output "cloudflare_zone_id" {
+  value       = cloudflare_zone.khaykingleb_com.id
+  description = "The ID of the Cloudflare zone"
+}

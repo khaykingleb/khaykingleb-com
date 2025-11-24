@@ -22,8 +22,8 @@ export default function NotFound() {
           <button
             onClick={() => window.history.back()}
             className={`
-              flex items-center gap-x-2 bg-transparent text-xl font-bold
-              transition-all
+              flex cursor-pointer items-center gap-x-2 bg-transparent text-xl
+              font-bold transition-all
               md:hover:scale-105 md:hover:opacity-80
             `}
           >

@@ -139,7 +139,7 @@ export default function AboutPage() {
               </div>
               <h2
                 className={`
-                  mt-4 mb-2 text-xl font-semibold
+                  mt-4 mb-2 text-xl font-semibold tracking-tight
                   sm:text-2xl
                 `}
               >
