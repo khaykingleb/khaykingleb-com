@@ -38,14 +38,10 @@
   @apply !bg-[hsl(var(--b1))] !text-[hsl(var(--bc))];
 }
 
-/* Other */
+/* Typography & Layout */
 
 .notion-page {
   @apply !pl-0;
-}
-
-.katex {
-  @apply flex items-center justify-center text-sm sm:text-base;
 }
 
 .notion-title {
@@ -61,10 +57,6 @@
   @apply font-gill-sans !w-full;
 }
 
-.notion-asset-caption {
-  @apply font-gill-sans text-center;
-}
-
 .notion-h1 {
   @apply !mt-3 !text-2xl sm:!text-3xl !tracking-tight;
 }
@@ -77,6 +69,14 @@
   @apply !mt-1 !text-base sm:!text-lg !tracking-tight;
 }
 
+.notion-asset-caption {
+  @apply font-gill-sans text-center;
+}
+
+.notion-callout {
+  @apply !ml-1;
+}
+
 .notion-table-of-contents,
 .notion-list,
 .notion-text {
@@ -87,10 +87,6 @@
   .notion-table-of-contents {
     @apply !pl-1 !-mt-2;
   }
-}
-
-.notion-callout {
-  @apply !ml-1;
 }
 
 .notion-list {
@@ -107,7 +103,23 @@
   }
 }
 
+/* Only add margin to standalone text blocks, not inside lists or TOC */
+.notion-text:not(.notion-list *):not(.notion-table-of-contents *) {
+  @apply !ml-1;
+}
+
+@media (max-width: 767px) {
+  .notion-text:not(.notion-list *):not(.notion-table-of-contents *) {
+    @apply !ml-0;
+  }
+}
+
 /* Responsible for all the spacing between list items */
 .notion-list li {
   @apply !p-[3px];
+}
+
+/* Math */
+.katex {
+  @apply flex items-center justify-center text-sm sm:text-base;
 }
