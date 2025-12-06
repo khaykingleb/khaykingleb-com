@@ -83,16 +83,6 @@
   @apply !mt-0 !text-sm sm:!text-base;
 }
 
-.notion-text {
-  @apply !ml-1;
-}
-
-@media (max-width: 767px) {
-  .notion-text {
-    @apply !ml-0;
-  }
-}
-
 @media (max-width: 767px) {
   .notion-table-of-contents {
     @apply !pl-1 !-mt-2;
