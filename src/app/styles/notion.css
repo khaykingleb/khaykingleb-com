@@ -10,14 +10,18 @@
 
 @reference "./global.css";
 
+/* Light mode colors */
+.notion-table-of-contents-item {
+  color: #5d5d5f !important;
+}
+
 /* Dark mode colors */
 .notion {
   @apply !bg-[hsl(var(--b1))] !text-[hsl(var(--bc))];
 }
 
 [data-theme="dark"] .notion-table-of-contents-item {
-  color: hsl(var(--bc));
-  opacity: 0.7;
+  color: #b0b0b0 !important;
 }
 
 .notion-code,
@@ -25,6 +29,8 @@
 .notion-code code {
   @apply !bg-[hsl(var(--b1))] !text-[hsl(var(--bc))];
 }
+
+/* Other */
 
 .notion-page {
   @apply !pl-0;
@@ -69,10 +75,18 @@
   @apply !mt-0 !text-sm sm:!text-base;
 }
 
+.notion-text {
+  @apply !ml-1;
+}
+
 @media (max-width: 767px) {
   .notion-table-of-contents {
     @apply !pl-1 !-mt-2;
   }
+}
+
+.notion-callout {
+  @apply !ml-1;
 }
 
 .notion-list {
@@ -92,13 +106,4 @@
 /* Responsible for all the spacing between list items */
 .notion-list li {
   @apply !p-[3px];
-}
-
-/* Dark mode colors */
-.notion-table-of-contents a {
-  @apply dark:text-[hsl(var(--bc))] dark:opacity-70;
-}
-
-.notion-asset-caption {
-  @apply text-[hsl(var(--bc))] opacity-70;
 }
