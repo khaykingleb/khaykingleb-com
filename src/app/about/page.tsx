@@ -61,7 +61,7 @@ export default function AboutPage() {
                     infrastructure, and DevOps
                   </li>
                   <li>
-                    Currently working on the Model Shaping team at{" "}
+                    Currently on the Model Shaping team at{" "}
                     <a
                       href="https://www.together.ai"
                       target="_blank"
