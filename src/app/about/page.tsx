@@ -113,7 +113,7 @@ export default function AboutPage() {
                       `}
                     >
                       National Research University &quot;Higher School of
-                      Economics &quot;
+                      Economics&quot;
                     </a>{" "}
                     which equips me with a comprehensive understanding of both
                     the business and technical aspects of projects
