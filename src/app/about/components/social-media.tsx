@@ -38,9 +38,9 @@ export const SocialMedia = ({
       icon: FaSquareXTwitter,
     },
     {
-      href: "https://t.me/khaykingleb_blog",
+      href: "https://t.me/blog_khaykingleb",
       platform: "Telegram",
-      label: "@khaykingleb_blog",
+      label: "@blog_khaykingleb",
       icon: FaTelegram,
     },
     {

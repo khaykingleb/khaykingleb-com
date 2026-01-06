@@ -10,22 +10,21 @@
 
 @reference "./global.css";
 
-/* Light mode colors */
-.notion-table-of-contents-item {
-  color: #5d5d5f !important;
-}
-
-/* Dark mode colors */
 .notion {
   @apply !bg-[hsl(var(--b1))] !text-[hsl(var(--bc))];
 }
 
-.notion-table-of-contents-item {
-  @apply dark:!text-[#b0b0b0];
+.notion-table-of-contents-item,
+.notion-table-of-contents-item-body,
+.notion-table-of-contents a {
+  color: #5d5d5f !important;
+  opacity: 1 !important;
 }
 
-.notion-table-of-contents a {
-  @apply dark:text-[hsl(var(--bc))] dark:opacity-70;
+:is([data-theme="dark"], .dark) .notion-table-of-contents-item,
+:is([data-theme="dark"], .dark) .notion-table-of-contents-item-body,
+:is([data-theme="dark"], .dark) .notion-table-of-contents a {
+  color: #b0b0b0 !important;
 }
 
 .notion-asset-caption {
