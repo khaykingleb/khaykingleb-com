@@ -57,8 +57,8 @@ export default function AboutPage() {
               <div className="mt-2 space-y-1 text-base text-pretty">
                 <ul className="list-disc space-y-1 space-x-0 pl-4">
                   <li>
-                    Full-stack developer focused on MLOps/DevOps engineering,
-                    passionate about building scalable systems and apps
+                    ML platform engineer working on large-scale ML systems,
+                    infrastructure, and DevOps
                   </li>
                   <li>
                     Currently working on the Model Shaping team at{" "}
@@ -71,10 +71,11 @@ export default function AboutPage() {
                         hover:underline hover:opacity-80
                       `}
                     >
-                      Together AI
+                      Together.ai
                     </a>
                     , building infrastructure and tooling for fine-tuning,
-                    evaluation, and continual improvement of open-source LLMs
+                    reinforcement learning, evaluation, quantization, and
+                    distillation of open-source LLMs
                   </li>
                   <li>
                     Studied{" "}
@@ -112,11 +113,10 @@ export default function AboutPage() {
                       `}
                     >
                       National Research University &quot;Higher School of
-                      Economics&quot;
+                      Economics &quot;
                     </a>{" "}
-                    — this dual background equips me with a comprehensive
-                    understanding of both the business and technical aspects of
-                    projects
+                    which equips me with a comprehensive understanding of both
+                    the business and technical aspects of projects
                   </li>
                   <li>
                     Passed{" "}
